@@ -7,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using YeelightUDP;
+using HomeAPI.Controllers;
+using HomeAPI.Yeelight;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace HomeAPI.Controllers
+namespace HomeAPI
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -59,7 +60,7 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> GetDevices()
         {
-            var device = Yeelight.GetAvailableDevices();          
+            var device = Yeelight.Yeelight.GetAvailableDevices();          
 
             if (!device.IsFound)
             {
@@ -101,7 +102,7 @@ namespace HomeAPI.Controllers
 
 
 
-                    response = Yeelight.BulbCommand(methodName, value);
+                    response = Yeelight.Yeelight.BulbCommand (methodName, value);
 
                    
 
@@ -114,7 +115,7 @@ namespace HomeAPI.Controllers
                     string value = yeelight.ControlMethod;
                     history.MethodValue = value.ToString();
 
-                    response = Yeelight.BulbCommand(methodName, value);
+                    response = Yeelight.Yeelight.BulbCommand(methodName, value);
                    
                 }
             };

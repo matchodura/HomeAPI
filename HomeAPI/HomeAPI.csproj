@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\YeelightUDP\YeelightUDP\YeelightUDP.csproj" />
+    <ProjectReference Include="..\..\HomeAPI.Yeelight\HomeAPI.Yeelight.csproj" />
   </ItemGroup>
 
   <ItemGroup>
