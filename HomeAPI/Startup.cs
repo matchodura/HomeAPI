@@ -1,12 +1,16 @@
+using HomeAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Pomelo.EntityFrameworkCore.MySql.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +42,16 @@ namespace HomeAPI
                     .AllowAnyHeader());
             });
 
-            services.AddControllers();
+            services.AddDbContext<HomeContext>(options => options
+                .UseMySql("Server=localhost; Database=homeapi;User=homeapi;Password=homeapi;",
+                    mysqlOptions =>
+                        mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 4, 6), ServerType.MariaDb))));
+
+            services.AddControllersWithViews().AddNewtonsoftJson();
+          
+            services.AddRazorPages();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +63,7 @@ namespace HomeAPI
             }
 
             app.UseHttpsRedirection();
-
+          
             app.UseRouting();
             app.UseCors("CorsPolicy");
             app.UseAuthorization();

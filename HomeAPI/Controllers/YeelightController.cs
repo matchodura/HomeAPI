@@ -1,4 +1,6 @@
-﻿using HomeAPI.Helpers;
+﻿using HomeAPI.Data;
+using HomeAPI.Helpers;
+using HomeAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,8 +15,43 @@ namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class YeelightController : ControllerBase
+    public class YeelightController : Controller
     {
+
+        private readonly HomeContext _context;
+
+        public YeelightController(HomeContext context)
+        {
+            _context = context;
+        }
+
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+
+        [Route("GetBulbs")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<Bulb>> CheckDB()
+        {
+            var bulb = _context.Bulbs.ToList();
+
+            if (!bulb.Any())
+            {
+                return NotFound();
+            }
+
+            else
+            {
+                return bulb;
+            }
+          
+        }
+
+
         // GET: api/<ValuesController>
         //[HttpGet]
         [Route("GetDevices")]
@@ -22,59 +59,78 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> GetDevices()
         {
-
-            var device = Yeelight.GetAvailableDevices();
-           
+            var device = Yeelight.GetAvailableDevices();          
 
             if (!device.IsFound)
             {
                 return NotFound();
             }
-
             else
             {
                 var foundDevice = JSONSerializer.SerializeObject(device);
                 return foundDevice;
-            }
-           
+            }           
         }
-
-        [HttpPost]
-        [Route("Bulb/{option}")]
+        
+        
+        [HttpPost]       
+        [Route("Control")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]        
-        public ActionResult<string> BulbControl(string option)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<string> BulbControlAdvanced([FromBody] YeelightCommand yeelight)
         {
-            var response = Yeelight.BulbCommand(option);
+
+            string methodName = yeelight.Method; 
+            string response = null;
+
+            BulbHistory history = new BulbHistory();
+
+            if (yeelight.IsIntValue && yeelight.IsStringValue)
+            {
+                response = "something wrong";
+            }
+            else
+            {
+                if (yeelight.IsIntValue)
+                {
+
+                    
+
+                    int value = yeelight.ControlValue;
+                    history.MethodValue = value.ToString();
+
+
+
+                    response = Yeelight.BulbCommand(methodName, value);
+
+                   
+
+                    // id is temporary for now, will add bulb ids later                   
+
+
+                }
+                else if (yeelight.IsStringValue)
+                {
+                    string value = yeelight.ControlMethod;
+                    history.MethodValue = value.ToString();
+
+                    response = Yeelight.BulbCommand(methodName, value);
+                   
+                }
+            };
+
+
+            history.LampId = 1;
+            history.MethodName = methodName;
+            history.DateSent = DateTime.Now;
+            history.Response = response;
+
+            _context.BulbsHistory.Add(history);
+            _context.SaveChanges();
+
 
             return response;
         }
-
-
-
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ValuesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+   
     }
 }
