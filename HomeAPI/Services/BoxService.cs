@@ -40,31 +40,25 @@ namespace HomeAPI.Services
         }
 
         private async void DoWork(object state)
-        {
-            //var count = Interlocked.Increment(ref executionCount);
-
-
-
+        {           
             using (var scope = _scopeFactory.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<HomeContext>();
 
-                var test = dbContext.DHTs.ToList();
+                try
+                {
+                    DHT record = await GetBoxData();
+                    dbContext.Add(record);
+                    dbContext.SaveChanges();
+                }
 
-                DHT record = await GetBoxData();
-
-
-
-                dbContext.Add(record);
-
-                dbContext.SaveChanges();
-            }
-
-        //    _logger.LogInformation(
-        //"Timed Hosted Service is working. Count: {Count}", test);
-
-
-
+                catch(Exception e)
+                {
+                   
+                    _logger.LogInformation("Error occured in DHT data logging: {e}", e.GetType().Name);
+                }
+              
+            }                
         }
 
         public async Task<DHT> GetBoxData()
@@ -75,7 +69,6 @@ namespace HomeAPI.Services
 
             var client = new HttpClient()
             {
-
                 BaseAddress = new Uri(clientAdress),
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
@@ -90,32 +83,23 @@ namespace HomeAPI.Services
 
                 if (response != null)
                 {
-
                     dht = JsonConvert.DeserializeObject<DHT>(responseMessage);
                 }
 
             }
 
             catch (HttpRequestException e)
-            {
-               
+            {               
                 responseMessage = e.Message;
-
             }
 
 
             //box id will be changed in the future
             dht.BoxId = 1;
             dht.Date = DateTime.Now;
-
-
-            return dht;
-                   
-
-       
+            dht.CalledBy = "service";
+            return dht;          
         }
-
-
 
 
         public Task StopAsync(CancellationToken stoppingToken)

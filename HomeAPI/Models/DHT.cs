@@ -27,6 +27,7 @@ namespace HomeAPI.Models
         public string Humidity { get; set; }
         public DateTime? Date { get; set; }
 
+        public string CalledBy { get; set; }
 
      
     }

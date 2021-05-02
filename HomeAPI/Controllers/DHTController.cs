@@ -74,18 +74,31 @@ namespace HomeAPI.Controllers
            //box id will be changed in the future
             dht.BoxId = 1;
             dht.Date = DateTime.Now;
+            dht.CalledBy = "user";
 
-
-            //_context.DHTs.Add(dht);
-            //_context.SaveChanges();
+            _context.DHTs.Add(dht);
+            _context.SaveChanges();
 
             return Json(responseMessage);
         }
+
 
         [Route("GetLastRecord")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> GetLastRecord()
+        {
+            var lastRecord = _context.DHTs.OrderByDescending(p => p.Date)
+                       .FirstOrDefault();
+
+            return Json(lastRecord);
+        }
+
+
+        [Route("GetRecordsByTime")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<string> GetRecordsByTime([FromBody] int timeSpan)
         {
 
             var lastRecord = _context.DHTs.OrderByDescending(p => p.Date)
@@ -93,5 +106,7 @@ namespace HomeAPI.Controllers
 
             return Json(lastRecord);
         }
+
+
     }
 }
