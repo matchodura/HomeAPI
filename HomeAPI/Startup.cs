@@ -1,4 +1,5 @@
 using HomeAPI.Data;
+using HomeAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,12 +17,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+
+
 namespace HomeAPI
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
+          
             Configuration = configuration;
         }
 
@@ -30,10 +35,8 @@ namespace HomeAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Poni¿sza konfiguracja jest bazowa i niezwykle prosta
-            // AllowAnyOrigin() - mo¿e zostaæ zmienione na np. WithOrigings("http://www.naszezrodlo.com") - dostêp tylko z tego miejsca
-            // AllowAnyMethod() - mo¿emy zezwoliæ na dostêp do wybranych metod np. WithMethods("POST", "GET")
-            // AllowAnyHeader() - mo¿emy akceptowaæ jedynie wybrane nag³ówki, np. WithHeaders("accept", "content-type")
+
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -41,6 +44,8 @@ namespace HomeAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+
+            
 
             services.AddDbContext<HomeContext>(options => options
                 .UseMySql("Server=localhost; Database=homeapi;User=homeapi;Password=homeapi;",
@@ -51,7 +56,7 @@ namespace HomeAPI
           
             services.AddRazorPages();
 
-
+            services.AddHostedService<BoxService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -93,18 +93,13 @@ namespace HomeAPI
             else
             {
                 if (yeelight.IsIntValue)
-                {
-
-                    
+                {                    
 
                     int value = yeelight.ControlValue;
                     history.MethodValue = value.ToString();
 
-
-
                     response = Yeelight.Yeelight.BulbCommand (methodName, value);
-
-                   
+                                      
 
                     // id is temporary for now, will add bulb ids later                   
 
@@ -114,7 +109,6 @@ namespace HomeAPI
                 {
                     string value = yeelight.ControlMethod;
                     history.MethodValue = value.ToString();
-
                     response = Yeelight.Yeelight.BulbCommand(methodName, value);
                    
                 }

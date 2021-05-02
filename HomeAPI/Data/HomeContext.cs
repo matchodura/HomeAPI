@@ -12,6 +12,9 @@ namespace HomeAPI.Data
         public HomeContext(DbContextOptions<HomeContext> options) : base(options) { }
         public DbSet<Bulb> Bulbs { get; set; }
         public DbSet<BulbHistory> BulbsHistory { get; set; }
+        public DbSet<DHT> DHTs { get; set; }
+
+        public DbSet<Box> Boxes { get; set; }
       
     }
 }
