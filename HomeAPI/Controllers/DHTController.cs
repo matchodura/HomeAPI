@@ -95,16 +95,49 @@ namespace HomeAPI.Controllers
         }
 
 
+        [Route("GetAllRecords")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<string> GetAllRecords()
+        {
+
+            var allRecords = _context.DHTs.OrderByDescending(p => p.Date).ToList();
+
+            return Json(allRecords);
+        }
+
+
+        
+
         [Route("GetRecordsByTime")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> GetRecordsByTime([FromBody] int timeSpan)
+        public ActionResult<string> GetRecordsByTime([FromBody] Filter filter)
         {
 
-            var lastRecord = _context.DHTs.OrderByDescending(p => p.Date)
-                       .FirstOrDefault();
+            string sortOrder = filter.SortOrder.ToUpper();
+            List<DHT> allRecords = new List<DHT>();
 
-            return Json(lastRecord);
+
+            if(sortOrder == "ASC")
+            {
+                allRecords = _context.DHTs.OrderBy(p => p.Date).ToList();
+            }
+
+            else if(sortOrder == "DESC")
+            {
+
+                allRecords = _context.DHTs.OrderByDescending(p => p.Date).ToList();
+            }
+
+            else
+            {
+
+            }
+
+            
+
+            return Json(allRecords);
         }
 
 
