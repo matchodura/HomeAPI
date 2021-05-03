@@ -1,4 +1,5 @@
 using HomeAPI.Data;
+using HomeAPI.HubConfig;
 using HomeAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,9 +41,10 @@ namespace HomeAPI
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
+                    builder => builder.WithOrigins("http://localhost:4200")
+                         .AllowAnyMethod()
+                         .AllowAnyHeader()
+                         .AllowCredentials());
             });
 
             
@@ -51,6 +53,9 @@ namespace HomeAPI
                 .UseMySql("Server=localhost; Database=homeapi;User=homeapi;Password=homeapi;",
                     mysqlOptions =>
                         mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 4, 6), ServerType.MariaDb))));
+
+            services.AddSignalR();
+
 
             services.AddControllersWithViews().AddNewtonsoftJson();
           
@@ -76,6 +81,7 @@ namespace HomeAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChartHub>("/chart");
             });
         }
     }

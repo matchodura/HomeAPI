@@ -16,10 +16,10 @@ namespace HomeAPI.Services
 {
     public class BoxService : IHostedService, IDisposable
     {
-        private int executionCount = 0;
+       
         private readonly ILogger<BoxService> _logger;
         private Timer _timer;
-        private readonly HomeContext _context;
+    
         private readonly IServiceScopeFactory _scopeFactory;
 
         public BoxService(ILogger<BoxService> logger, IServiceScopeFactory scopeFactory)
@@ -34,7 +34,7 @@ namespace HomeAPI.Services
             _logger.LogInformation("Timed Hosted Service running.");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(30));
+                TimeSpan.FromMinutes(15));
 
             return Task.CompletedTask;
         }
@@ -50,6 +50,7 @@ namespace HomeAPI.Services
                     DHT record = await GetBoxData();
                     dbContext.Add(record);
                     dbContext.SaveChanges();
+
                 }
 
                 catch(Exception e)
@@ -101,6 +102,7 @@ namespace HomeAPI.Services
             return dht;          
         }
 
+        
 
         public Task StopAsync(CancellationToken stoppingToken)
         {

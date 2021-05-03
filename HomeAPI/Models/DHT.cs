@@ -21,11 +21,11 @@ namespace HomeAPI.Models
         public string Device { get; set; }
 
         [JsonProperty("temp")]
-        public string Temperature { get; set; }
+        public float Temperature { get; set; }
 
         [JsonProperty("humidity")]
-        public string Humidity { get; set; }
-        public DateTime? Date { get; set; }
+        public float Humidity { get; set; }
+        public DateTime Date { get; set; }
 
         public string CalledBy { get; set; }
 
