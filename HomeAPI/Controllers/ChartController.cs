@@ -1,5 +1,4 @@
 ﻿using HomeAPI.Data;
-using HomeAPI.DataStorage;
 using HomeAPI.HubConfig;
 using HomeAPI.Models;
 using HomeAPI.TimerFeatures;
@@ -31,12 +30,8 @@ namespace HomeAPI.Controllers
 
         public IActionResult Get()
         {
-
             var records = _context.DHTs.ToList();
-
-
             var timerManager = new TimerManager(() => _hub.Clients.All.SendAsync("transferchartdata", GetData(records)));
-
             return Ok(new { Message = "Request completed" });
         }
 
@@ -74,19 +69,3 @@ namespace HomeAPI.Controllers
     }
 }
 
-
-
-// new DataModel {
-//     x = 1,
-//     y = 2 }
-// ,
-
-//new DataModel {
-//     x = 5,
-//     y = 5 }
-//,
-
-//new DataModel {
-//     x = 10,
-//     y = 22 }
-//} }

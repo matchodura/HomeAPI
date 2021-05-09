@@ -82,6 +82,7 @@ namespace HomeAPI
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChartHub>("/chart");
+                endpoints.MapHub<MotionHub>("/notify");
             });
         }
     }
