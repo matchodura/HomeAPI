@@ -1,4 +1,6 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Interfaces;
+using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +15,7 @@ namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DHTController : Controller
+    public class DHTController : Controller, IDHTSensor, IDHTRepository
     {
 
         private readonly HomeContext _context;
@@ -56,7 +58,9 @@ namespace HomeAPI.Controllers
                 if (response != null)
                 {                   
 
-                    dht = JsonConvert.DeserializeObject<DHT>(responseMessage);       
+                    dht = JsonConvert.DeserializeObject<DHT>(responseMessage);
+
+                   
                 }
 
             }
@@ -79,6 +83,7 @@ namespace HomeAPI.Controllers
             _context.DHTs.Add(dht);
             _context.SaveChanges();
 
+           
             return Json(responseMessage);
         }
 
@@ -105,9 +110,7 @@ namespace HomeAPI.Controllers
 
             return Json(allRecords);
         }
-
-
-        
+                
 
         [Route("GetRecordsByTime")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -134,12 +137,29 @@ namespace HomeAPI.Controllers
             {
 
             }
-
-            
+                        
 
             return Json(allRecords);
         }
 
+        public string GetCurrentValue()
+        {
+            throw new NotImplementedException();
+        }
 
+        List<DHT> IDHTRepository.GetAllRecords()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DHT> GetRecordsByTime()
+        {
+            throw new NotImplementedException();
+        }
+
+        DHT IDHTRepository.GetLastRecord()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
