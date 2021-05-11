@@ -1,4 +1,5 @@
-﻿using HomeAPI.Interfaces;
+﻿using HomeAPI.Data;
+using HomeAPI.Interfaces;
 using HomeAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,12 @@ namespace HomeAPI.Controllers
 {
     public class BoxController : Controller, IBoxRepository
     {
+        private readonly HomeContext _context;
+
+        public BoxController(HomeContext context)
+        {         
+            _context = context;
+        }
 
         public IActionResult Index()
         {

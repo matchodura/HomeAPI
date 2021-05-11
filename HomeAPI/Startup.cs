@@ -1,5 +1,6 @@
 using HomeAPI.Data;
 using HomeAPI.HubConfig;
+using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,6 +62,7 @@ namespace HomeAPI
           
             services.AddRazorPages();
 
+            services.AddScoped<IMotionSensorRepository, MotionSensorRepository>();
             services.AddHostedService<BoxService>();
         }
 

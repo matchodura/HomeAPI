@@ -1,5 +1,8 @@
-﻿using HomeAPI.HubConfig;
+﻿using HomeAPI.Data;
+using HomeAPI.HubConfig;
 using HomeAPI.Interfaces;
+using HomeAPI.Interfaces.Repositories;
+using HomeAPI.Interfaces.Sensors;
 using HomeAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +16,17 @@ using System.Threading.Tasks;
 namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class MotionController : Controller
+    public class MotionController : Controller, IMotionSensor
     {
         private readonly IHubContext<MotionHub, INotifyHubClient> _hubContext;
+        private readonly HomeContext _context;
+        private readonly IMotionSensorRepository _motionSensorRepository;
 
-        public MotionController(IHubContext<MotionHub, INotifyHubClient> hubContext)
+        public MotionController(IHubContext<MotionHub, INotifyHubClient> hubContext, HomeContext context, IMotionSensorRepository motionSensorRepository)
         {
             _hubContext = hubContext;
+            _context = context;
+            _motionSensorRepository = motionSensorRepository;
         }
 
 
@@ -30,16 +37,15 @@ namespace HomeAPI.Controllers
         {
             string responseMessage = "";
 
+            //to be changed in future
+            int boxId = 1;
+
             DateTime dateTime = DateTime.Now;
-            MotionSensor motionSensor = new MotionSensor();
-
-            //responseMessage = JsonConvert.DeserializeObject<MotionSensor>(motionSensor);
-            motionSensor.Date = dateTime;
-            motionSensor.Device = device;
-
+            
             responseMessage = $"{device} {dateTime}";
 
-            // SendMessage(responseMessage);
+           
+            _motionSensorRepository.InsertRecord(boxId, device, dateTime);
 
             await _hubContext.Clients.All.BroadcastMessage(responseMessage);
 
@@ -87,6 +93,11 @@ namespace HomeAPI.Controllers
             }
 
             return Json(responseMessage);
+        }
+
+        string IMotionSensor.ChangeURL(string port, string device)
+        {
+            throw new NotImplementedException();
         }
     }
 }

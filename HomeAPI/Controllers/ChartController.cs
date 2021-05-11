@@ -19,8 +19,6 @@ namespace HomeAPI.Controllers
         private readonly IHubContext<ChartHub> _hub;
         private readonly HomeContext _context;
 
-
-
         public ChartController(IHubContext<ChartHub> hub, HomeContext context)
         {
             _hub = hub;
