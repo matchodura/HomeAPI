@@ -27,12 +27,6 @@ namespace HomeAPI
         }
 
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
         [Route("GetBulbs")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
