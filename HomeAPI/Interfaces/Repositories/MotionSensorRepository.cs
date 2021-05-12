@@ -15,21 +15,53 @@ namespace HomeAPI.Interfaces.Repositories
             _context = context;
         }
 
+        public List<MotionSensor> GetAllRecordsByDeviceName(string sensorName)
+        {
+            List<MotionSensor> motionSensors;
 
-        public List<MotionSensor> GetAllRecords()
+            motionSensors = _context.MotionSensors.Where(i => i.Device == sensorName).ToList();
+
+            return motionSensors;
+        }
+
+
+        public List<MotionSensor> GetAllRecordsById(int sensorId)
+        {
+            List<MotionSensor> motionSensors;
+
+            motionSensors = _context.MotionSensors.Where(i => i.DeviceId == sensorId).ToList();
+
+            return motionSensors;
+        }
+
+
+        public List<MotionSensor> GetAllRecordsByBoxId(int boxId)
+        {
+            List<MotionSensor> motionSensors;
+
+            motionSensors = _context.MotionSensors.Where(i => i.BoxId == boxId).ToList();
+
+            return motionSensors;
+        }
+
+
+        public MotionSensor GetLastRecordById(int sensorId, int boxId)
         {
             throw new NotImplementedException();
         }
 
-        public MotionSensor GetLastRecord()
+
+        public MotionSensor GetLastRecordByName(string sensorName, string boxName)
         {
             throw new NotImplementedException();
         }
+
 
         public List<MotionSensor> GetRecordsByTime()
         {
             throw new NotImplementedException();
         }
+
 
         public void InsertRecord(int boxId, string deviceName, DateTime dateTime)
         {
@@ -38,9 +70,12 @@ namespace HomeAPI.Interfaces.Repositories
             motionSensor.BoxId = boxId;
             motionSensor.Date = dateTime;
             motionSensor.Device = deviceName;
+            motionSensor.DeviceId = 1234;
 
             _context.MotionSensors.Add(motionSensor);
             _context.SaveChanges();
         }
+
+       
     }
 }

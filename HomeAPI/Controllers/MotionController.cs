@@ -16,11 +16,12 @@ using System.Threading.Tasks;
 namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class MotionController : Controller, IMotionSensor
+    public class MotionController : Controller
     {
         private readonly IHubContext<MotionHub, INotifyHubClient> _hubContext;
         private readonly HomeContext _context;
         private readonly IMotionSensorRepository _motionSensorRepository;
+
 
         public MotionController(IHubContext<MotionHub, INotifyHubClient> hubContext, HomeContext context, IMotionSensorRepository motionSensorRepository)
         {
@@ -30,22 +31,52 @@ namespace HomeAPI.Controllers
         }
 
 
+        [HttpGet]
+        [Route("records/box/{boxId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<MotionSensor>> GetAllRecordsByBoxId(int boxId)
+        {          
+            var allRecords = _motionSensorRepository.GetAllRecordsByBoxId(boxId);
+            return Json(allRecords);
+        }
+
+
+        [HttpGet]
+        [Route("records/sensors/id/{sensorId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<MotionSensor>> GetAllRecordsById(int sensorId)
+        {
+            var allRecords = _motionSensorRepository.GetAllRecordsById(sensorId);
+            return Json(allRecords);
+        }
+
+
+        [HttpGet]
+        [Route("records/sensors/name/{sensorName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<MotionSensor>> GetAllRecordsByName(string sensorName)
+        {
+            var allRecords = _motionSensorRepository.GetAllRecordsByDeviceName(sensorName);
+            return Json(allRecords);
+        }
+
+
         [Route("Motion")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<string>> Motion(string device)
+        public async Task<ActionResult<string>> Motion(string deviceName, int boxId)
         {
             string responseMessage = "";
 
-            //to be changed in future
-            int boxId = 1;
-
             DateTime dateTime = DateTime.Now;
             
-            responseMessage = $"{device} {dateTime}";
+            responseMessage = $"{deviceName} {dateTime}";
 
            
-            _motionSensorRepository.InsertRecord(boxId, device, dateTime);
+            _motionSensorRepository.InsertRecord(boxId, deviceName, dateTime);
 
             await _hubContext.Clients.All.BroadcastMessage(responseMessage);
 
@@ -60,14 +91,14 @@ namespace HomeAPI.Controllers
         [Route("ChangeUrl")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ChangeURL(string port, string device)
+        public async Task<IActionResult> ChangeURL(string port)
         {
             string responseMessage = "";
-            string clientAdress = "http://192.168.1.21";
+            string clientAdress = "http://192.168.1.21:";
             int timeout = 10;
 
             //URL query, as asp.net sometimes changes port number during execution/rerun todo to make it automatic
-            string methodURL = "http://192.168.1.19:" + port + "/api/motion/motion?device=" + device;
+            string methodURL = clientAdress + port + "/api/motion/motion";
 
             var client = new HttpClient()
             {
@@ -94,10 +125,6 @@ namespace HomeAPI.Controllers
 
             return Json(responseMessage);
         }
-
-        string IMotionSensor.ChangeURL(string port, string device)
-        {
-            throw new NotImplementedException();
-        }
+              
     }
 }

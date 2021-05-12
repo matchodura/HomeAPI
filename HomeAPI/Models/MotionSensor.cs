@@ -15,7 +15,9 @@ namespace HomeAPI.Models
         public int? BoxId { get; set; }
       
         [JsonProperty("device")]
-        public string Device { get; set; }        
+        public string Device { get; set; }       
+        
+        public int? DeviceId { get; set; }
         
         public DateTime Date { get; set; }     
 
