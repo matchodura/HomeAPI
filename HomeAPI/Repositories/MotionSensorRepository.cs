@@ -1,15 +1,18 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeAPI.Interfaces.Repositories
+namespace HomeAPI.Repositories
 {
     public class MotionSensorRepository : IMotionSensorRepository
     {
         private readonly HomeContext _context;
+
+
         public MotionSensorRepository(HomeContext context)
         {
             _context = context;

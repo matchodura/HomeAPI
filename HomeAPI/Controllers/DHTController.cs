@@ -15,14 +15,16 @@ namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DHTController : Controller, IDHTSensor, IDHTRepository
+    public class DHTController : Controller, IDHTSensor
     {
 
         private readonly HomeContext _context;
+        private readonly IDHTRepository _dhtRepository;
 
-        public DHTController(HomeContext context)
+        public DHTController(HomeContext context, IDHTRepository dhtRepository)
         {
             _context = context;
+            _dhtRepository = dhtRepository;
         }
 
 
@@ -146,20 +148,6 @@ namespace HomeAPI.Controllers
         {
             throw new NotImplementedException();
         }
-
-        List<DHT> IDHTRepository.GetAllRecords()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<DHT> GetRecordsByTime()
-        {
-            throw new NotImplementedException();
-        }
-
-        DHT IDHTRepository.GetLastRecord()
-        {
-            throw new NotImplementedException();
-        }
+             
     }
 }

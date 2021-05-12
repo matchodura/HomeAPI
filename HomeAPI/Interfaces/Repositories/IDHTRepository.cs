@@ -8,11 +8,8 @@ namespace HomeAPI.Interfaces.Repositories
 {
     public interface IDHTRepository
     {
-
         public List<DHT> GetAllRecords();
-
         public List<DHT> GetRecordsByTime();
-
         public DHT GetLastRecord();
 
     }

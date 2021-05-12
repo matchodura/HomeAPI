@@ -1,13 +1,14 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Interfaces;
 using HomeAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeAPI.Interfaces.Repositories
+namespace HomeAPI.Repositories
 {
-    public class BoxRepository : IMotionSensorRepository
+    public class BoxRepository : IBoxRepository
     {
         private readonly HomeContext _context;
 
@@ -16,44 +17,33 @@ namespace HomeAPI.Interfaces.Repositories
         {
             _context = context;
         }
-    
 
-        public List<MotionSensor> GetAllRecordsByBoxId(int boxId)
+        public bool CreateBox()
         {
             throw new NotImplementedException();
         }
 
-
-        public List<MotionSensor> GetAllRecordsByDeviceName(string sensorName)
+        public bool DeleteBox()
         {
             throw new NotImplementedException();
         }
 
-
-        public List<MotionSensor> GetAllRecordsById(int sensorId)
+        public List<Box> GetAllBoxes()
         {
             throw new NotImplementedException();
         }
 
-
-        public MotionSensor GetLastRecordById(int sensorId, int boxId)
+        public Box GetBoxById(int boxId)
         {
             throw new NotImplementedException();
         }
 
-
-        public MotionSensor GetLastRecordByName(string sensorName, string boxName)
+        public Box GetBoxByName(string boxName)
         {
             throw new NotImplementedException();
         }
 
-
-        public List<MotionSensor> GetRecordsByTime()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertRecord(int boxId, string deviceName, DateTime dateTime)
+        public Box UpdateBox(int boxId, string boxName)
         {
             throw new NotImplementedException();
         }
