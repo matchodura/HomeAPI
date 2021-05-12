@@ -63,6 +63,7 @@ namespace HomeAPI
             services.AddRazorPages();
 
             services.AddScoped<IMotionSensorRepository, MotionSensorRepository>();
+            services.AddScoped<IBoxRepository, BoxRepository()>();
             services.AddHostedService<BoxService>();
         }
 

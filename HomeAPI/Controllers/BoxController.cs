@@ -9,48 +9,26 @@ using System.Threading.Tasks;
 
 namespace HomeAPI.Controllers
 {
-    public class BoxController : Controller, IBoxRepository
+    [Route("api/[controller]")]
+    public class BoxController : Controller
     {
         private readonly HomeContext _context;
+        private readonly IBoxRepository _boxRepository;
 
-        public BoxController(HomeContext context)
+
+        public BoxController(HomeContext context, IBoxRepository boxRepository)
         {         
             _context = context;
+            _boxRepository = boxRepository;
         }
+
 
         public IActionResult Index()
         {
             return View();
         }
 
-        public bool AddNewBox()
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool DeleteBox()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Box> GetAllBoxes()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Box GetBoxById(int boxId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Box GetBoxByName(string boxName)
-        {
-            throw new NotImplementedException();
-        }
-                
-        public Box UpdateBox(Box currentBox)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

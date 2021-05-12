@@ -11,9 +11,9 @@ namespace HomeAPI.Interfaces
         public List<Box> GetAllBoxes();
         public Box GetBoxById(int boxId);
         public Box GetBoxByName(string boxName);
-        public bool AddNewBox();
+        public bool CreateBox();
         public bool DeleteBox();
-        public Box UpdateBox(Box currentBox);
+        public Box UpdateBox(int boxId, string boxName);
 
     }
 }
