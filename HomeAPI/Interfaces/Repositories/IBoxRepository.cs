@@ -11,9 +11,13 @@ namespace HomeAPI.Interfaces
         public List<Box> GetAllBoxes();
         public Box GetBoxById(int boxId);
         public Box GetBoxByName(string boxName);
-        public bool CreateBox();
+        public Box CreateBox(Box box);
         public bool DeleteBox();
-        public Box UpdateBox(int boxId, string boxName);
+        public Box UpdateBox(Box box);
+
+        public List<DHT> GetDHTs();
+
+        public List<MotionSensor> GetMotionSensors();
 
     }
 }

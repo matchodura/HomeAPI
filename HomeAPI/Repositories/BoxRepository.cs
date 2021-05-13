@@ -1,6 +1,8 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Helpers;
 using HomeAPI.Interfaces;
 using HomeAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,43 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public bool CreateBox()
+        public Box CreateBox(Box box)
         {
-            throw new NotImplementedException();
+
+            DateTime currentDateTime = DateTime.Now;
+
+            box.DateCreated = currentDateTime;
+            box.DateModified = currentDateTime;
+                       
+            _context.Add(box);
+            _context.SaveChanges();
+
+            int boxId = box.Id;
+
+            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceId == box.DHTId).ToList();
+            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceId == box.MotionSensorId).ToList();
+
+            foreach (DHT dht in dhts)
+            {
+                dht.BoxId = boxId;
+                dht.DateCreated = currentDateTime;
+                dht.DateModified = currentDateTime;
+                _context.Update(dht);
+                _context.SaveChanges();
+            }
+
+            foreach (MotionSensor motionSensor in motionSensors)
+            {
+                motionSensor.BoxId = boxId;
+                motionSensor.DateCreated = currentDateTime;
+                motionSensor.DateModified = currentDateTime;
+                _context.Update(motionSensor);
+                _context.SaveChanges();
+            }
+
+            _context.SaveChanges();
+
+            return box;
         }
 
         public bool DeleteBox()
@@ -43,9 +79,54 @@ namespace HomeAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public Box UpdateBox(int boxId, string boxName)
+        public List<DHT> GetDHTs()
         {
-            throw new NotImplementedException();
+            return _context.DHTs.Distinct().ToList();
+        }
+
+        public List<MotionSensor> GetMotionSensors()
+        {
+            return _context.MotionSensors.Distinct().ToList();
+        }
+
+        // to be completed
+        public Box UpdateBox(Box box)
+        {
+
+
+            DateTime currentDateTime = DateTime.Now;
+                      
+            box.DateModified = currentDateTime;
+
+            _context.Add(box);
+            _context.SaveChanges();
+
+            int boxId = box.Id;
+
+            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceId == box.DHTId).ToList();
+            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceId == box.MotionSensorId).ToList();
+
+            foreach (DHT dht in dhts)
+            {
+                dht.BoxId = boxId;
+                dht.DateCreated = currentDateTime;
+                dht.DateModified = currentDateTime;
+                _context.Update(dht);
+                _context.SaveChanges();
+            }
+
+            foreach (MotionSensor motionSensor in motionSensors)
+            {
+                motionSensor.BoxId = boxId;
+                motionSensor.DateCreated = currentDateTime;
+                motionSensor.DateModified = currentDateTime;
+                _context.Update(motionSensor);
+                _context.SaveChanges();
+            }
+
+            _context.SaveChanges();
+
+            return box;
         }
     }
 }

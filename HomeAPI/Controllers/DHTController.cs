@@ -79,7 +79,7 @@ namespace HomeAPI.Controllers
 
            //box id will be changed in the future
             dht.BoxId = 1;
-            dht.Date = DateTime.Now;
+            dht.MeasureTime = DateTime.Now;
             dht.CalledBy = "user";
 
             _context.DHTs.Add(dht);
@@ -95,7 +95,7 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> GetLastRecord()
         {
-            var lastRecord = _context.DHTs.OrderByDescending(p => p.Date)
+            var lastRecord = _context.DHTs.OrderByDescending(p => p.MeasureTime)
                        .FirstOrDefault();
 
             return Json(lastRecord);
@@ -108,7 +108,7 @@ namespace HomeAPI.Controllers
         public ActionResult<string> GetAllRecords()
         {
 
-            var allRecords = _context.DHTs.OrderByDescending(p => p.Date).ToList();
+            var allRecords = _context.DHTs.OrderByDescending(p => p.MeasureTime).ToList();
 
             return Json(allRecords);
         }
@@ -126,13 +126,13 @@ namespace HomeAPI.Controllers
 
             if(sortOrder == "ASC")
             {
-                allRecords = _context.DHTs.OrderBy(p => p.Date).ToList();
+                allRecords = _context.DHTs.OrderBy(p => p.MeasureTime).ToList();
             }
 
             else if(sortOrder == "DESC")
             {
 
-                allRecords = _context.DHTs.OrderByDescending(p => p.Date).ToList();
+                allRecords = _context.DHTs.OrderByDescending(p => p.MeasureTime).ToList();
             }
 
             else

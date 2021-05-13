@@ -38,6 +38,12 @@ namespace HomeAPI.Controllers
         public ActionResult<List<MotionSensor>> GetAllRecordsByBoxId(int boxId)
         {          
             var allRecords = _motionSensorRepository.GetAllRecordsByBoxId(boxId);
+
+            if (!allRecords.Any())
+            {
+                return NotFound();
+            }
+
             return Json(allRecords);
         }
 
@@ -49,6 +55,12 @@ namespace HomeAPI.Controllers
         public ActionResult<List<MotionSensor>> GetAllRecordsById(int sensorId)
         {
             var allRecords = _motionSensorRepository.GetAllRecordsById(sensorId);
+
+            if (!allRecords.Any())
+            {
+                return NotFound();
+            }
+
             return Json(allRecords);
         }
 
@@ -60,7 +72,14 @@ namespace HomeAPI.Controllers
         public ActionResult<List<MotionSensor>> GetAllRecordsByName(string sensorName)
         {
             var allRecords = _motionSensorRepository.GetAllRecordsByDeviceName(sensorName);
+
+            if (!allRecords.Any())
+            {                
+                return NotFound();
+            }
+            
             return Json(allRecords);
+            
         }
 
 

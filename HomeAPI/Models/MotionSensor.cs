@@ -19,7 +19,9 @@ namespace HomeAPI.Models
         
         public int? DeviceId { get; set; }
         
-        public DateTime Date { get; set; }     
+        public DateTime MeasureTime { get; set; }     
+        public DateTime? DateModified { get; set; }     
+        public DateTime? DateCreated { get; set; }     
 
     }
 }

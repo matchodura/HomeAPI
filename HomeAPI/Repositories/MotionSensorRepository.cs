@@ -71,7 +71,7 @@ namespace HomeAPI.Repositories
             MotionSensor motionSensor = new MotionSensor();
 
             motionSensor.BoxId = boxId;
-            motionSensor.Date = dateTime;
+            motionSensor.MeasureTime = dateTime;
             motionSensor.Device = deviceName;
             motionSensor.DeviceId = 1234;
 

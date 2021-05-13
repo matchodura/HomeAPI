@@ -97,7 +97,7 @@ namespace HomeAPI.Services
 
             //box id will be changed in the future
             dht.BoxId = 1;
-            dht.Date = DateTime.Now;
+            dht.MeasureTime = DateTime.Now;
             dht.CalledBy = "service";
             return dht;          
         }

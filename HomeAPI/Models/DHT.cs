@@ -11,11 +11,12 @@ namespace HomeAPI.Models
     {
         public int Id { get; set; }
 
-
         [ForeignKey("BoxId")] 
-        public int? BoxId { get; set; }       
+        public int? BoxId { get; set; }
 
-        //public Box Box { get; set; }
+        public virtual Box Box { get; set; }
+
+        public int? DeviceId { get; set; }                
 
         [JsonProperty("device")]
         public string Device { get; set; }
@@ -25,7 +26,9 @@ namespace HomeAPI.Models
 
         [JsonProperty("humidity")]
         public float Humidity { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime MeasureTime{ get; set; }
+        public DateTime? DateModified { get; set; }
+        public DateTime? DateCreated { get; set; }
 
         public string CalledBy { get; set; }
 

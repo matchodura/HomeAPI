@@ -11,6 +11,5 @@ namespace HomeAPI.Interfaces.Repositories
         public List<DHT> GetAllRecords();
         public List<DHT> GetRecordsByTime();
         public DHT GetLastRecord();
-
     }
 }

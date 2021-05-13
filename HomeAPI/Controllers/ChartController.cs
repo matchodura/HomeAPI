@@ -37,13 +37,13 @@ namespace HomeAPI.Controllers
         public static List<ChartModel> GetData(List<DHT> records)
         {
 
-            var lastRecord = records.OrderByDescending(p => p.Date)
+            var lastRecord = records.OrderByDescending(p => p.MeasureTime)
                        .FirstOrDefault();
 
-            var allTemps = records.OrderByDescending(p => p.Date).Select(t => t.Temperature).ToList();
-            var allHumidity = records.OrderByDescending(p => p.Date).Select(t => t.Humidity).ToList();
+            var allTemps = records.OrderByDescending(p => p.MeasureTime).Select(t => t.Temperature).ToList();
+            var allHumidity = records.OrderByDescending(p => p.MeasureTime).Select(t => t.Humidity).ToList();
 
-            var allDates = records.OrderByDescending(p => p.Date).Select(t => t.Date).ToList();
+            var allDates = records.OrderByDescending(p => p.MeasureTime).Select(t => t.MeasureTime).ToList();
 
           
             List<DataModel> dataModelsTemp = new List<DataModel>();
@@ -51,8 +51,8 @@ namespace HomeAPI.Controllers
 
             foreach(var record in records)
             {
-                dataModelsTemp.Add(new DataModel { x = record.Date , y = record.Temperature });
-                dataModelsHum.Add(new DataModel { x = record.Date , y = record.Humidity });
+                dataModelsTemp.Add(new DataModel { x = record.MeasureTime, y = record.Temperature });
+                dataModelsHum.Add(new DataModel { x = record.MeasureTime, y = record.Humidity });
 
             }
 

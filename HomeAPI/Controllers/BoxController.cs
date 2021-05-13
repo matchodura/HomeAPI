@@ -1,6 +1,7 @@
 ﻿using HomeAPI.Data;
 using HomeAPI.Interfaces;
 using HomeAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,53 @@ namespace HomeAPI.Controllers
             return View();
         }
 
+        [HttpPost]
+        [Route("Create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<string> CreateBox([FromBody] Box box)
+        {
 
-       
+            box = _boxRepository.CreateBox(box);
+
+            return Json(box);
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<string> UpdateBox([FromBody] Box box)
+        {
+
+            box = _boxRepository.UpdateBox(box);
+
+            return Json(box);
+        }
+
+        [HttpGet]
+        [Route("GetDHTS")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<DHT>> GetDHTS()
+        {
+
+             List<DHT> dhts = _boxRepository.GetDHTs();
+
+            return Json(dhts);
+        }
+
+        [HttpGet]
+        [Route("GetMotionSensors")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<DHT>> GetMotionSensors()
+        {
+
+            List<MotionSensor> motionSensors = _boxRepository.GetMotionSensors();
+
+            return Json(motionSensors);
+        }
+
     }
 }
