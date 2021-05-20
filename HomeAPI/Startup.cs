@@ -69,6 +69,8 @@ namespace HomeAPI
             services.AddScoped<IDHTRepository, DHTRepository>();
 
             services.AddHostedService<BoxService>();
+            services.AddHostedService<DataUpdateService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +91,7 @@ namespace HomeAPI
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChartHub>("/chart");
-                endpoints.MapHub<MotionHub>("/notify");
+                endpoints.MapHub<MotionHub>("/notify");          
             });
         }
     }

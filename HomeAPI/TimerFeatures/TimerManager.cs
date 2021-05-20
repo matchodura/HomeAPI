@@ -14,7 +14,7 @@ namespace HomeAPI.TimerFeatures
 
         public DateTime TimerStarted { get; set; }
 
-        public TimerManager(Action action)
+        public TimerManager(Action action, int time)
         {
             _action = action;
             //_autoResetEvent = new AutoResetEvent(false);
@@ -22,7 +22,7 @@ namespace HomeAPI.TimerFeatures
             TimerStarted = DateTime.Now;
 
             _timer = new Timer(Execute, null, TimeSpan.Zero,
-               TimeSpan.FromSeconds(30));
+               TimeSpan.FromSeconds(time));
 
 
         }

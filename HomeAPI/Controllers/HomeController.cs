@@ -1,6 +1,9 @@
-﻿using HomeAPI.HubConfig;
+﻿using HomeAPI.Data;
+using HomeAPI.HubConfig;
 using HomeAPI.Interfaces;
+using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
+using HomeAPI.TimerFeatures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -19,7 +22,7 @@ namespace HomeAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class HomeController : Controller
-    {    
+    {             
 
         public IActionResult Index()
         {

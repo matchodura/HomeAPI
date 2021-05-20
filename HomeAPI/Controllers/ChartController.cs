@@ -29,7 +29,7 @@ namespace HomeAPI.Controllers
         public IActionResult Get()
         {
             var records = _context.DHTs.ToList();
-            var timerManager = new TimerManager(() => _hub.Clients.All.SendAsync("transferchartdata", GetData(records)));
+            var timerManager = new TimerManager(() => _hub.Clients.All.SendAsync("transferchartdata", GetData(records)), 30 );
             return Ok(new { Message = "Request completed" });
         }
 

@@ -26,7 +26,7 @@ namespace HomeAPI.Repositories
 
         public DHT GetLastRecord()
         {
-            throw new NotImplementedException();
+            return _context.DHTs.OrderByDescending(c => c.Id).First();
         }
 
         public List<DHT> GetRecordsByTime()

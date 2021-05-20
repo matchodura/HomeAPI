@@ -83,10 +83,10 @@ namespace HomeAPI.Controllers
         }
 
 
-        [Route("Motion")]
+        [Route("MotionOn")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<string>> Motion(string deviceName, int boxId)
+        public async Task<ActionResult<string>> MotionOn(string deviceName, int boxId)
         {
             string responseMessage = "";
 
@@ -97,10 +97,33 @@ namespace HomeAPI.Controllers
            
             _motionSensorRepository.InsertRecord(boxId, deviceName, dateTime);
 
-            await _hubContext.Clients.All.BroadcastMessage(responseMessage);
+
+            await _hubContext.Clients.All.MotionOn(responseMessage);
+
+           
 
             return responseMessage;
         }
+
+
+        [Route("MotionOff")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<string>> MotionOff(string deviceName, int boxId)
+        {
+            string responseMessage = "";
+
+            DateTime dateTime = DateTime.Now;
+
+            responseMessage = $"{deviceName} {dateTime}";
+                      
+
+            await _hubContext.Clients.All.MotionOff($"{deviceName} motion has stopped!");
+
+            return responseMessage;
+        }
+
+
 
 
         /// <summary>
@@ -110,14 +133,16 @@ namespace HomeAPI.Controllers
         [Route("ChangeUrl")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ChangeURL(string port)
+        public async Task<IActionResult> ChangeURL(string port, string motionType)
         {
             string responseMessage = "";
-            string clientAdress = "http://192.168.1.21:";
+            string clientAdress = "http://192.168.1.21";
+            string serverAdress = "http://192.168.1.19:";
             int timeout = 10;
 
+
             //URL query, as asp.net sometimes changes port number during execution/rerun todo to make it automatic
-            string methodURL = clientAdress + port + "/api/motion/motion";
+            string methodURL = serverAdress + port + "/api/motion/"+motionType;
 
             var client = new HttpClient()
             {
@@ -129,7 +154,7 @@ namespace HomeAPI.Controllers
             {
                 StringContent httpContent = new StringContent(methodURL, System.Text.Encoding.UTF8, "text/plain");
 
-                HttpResponseMessage response = await client.PostAsync(clientAdress + "/changeurl", httpContent);
+                HttpResponseMessage response = await client.PostAsync(clientAdress + "/changeurl/"+motionType, httpContent);
                 response.EnsureSuccessStatusCode();
                 responseMessage = await response.Content.ReadAsStringAsync();
 

@@ -33,8 +33,8 @@ namespace HomeAPI.Services
         {
             _logger.LogInformation("Timed Hosted Service running.");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromMinutes(15));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero,              
+                TimeSpan.FromMinutes(1));
 
             return Task.CompletedTask;
         }
@@ -101,8 +101,7 @@ namespace HomeAPI.Services
             dht.CalledBy = "service";
             return dht;          
         }
-
-        
+               
 
         public Task StopAsync(CancellationToken stoppingToken)
         {
