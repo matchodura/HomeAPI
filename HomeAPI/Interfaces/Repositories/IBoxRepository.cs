@@ -15,7 +15,8 @@ namespace HomeAPI.Interfaces
         public bool DeleteBox();
         public Box UpdateBox(Box box);
 
-        public List<DHT> GetDHTs();
+        public List<DHT> GetAllValues();
+        public List<DHT> GetValuesByDate(TimeFilter timeFilter);
 
         public List<MotionSensor> GetMotionSensors();
 

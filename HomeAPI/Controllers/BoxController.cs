@@ -59,11 +59,22 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<DHT>> GetDHTS()
         {
-
-             List<DHT> dhts = _boxRepository.GetDHTs();
+            List<DHT> dhts = _boxRepository.GetAllValues();
 
             return Json(dhts);
         }
+
+        [HttpGet]
+        [Route("GetDHTS/Filtered")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<DHT>> GetDHTS([FromBody] TimeFilter timeFilter)
+        {
+            List<DHT> dhts = _boxRepository.GetValuesByDate(timeFilter);
+
+            return Json(dhts);
+        }
+
 
         [HttpGet]
         [Route("GetMotionSensors")]

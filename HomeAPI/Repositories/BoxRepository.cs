@@ -79,9 +79,14 @@ namespace HomeAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public List<DHT> GetDHTs()
+        public List<DHT> GetAllValues()
         {
             return _context.DHTs.Distinct().ToList();
+        }
+        public List<DHT> GetValuesByDate(TimeFilter timeFilter)
+        {
+
+            return _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter).ToList(); ;
         }
 
         public List<MotionSensor> GetMotionSensors()
@@ -128,5 +133,7 @@ namespace HomeAPI.Repositories
 
             return box;
         }
+
+      
     }
 }
