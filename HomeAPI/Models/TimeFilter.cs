@@ -9,5 +9,6 @@ namespace HomeAPI.Models
     {
         public DateTime DateBefore { get; set; }
         public DateTime DateAfter { get; set; }
+        public string SortOrder { get; set; }
     }
 }

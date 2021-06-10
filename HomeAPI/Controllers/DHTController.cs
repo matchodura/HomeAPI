@@ -102,47 +102,29 @@ namespace HomeAPI.Controllers
         }
 
 
-        [Route("GetAllRecords")]
+        [HttpGet]
+        [Route("GetDHTS")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> GetAllRecords()
+        public ActionResult<List<DHT>> GetDHTS()
         {
+            List<DHT> dhts = _dhtRepository.GetAllValues();
 
-            var allRecords = _context.DHTs.OrderByDescending(p => p.MeasureTime).ToList();
-
-            return Json(allRecords);
+            return Json(dhts);
         }
-                
 
-        [Route("GetRecordsByTime")]
+
+        [HttpGet]
+        [Route("GetDHTS/Filtered")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> GetRecordsByTime([FromBody] Filter filter)
+        public ActionResult<List<DHT>> GetDHTS([FromBody] TimeFilter timeFilter)
         {
+            List<DHT> dhts = _dhtRepository.GetValuesByDate(timeFilter);
 
-            string sortOrder = filter.SortOrder.ToUpper();
-            List<DHT> allRecords = new List<DHT>();
-
-
-            if(sortOrder == "ASC")
-            {
-                allRecords = _context.DHTs.OrderBy(p => p.MeasureTime).ToList();
-            }
-
-            else if(sortOrder == "DESC")
-            {
-
-                allRecords = _context.DHTs.OrderByDescending(p => p.MeasureTime).ToList();
-            }
-
-            else
-            {
-
-            }
-                        
-
-            return Json(allRecords);
+            return Json(dhts);
         }
+
 
         public string GetCurrentValue()
         {

@@ -13,11 +13,7 @@ namespace HomeAPI.Interfaces
         public Box GetBoxByName(string boxName);
         public Box CreateBox(Box box);
         public bool DeleteBox();
-        public Box UpdateBox(Box box);
-
-        public List<DHT> GetAllValues();
-        public List<DHT> GetValuesByDate(TimeFilter timeFilter);
-
+        public Box UpdateBox(Box box);     
         public List<MotionSensor> GetMotionSensors();
 
     }

@@ -18,9 +18,9 @@ namespace HomeAPI.Tests
             //Assert
             var mockRepo = new Mock<IBoxRepository>();
             var context = new Mock<HomeContext>();
-            var boxController = new BoxController(context.Object, mockRepo.Object);
+          //  var boxController = new BoxController(context.Object, mockRepo.Object);
 
-            var result =  boxController.GetDHTS();
+           // var result =  boxController.GetDHTS();
         }
     }
 }

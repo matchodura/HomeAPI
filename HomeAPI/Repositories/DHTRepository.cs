@@ -29,9 +29,31 @@ namespace HomeAPI.Repositories
             return _context.DHTs.OrderByDescending(c => c.Id).First();
         }
 
-        public List<DHT> GetRecordsByTime()
+        public List<DHT> GetAllValues()
         {
-            throw new NotImplementedException();
+            return _context.DHTs.Distinct().ToList();
+        }
+
+        public List<DHT> GetValuesByDate(TimeFilter timeFilter)
+        {
+            string sortOrder = timeFilter.SortOrder.ToUpper();
+            List<DHT> results = new List<DHT>();
+
+            if (sortOrder == "DESC")
+            {
+                results = _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                                       .OrderByDescending(p => p.MeasureTime)
+                                       .ToList();
+            }
+            else
+            {
+                results = _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                                       .OrderBy(p => p.MeasureTime)
+                                       .ToList();
+            }
+          
+            return results;
+           
         }
     }
 }

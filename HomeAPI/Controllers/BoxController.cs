@@ -15,8 +15,7 @@ namespace HomeAPI.Controllers
     {
         private readonly HomeContext _context;
         private readonly IBoxRepository _boxRepository;
-
-
+     
         public BoxController(HomeContext context, IBoxRepository boxRepository)
         {         
             _context = context;
@@ -35,9 +34,7 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> CreateBox([FromBody] Box box)
         {
-
             box = _boxRepository.CreateBox(box);
-
             return Json(box);
         }
 
@@ -47,34 +44,9 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> UpdateBox([FromBody] Box box)
         {
-
             box = _boxRepository.UpdateBox(box);
-
             return Json(box);
-        }
-
-        [HttpGet]
-        [Route("GetDHTS")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHT>> GetDHTS()
-        {
-            List<DHT> dhts = _boxRepository.GetAllValues();
-
-            return Json(dhts);
-        }
-
-        [HttpGet]
-        [Route("GetDHTS/Filtered")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHT>> GetDHTS([FromBody] TimeFilter timeFilter)
-        {
-            List<DHT> dhts = _boxRepository.GetValuesByDate(timeFilter);
-
-            return Json(dhts);
-        }
-
+        }    
 
         [HttpGet]
         [Route("GetMotionSensors")]
@@ -82,9 +54,7 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<DHT>> GetMotionSensors()
         {
-
             List<MotionSensor> motionSensors = _boxRepository.GetMotionSensors();
-
             return Json(motionSensors);
         }
 

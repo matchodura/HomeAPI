@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace HomeAPI.Interfaces.Repositories
 {
     public interface IDHTRepository
-    {
-        public List<DHT> GetAllRecords();
-        public List<DHT> GetRecordsByTime();
+    {      
+        public List<DHT> GetAllValues();
+        public List<DHT> GetValuesByDate(TimeFilter timeFilter);
         public DHT GetLastRecord();
     }
 }

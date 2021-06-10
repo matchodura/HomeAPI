@@ -14,7 +14,6 @@ namespace HomeAPI.Repositories
     {
         private readonly HomeContext _context;
 
-
         public BoxRepository(HomeContext context)
         {
             _context = context;
@@ -77,17 +76,7 @@ namespace HomeAPI.Repositories
         public Box GetBoxByName(string boxName)
         {
             throw new NotImplementedException();
-        }
-
-        public List<DHT> GetAllValues()
-        {
-            return _context.DHTs.Distinct().ToList();
-        }
-        public List<DHT> GetValuesByDate(TimeFilter timeFilter)
-        {
-
-            return _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter).ToList(); ;
-        }
+        }            
 
         public List<MotionSensor> GetMotionSensors()
         {
