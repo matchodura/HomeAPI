@@ -114,7 +114,7 @@ namespace HomeAPI.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetDHTS/Filtered")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
