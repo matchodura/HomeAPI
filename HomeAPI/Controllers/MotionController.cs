@@ -136,8 +136,8 @@ namespace HomeAPI.Controllers
         public async Task<IActionResult> ChangeURL(string port, string motionType)
         {
             string responseMessage = "";
-            string clientAdress = "http://192.168.1.21";
-            string serverAdress = "http://192.168.1.19:";
+            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
+            string serverAdress = Constants.Constants.BACKEND_IP_ADDRESS;
             int timeout = 10;
 
 

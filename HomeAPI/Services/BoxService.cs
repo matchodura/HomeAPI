@@ -65,7 +65,7 @@ namespace HomeAPI.Services
         public async Task<DHT> GetBoxData()
         {
             string responseMessage = "";
-            string clientAdress = "http://192.168.1.21";
+            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
             int timeout = 10;
 
             var client = new HttpClient()
