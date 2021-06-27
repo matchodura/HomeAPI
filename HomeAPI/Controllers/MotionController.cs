@@ -83,7 +83,7 @@ namespace HomeAPI.Controllers
         }
 
 
-        [Route("MotionOn")]
+        [Route("on")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<string>> MotionOn(string deviceName, int boxId)
@@ -106,7 +106,7 @@ namespace HomeAPI.Controllers
         }
 
 
-        [Route("MotionOff")]
+        [Route("off")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<string>> MotionOff(string deviceName, int boxId)
