@@ -33,8 +33,9 @@ namespace HomeAPI.Services
         {
             _logger.LogInformation("Timed Hosted Service running.");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,              
-                TimeSpan.FromMinutes(1));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero,            
+          
+                TimeSpan.FromMinutes(15));
 
             return Task.CompletedTask;
         }
@@ -46,7 +47,7 @@ namespace HomeAPI.Services
                 var dbContext = scope.ServiceProvider.GetRequiredService<HomeContext>();
 
                 try
-                {
+                { 
                     DHT record = await GetBoxData();
                     dbContext.Add(record);
                     dbContext.SaveChanges();

@@ -125,11 +125,53 @@ namespace HomeAPI.Controllers
             return Json(dhts);
         }
 
-
-        public string GetCurrentValue()
+        [HttpGet]
+        [Route("CurrentValues")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> GetCurrentValue()
         {
-            throw new NotImplementedException();
+            string responseMessage = "";
+            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
+            int timeout = 10;
+
+            var client = new HttpClient()
+            {
+                BaseAddress = new Uri(clientAdress),
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            DHT dht = new DHT();
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values");
+                response.EnsureSuccessStatusCode();
+                responseMessage = await response.Content.ReadAsStringAsync();
+
+                if (response != null)
+                {
+
+                    dht = JsonConvert.DeserializeObject<DHT>(responseMessage);
+
+
+                }
+
+            }
+
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+
+                responseMessage = e.Message;
+
+            }
+
+            dht.MeasureTime = DateTime.Now;
+            return Json(dht);
         }
-             
+
+       
     }
 }

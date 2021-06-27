@@ -52,9 +52,17 @@ namespace HomeAPI
             
 
             services.AddDbContext<HomeContext>(options => options
-                .UseMySql("Server=localhost; Database=homeapi;User=homeapi;Password=homeapi;",
+                //.UseMySql("Server=192.168.0.183; Port=3306; Database=homeapi; User=username;Password=password;",
+                .UseMySql("Server=192.168.0.183; Port=3306; Database=homeapi; User=pi;Password=pi;",
                     mysqlOptions =>
-                        mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 4, 6), ServerType.MariaDb))));
+                        mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 3, 27), ServerType.MariaDb))
+                        
+                        
+                        )
+                
+                
+                
+                );
 
             services.AddSignalR();
 
@@ -84,6 +92,7 @@ namespace HomeAPI
           
             app.UseRouting();
             app.UseCors("CorsPolicy");
+          
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

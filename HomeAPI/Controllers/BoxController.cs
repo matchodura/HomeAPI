@@ -38,6 +38,7 @@ namespace HomeAPI.Controllers
             return Json(box);
         }
 
+
         [HttpPut]
         [Route("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
