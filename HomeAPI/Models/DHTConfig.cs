@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 namespace HomeAPI.Models
 {
     public class DHTConfig
-    {
-     
+    {     
         public int CurrentId { get; set; }
 
         public int NewId { get; set; }

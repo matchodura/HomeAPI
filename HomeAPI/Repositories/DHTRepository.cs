@@ -59,17 +59,7 @@ namespace HomeAPI.Repositories
 
         public async Task<List<DHT>> UpdateSettings(int oldId, DHTConfig newDHT)
         {
-
             var dHTs = GetRowsBySensorId(oldId);
-
-
-            //DHT dht = new DHT()
-            //{
-            //    BoxId = newDHT.BoxId,
-            //    DeviceId = newDHT.NewId,
-            //    Device = newDHT.Device,
-            //    DateModified = newDHT.DateModified
-            //};
 
             foreach (var oldDht in dHTs)
             {

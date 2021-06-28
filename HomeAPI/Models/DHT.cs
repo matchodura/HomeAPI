@@ -31,7 +31,6 @@ namespace HomeAPI.Models
         public DateTime? DateCreated { get; set; }
 
         public string CalledBy { get; set; }
-
      
     }
 }

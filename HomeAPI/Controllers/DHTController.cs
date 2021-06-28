@@ -178,7 +178,8 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<DHT> ChangeConfig([FromBody] DHTConfig newDHT)
         {
-            int oldId = newDHT.CurrentId;            
+            int oldId = newDHT.CurrentId; 
+            //TODO wysylanie do node
             var updatedDHT = _dhtRepository.UpdateSettings(oldId, newDHT);
             return Json(updatedDHT);
         }
