@@ -1,6 +1,7 @@
 ﻿using HomeAPI.Data;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,43 @@ namespace HomeAPI.Repositories
           
             return results;
            
+        }
+
+        public async Task<List<DHT>> UpdateSettings(int oldId, DHTConfig newDHT)
+        {
+
+            var dHTs = GetRowsBySensorId(oldId);
+
+
+            //DHT dht = new DHT()
+            //{
+            //    BoxId = newDHT.BoxId,
+            //    DeviceId = newDHT.NewId,
+            //    Device = newDHT.Device,
+            //    DateModified = newDHT.DateModified
+            //};
+
+            foreach (var oldDht in dHTs)
+            {
+                DHT dht = new DHT();
+                dht = oldDht;
+                dht.BoxId = newDHT.BoxId;
+                dht.DeviceId = newDHT.NewId;
+                dht.Device = newDHT.Device;
+                dht.DateModified = newDHT.DateModified;
+
+                _context.DHTs.Update(dht);
+                _context.SaveChanges();
+            }
+        
+
+            var results = await _context.DHTs.ToListAsync();
+            return results;
+        }
+
+        public List<DHT> GetRowsBySensorId(int id)
+        {
+            return _context.DHTs.Where(x => x.DeviceId == id).ToList();
         }
     }
 }

@@ -172,6 +172,16 @@ namespace HomeAPI.Controllers
             return Json(dht);
         }
 
+        [HttpPost]
+        [Route("config")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<DHT> ChangeConfig([FromBody] DHTConfig newDHT)
+        {
+            int oldId = newDHT.CurrentId;            
+            var updatedDHT = _dhtRepository.UpdateSettings(oldId, newDHT);
+            return Json(updatedDHT);
+        }
 
 
     }
