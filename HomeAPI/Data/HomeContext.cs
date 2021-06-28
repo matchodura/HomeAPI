@@ -20,6 +20,7 @@ namespace HomeAPI.Data
         public DbSet<Box> Boxes { get; set; }
 
         public DbSet<MotionSensor> MotionSensors { get; set; }
+        public DbSet<Room> Rooms { get; set; }
       
     }
 }
