@@ -58,22 +58,17 @@ namespace HomeAPI.Controllers
                 responseMessage = await response.Content.ReadAsStringAsync();
 
                 if (response != null)
-                {                   
-
-                    dht = JsonConvert.DeserializeObject<DHT>(responseMessage);
-
-                   
+                {                 
+                    dht = JsonConvert.DeserializeObject<DHT>(responseMessage);                                       
                 }
 
             }
-
             catch (HttpRequestException e)
             {
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
 
-                responseMessage = e.Message;
-                                
+                responseMessage = e.Message;                                
             }
 
 

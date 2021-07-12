@@ -35,6 +35,7 @@ namespace HomeAPI.Services
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero,            
           
+                //TimeSpan.FromMinutes(15));
                 TimeSpan.FromMinutes(15));
 
             return Task.CompletedTask;
@@ -48,8 +49,11 @@ namespace HomeAPI.Services
 
                 try
                 { 
-                    DHT record = await GetBoxData();
-                    dbContext.Add(record);
+                    DHT dhtRecord = await GetBoxData();
+                    dbContext.Add(dhtRecord);
+
+                    //LightSensor lightSensorRecord = await GetLightSensorData();
+                    //dbContext.Add(lightSensorRecord);
                     dbContext.SaveChanges();
 
                 }
@@ -102,7 +106,48 @@ namespace HomeAPI.Services
             dht.CalledBy = "service";
             return dht;          
         }
-               
+
+
+        public async Task<LightSensor> GetLightSensorData()
+        {
+            string responseMessage = "";
+            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
+            int timeout = 10;
+
+            var client = new HttpClient()
+            {
+                BaseAddress = new Uri(clientAdress),
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            LightSensor lightSensor = new LightSensor();
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(clientAdress + "/light");
+                response.EnsureSuccessStatusCode();
+                responseMessage = await response.Content.ReadAsStringAsync();
+
+                if (response != null)
+                {
+                    lightSensor = JsonConvert.DeserializeObject<LightSensor>(responseMessage);
+                }
+
+            }
+
+            catch (HttpRequestException e)
+            {
+                responseMessage = e.Message;
+            }
+
+
+            //box id will be changed in the future
+            lightSensor.BoxId = 1;
+            lightSensor.MeasureTime = DateTime.Now;
+            lightSensor.CalledBy = "service";
+            return lightSensor;
+        }
+
 
         public Task StopAsync(CancellationToken stoppingToken)
         {

@@ -70,6 +70,7 @@ namespace HomeAPI
             services.AddScoped<IBoxRepository, BoxRepository>();
             services.AddScoped<IDHTRepository, DHTRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<ILightSensorRepository, LightSensorRepository>();
 
             services.AddHostedService<BoxService>();
             services.AddHostedService<DataUpdateService>();

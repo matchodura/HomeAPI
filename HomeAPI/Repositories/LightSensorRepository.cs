@@ -9,78 +9,77 @@ using System.Threading.Tasks;
 
 namespace HomeAPI.Repositories
 {
-    public class DHTRepository : IDHTRepository
+    public class LightSensorRepository : ILightSensorRepository
     {
-
         private readonly HomeContext _context;
 
-        public DHTRepository(HomeContext context)
+        public LightSensorRepository(HomeContext context)
         {
             _context = context;
         }
 
-        public List<DHT> GetAllRecords()
+        public List<LightSensor> GetAllRecords()
         {
             throw new NotImplementedException();
         }
 
-        public DHT GetLastRecord()
+        public LightSensor GetLastRecord()
         {
-            return _context.DHTs.OrderByDescending(c => c.Id).First();
+            return _context.LightSensors.OrderByDescending(c => c.Id).First();
         }
 
-        public List<DHT> GetAllValues()
+        public List<LightSensor> GetAllValues()
         {
-            return _context.DHTs.Distinct().ToList();
+            return _context.LightSensors.Distinct().ToList();
         }
 
-        public List<DHT> GetValuesByDate(TimeFilter timeFilter)
+        public List<LightSensor> GetValuesByDate(TimeFilter timeFilter)
         {
             string sortOrder = timeFilter.SortOrder.ToUpper();
-            List<DHT> results = new List<DHT>();
+            List<LightSensor> results = new List<LightSensor>();
 
             if (sortOrder == "DESC")
             {
-                results = _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results = _context.LightSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderByDescending(p => p.MeasureTime)
                                        .ToList();
             }
             else
             {
-                results = _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results = _context.LightSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderBy(p => p.MeasureTime)
                                        .ToList();
             }
-          
+
             return results;
-           
+
         }
 
-        public async Task<List<DHT>> UpdateSettings(int oldId, DHTConfig newDHT)
+        public async Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
         {
             var dHTs = GetRowsBySensorId(oldId);
 
             foreach (var oldDht in dHTs)
             {
-                DHT dht = new DHT();
+                LightSensor dht = new LightSensor();
                 dht = oldDht;
                 dht.BoxId = newDHT.BoxId;
                 dht.DeviceId = newDHT.NewId;
                 dht.Device = newDHT.Device;
                 dht.DateModified = newDHT.DateModified;
 
-                _context.DHTs.Update(dht);
+                _context.LightSensors.Update(dht);
                 _context.SaveChanges();
             }
-        
 
-            var results = await _context.DHTs.ToListAsync();
+
+            var results = await _context.LightSensors.ToListAsync();
             return results;
         }
 
-        public List<DHT> GetRowsBySensorId(int id)
+        public List<LightSensor> GetRowsBySensorId(int id)
         {
-            return _context.DHTs.Where(x => x.DeviceId == id).ToList();
+            return _context.LightSensors.Where(x => x.DeviceId == id).ToList();
         }
     }
 }

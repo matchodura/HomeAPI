@@ -21,6 +21,7 @@ namespace HomeAPI.Data
 
         public DbSet<MotionSensor> MotionSensors { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<LightSensor> LightSensors { get; set; }
       
     }
 }
