@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace HomeAPI.Controllers
@@ -57,7 +58,7 @@ namespace HomeAPI.Controllers
         {
             List<MotionSensor> motionSensors = _boxRepository.GetMotionSensors();
             return Json(motionSensors);
-        }
+        }             
 
     }
 }

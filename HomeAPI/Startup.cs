@@ -52,7 +52,7 @@ namespace HomeAPI
             
 
             services.AddDbContext<HomeContext>(options => options           
-                .UseMySql("Server=192.168.0.183; Port=3306; Database=homeapi; User=pi;Password=pi;",
+                .UseMySql("Server=192.168.11.27; Port=3306; Database=homeapi; User=test2;Password=test;",
                     mysqlOptions =>
                         mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 3, 27), ServerType.MariaDb))                      
                         

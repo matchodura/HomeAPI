@@ -13,6 +13,7 @@ namespace HomeAPI.Models
         [JsonProperty("room")]
         public string Name { get; set; }
 
+        [JsonProperty("boxid")]
         public int BoxId { get; set; }
 
         public string CreatedBy { get; set; }
@@ -20,6 +21,8 @@ namespace HomeAPI.Models
         public DateTime DateModified { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public DateTime MeasureTime { get; set; }
 
         [JsonProperty("temp")]
         public string Temperature { get; set; }
@@ -33,6 +36,11 @@ namespace HomeAPI.Models
 
         public string AlarmMessage { get; set; }
 
+        [JsonProperty("calledby")]
+        public string CalledBy { get; set; }
+
+        [JsonProperty("device")]
+        public string DeviceName { get; set; }
         //public virtual ICollection<DHT> DHTs { get; set; }
 
         //public ICollection<MotionSensor> MotionSensors { get; set; }
