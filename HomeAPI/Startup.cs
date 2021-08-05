@@ -49,15 +49,19 @@ namespace HomeAPI
                          .AllowCredentials());
             });
 
-            
 
-            services.AddDbContext<HomeContext>(options => options           
-                .UseMySql("Server=192.168.11.27; Port=3306; Database=homeapi; User=test2;Password=test;",
-                    mysqlOptions =>
-                        mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 3, 27), ServerType.MariaDb))                      
-                        
-                        )                
-                );
+
+            //services.AddDbContext<HomeContext>(options => options
+            //    .UseMySql("Server=192.168.1.181; Port=3306; Database=homeapi; User=test2;Password=test;",
+            //        mysqlOptions =>
+            //            mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 3, 27), ServerType.MariaDb))
+
+            //            )
+            //    );
+
+            services.AddDbContext<HomeContext>(options => options
+                 .UseMySQL("Server=192.168.1.181; Port=3306; Database=homeapi; User=test2;Password=test;SSL Mode=None;"));
+          
 
             services.AddSignalR();
 
@@ -66,6 +70,7 @@ namespace HomeAPI
           
             services.AddRazorPages();
 
+            services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<IMotionSensorRepository, MotionSensorRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
             services.AddScoped<IDHTRepository, DHTRepository>();

@@ -123,7 +123,7 @@ namespace HomeAPI.Controllers
 
             if (alreadyExists)
             {
-                room.Id = _context.Rooms.SingleOrDefault(x => x.Name == room.Name).Id;
+                room.ID = _context.Rooms.SingleOrDefault(x => x.Name == room.Name).ID;
                 _context.Rooms.Update(room);
                 _context.SaveChanges();
             }

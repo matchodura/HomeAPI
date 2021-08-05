@@ -8,39 +8,44 @@ namespace HomeAPI.Models
 {
     public class Room
     {
-        public int Id { get; set; }
+        [JsonProperty("roomId")]      
+        public int ID { get; set; }
 
-        [JsonProperty("room")]
+        [JsonProperty("roomName")]
         public string Name { get; set; }
 
-        [JsonProperty("boxid")]
+        [JsonProperty("boxId")]
         public int BoxId { get; set; }
 
-        public string CreatedBy { get; set; }
+        [JsonProperty("createdBy")]
+        public DateTime CreatedBy { get; set; }
 
+
+        [JsonProperty("calledBy")]
+        public string CalledBy { get; set; }
+
+        [JsonProperty("dateModified")]
         public DateTime DateModified { get; set; }
 
+        [JsonProperty("dateCreated")]
         public DateTime DateCreated { get; set; }
 
+        [JsonProperty("measureTime")]
         public DateTime MeasureTime { get; set; }
 
-        [JsonProperty("temp")]
+        [JsonProperty("temperature")]
         public string Temperature { get; set; }
 
         [JsonProperty("humidity")]
         public string Humidity { get; set; }
 
         [JsonProperty("luxes")]
-        public float Luxes { get; set; }
-        public DateTime LastAlarm { get; set; }
+        public float Luxes { get; set; }     
 
+        [JsonProperty("aAlarmMessage")]
         public string AlarmMessage { get; set; }
 
-        [JsonProperty("calledby")]
-        public string CalledBy { get; set; }
-
-        [JsonProperty("device")]
-        public string DeviceName { get; set; }
+        public virtual Home Home { get; set; }
         //public virtual ICollection<DHT> DHTs { get; set; }
 
         //public ICollection<MotionSensor> MotionSensors { get; set; }
