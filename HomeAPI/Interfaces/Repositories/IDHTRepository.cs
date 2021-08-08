@@ -11,7 +11,7 @@ namespace HomeAPI.Interfaces.Repositories
         public List<DHTSensor> GetAllValues();
         public List<DHTSensor> GetValuesByDate(TimeFilter timeFilter);
         public DHTSensor GetLastRecord();
-        public Task<List<DHTSensor> UpdateSettings(int oldId, DHTConfig newDHT);
+        public Task<List<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT);
         public List<DHTSensor> GetRowsBySensorId(int id);
     }
 }
