@@ -15,17 +15,20 @@ namespace HomeAPI.Models
 
         [JsonProperty("boxName")]
         public string BoxName { get; set; }
-        
+
+        [JsonProperty("roomId")]
         public int RoomId { get; set; }
-                      
-        public string CreatedBy { get; set; }
+
+        public string CreatedBy { get; set; } = Constants.Constants.CREATEDBY;
 
         public DateTime DateModified { get; set; }
 
         public DateTime DateCreated { get; set; }
 
+        [JsonProperty("dhtID")]
         public int DHTId { get; set; }
 
+        [JsonProperty("motionSensorID")]
         public int MotionSensorId { get; set; }
 
         public virtual Room Rooms { get; set; }
