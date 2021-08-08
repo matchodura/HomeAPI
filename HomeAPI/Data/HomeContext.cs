@@ -13,8 +13,6 @@ namespace HomeAPI.Data
 
         public DbSet<Bulb> Bulbs { get; set; }
 
-        //public DbSet<BulbHistory> BulbsHistory { get; set; }
-
         public DbSet<DHTSensorsensor> DHTSensors { get; set; }
 
         public DbSet<Box> Boxes { get; set; }
@@ -26,11 +24,7 @@ namespace HomeAPI.Data
         public DbSet<LightSensor> LightSensors { get; set; }
 
         public DbSet<Home> Home { get; set; }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseMySQL("Server=192.168.1.181; Port=3306; Database=homeapi; User=test2;Password=test;");
-        //}
+              
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +43,25 @@ namespace HomeAPI.Data
                 entity.HasOne(d => d.Home)
                   .WithMany(p => p.Rooms);
             });
+
+            #region HomeSeed
+            modelBuilder.Entity<Home>().HasData(
+                new Home { ID = 1, Name = "Klatka" },
+                new Home { ID = 2, Name = "Korytarz_parter" },
+                new Home { ID = 3, Name = "Kuchnia_parter" },
+                new Home { ID = 4, Name = "DuzyPokoj_parter" },
+                new Home { ID = 5, Name = "MalyPokoj_parter" },
+                new Home { ID = 6, Name = "Lazienka_parter" },
+                new Home { ID = 7, Name = "Sypialnia_parter" },
+                new Home { ID = 8, Name = "Lazienka_pietro" },
+                new Home { ID = 9, Name = "Korytarz_pietro" },
+                new Home { ID = 10, Name = "DuzyPokoj_pietro" },
+                new Home { ID = 11, Name = "Sypialnia_pietro" },
+                new Home { ID = 12, Name = "PokojMateusza_pietro" },
+                new Home { ID = 13, Name = "Strych" },
+                new Home { ID = 14, Name = "Piwnica" }
+                );
+            #endregion
         }
 
     }
