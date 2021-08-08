@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HomeAPI.Models
 {
-    public class DHTSensorsensor
+    public class DHTSensor
     {
         public int ID { get; set; }
 

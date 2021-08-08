@@ -19,22 +19,22 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public List<DHTSensorsensor> GetAllRecords()
+        public List<DHTSensor> GetAllRecords()
         {
             throw new NotImplementedException();
         }
 
-        public DHTSensorsensor GetLastRecord()
+        public DHTSensor GetLastRecord()
         {
             return _context.DHTSensors.OrderByDescending(c => c.ID).First();
         }
 
-        public List<DHTSensorsensor> GetAllValues()
+        public List<DHTSensor> GetAllValues()
         {
             return _context.DHTSensors.Distinct().ToList();
         }
 
-        public List<DHTSensorsensor> GetValuesByDate(TimeFilter timeFilter)
+        public List<DHTSensor> GetValuesByDate(TimeFilter timeFilter)
         {
             string sortOrder = timeFilter.SortOrder.ToUpper();
             List<DHTSensorsensor> results = new List<DHTSensorsensor>();
@@ -56,13 +56,13 @@ namespace HomeAPI.Repositories
            
         }
 
-        public async Task<List<DHTSensorsensor>> UpdateSettings(int oldId, DHTConfig newDHT)
+        public async Task<List<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
         {
             var DHTSensors = GetRowsBySensorId(oldId);
 
             foreach (var oldDht in DHTSensors)
             {
-                DHTSensorsensor dht = new DHTSensorsensor();
+                DHTSensor dht = new DHTSensor();
                 dht = oldDht;
                 dht.BoxId = newDHT.BoxId;
                 dht.DeviceID = newDHT.NewId;
@@ -78,7 +78,7 @@ namespace HomeAPI.Repositories
             return results;
         }
 
-        public List<DHTSensorsensor> GetRowsBySensorId(int id)
+        public List<DHTSensor> GetRowsBySensorId(int id)
         {
             return _context.DHTSensors.Where(x => x.DeviceID == id).ToList();
         }

@@ -13,7 +13,7 @@ namespace HomeAPI.Data
 
         public DbSet<Bulb> Bulbs { get; set; }
 
-        public DbSet<DHTSensorsensor> DHTSensors { get; set; }
+        public DbSet<DHTSensor> DHTSensors { get; set; }
 
         public DbSet<Box> Boxes { get; set; }
 
