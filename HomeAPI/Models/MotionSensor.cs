@@ -9,19 +9,26 @@ namespace HomeAPI.Models
 {
     public class MotionSensor
     {     
-        public int Id { get; set; }
 
-        [ForeignKey("BoxId")]
+        public int ID { get; set; }
+
+        [ForeignKey("boxId")]
         public int? BoxId { get; set; }
       
         [JsonProperty("device")]
-        public string Device { get; set; }       
-        
-        public int? DeviceId { get; set; }
-        
-        public DateTime MeasureTime { get; set; }     
-        public DateTime? DateModified { get; set; }     
-        public DateTime? DateCreated { get; set; }     
+        public string Device { get; set; }
 
+        public int? DeviceID { get; set; }
+
+        [JsonProperty("alarmMessage")]
+        public string AlarmMessage { get; set; }
+
+        public DateTime MeasureTime { get; set; } 
+        
+        public DateTime? DateModified { get; set; }   
+        
+        public DateTime? DateCreated { get; set; }
+
+        public virtual Box Box { get; set; }
     }
 }

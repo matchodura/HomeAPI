@@ -9,25 +9,27 @@ namespace HomeAPI.Models
 {
     public class LightSensor
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
 
-        [ForeignKey("BoxId")]
-        public int? BoxId { get; set; }
-
-        public virtual Box Box { get; set; }
-
-        public int? DeviceId { get; set; }
+        [ForeignKey("boxId")]
+        public int? BoxId { get; set; }           
 
         [JsonProperty("device")]
         public string Device { get; set; }
 
+        public int? DeviceID { get; set; }
+
         [JsonProperty("luxes")]
         public float Luxes { get; set; }
-        
-        public DateTime MeasureTime { get; set; }
-        public DateTime? DateModified { get; set; }
-        public DateTime? DateCreated { get; set; }
 
         public string CalledBy { get; set; }
+
+        public DateTime MeasureTime { get; set; }
+
+        public DateTime? DateModified { get; set; }
+
+        public DateTime? DateCreated { get; set; }      
+
+        public virtual Box Box { get; set; }
     }
 }

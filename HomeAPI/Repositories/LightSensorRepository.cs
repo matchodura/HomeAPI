@@ -25,7 +25,7 @@ namespace HomeAPI.Repositories
 
         public LightSensor GetLastRecord()
         {
-            return _context.LightSensors.OrderByDescending(c => c.Id).First();
+            return _context.LightSensors.OrderByDescending(c => c.ID).First();
         }
 
         public List<LightSensor> GetAllValues()
@@ -64,7 +64,7 @@ namespace HomeAPI.Repositories
                 LightSensor dht = new LightSensor();
                 dht = oldDht;
                 dht.BoxId = newDHT.BoxId;
-                dht.DeviceId = newDHT.NewId;
+                dht.DeviceID = newDHT.NewId;
                 dht.Device = newDHT.Device;
                 dht.DateModified = newDHT.DateModified;
 
@@ -79,7 +79,7 @@ namespace HomeAPI.Repositories
 
         public List<LightSensor> GetRowsBySensorId(int id)
         {
-            return _context.LightSensors.Where(x => x.DeviceId == id).ToList();
+            return _context.LightSensors.Where(x => x.DeviceID == id).ToList();
         }
     }
 }

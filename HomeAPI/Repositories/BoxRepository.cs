@@ -30,10 +30,10 @@ namespace HomeAPI.Repositories
             _context.Add(box);
             _context.SaveChanges();
 
-            int boxId = box.Id;
+            int boxId = box.ID;
 
-            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceId == box.DHTId).ToList();
-            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceId == box.MotionSensorId).ToList();
+            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceID == box.DHTId).ToList();
+            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceID == box.MotionSensorId).ToList();
 
             foreach (DHT dht in dhts)
             {
@@ -95,10 +95,10 @@ namespace HomeAPI.Repositories
             _context.Add(box);
             _context.SaveChanges();
 
-            int boxId = box.Id;
+            int boxId = box.ID;
 
-            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceId == box.DHTId).ToList();
-            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceId == box.MotionSensorId).ToList();
+            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceID == box.DHTId).ToList();
+            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceID == box.MotionSensorId).ToList();
 
             foreach (DHT dht in dhts)
             {

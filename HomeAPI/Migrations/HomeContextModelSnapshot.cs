@@ -19,7 +19,7 @@ namespace HomeAPI.Migrations
 
             modelBuilder.Entity("HomeAPI.Models.Box", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -44,7 +44,9 @@ namespace HomeAPI.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Boxes");
                 });
@@ -100,7 +102,7 @@ namespace HomeAPI.Migrations
 
             modelBuilder.Entity("HomeAPI.Models.DHT", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -119,7 +121,7 @@ namespace HomeAPI.Migrations
                     b.Property<string>("Device")
                         .HasColumnType("text");
 
-                    b.Property<int?>("DeviceId")
+                    b.Property<int?>("DeviceID")
                         .HasColumnType("int");
 
                     b.Property<float>("Humidity")
@@ -131,7 +133,7 @@ namespace HomeAPI.Migrations
                     b.Property<float>("Temperature")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("BoxId");
 
@@ -155,7 +157,7 @@ namespace HomeAPI.Migrations
 
             modelBuilder.Entity("HomeAPI.Models.LightSensor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -174,7 +176,7 @@ namespace HomeAPI.Migrations
                     b.Property<string>("Device")
                         .HasColumnType("text");
 
-                    b.Property<int?>("DeviceId")
+                    b.Property<int?>("DeviceID")
                         .HasColumnType("int");
 
                     b.Property<float>("Luxes")
@@ -183,7 +185,7 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime>("MeasureTime")
                         .HasColumnType("datetime");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("BoxId");
 
@@ -192,9 +194,12 @@ namespace HomeAPI.Migrations
 
             modelBuilder.Entity("HomeAPI.Models.MotionSensor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("AlarmMessage")
+                        .HasColumnType("text");
 
                     b.Property<int?>("BoxId")
                         .HasColumnType("int");
@@ -208,13 +213,13 @@ namespace HomeAPI.Migrations
                     b.Property<string>("Device")
                         .HasColumnType("text");
 
-                    b.Property<int?>("DeviceId")
+                    b.Property<int?>("DeviceID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("MeasureTime")
                         .HasColumnType("datetime");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("BoxId");
 
@@ -271,6 +276,17 @@ namespace HomeAPI.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("HomeAPI.Models.Box", b =>
+                {
+                    b.HasOne("HomeAPI.Models.Room", "Rooms")
+                        .WithMany("Boxes")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rooms");
+                });
+
             modelBuilder.Entity("HomeAPI.Models.DHT", b =>
                 {
                     b.HasOne("HomeAPI.Models.Box", "Box")
@@ -283,7 +299,7 @@ namespace HomeAPI.Migrations
             modelBuilder.Entity("HomeAPI.Models.LightSensor", b =>
                 {
                     b.HasOne("HomeAPI.Models.Box", "Box")
-                        .WithMany()
+                        .WithMany("LightSensors")
                         .HasForeignKey("BoxId");
 
                     b.Navigation("Box");
@@ -291,9 +307,11 @@ namespace HomeAPI.Migrations
 
             modelBuilder.Entity("HomeAPI.Models.MotionSensor", b =>
                 {
-                    b.HasOne("HomeAPI.Models.Box", null)
+                    b.HasOne("HomeAPI.Models.Box", "Box")
                         .WithMany("MotionSensors")
                         .HasForeignKey("BoxId");
+
+                    b.Navigation("Box");
                 });
 
             modelBuilder.Entity("HomeAPI.Models.Room", b =>
@@ -309,12 +327,19 @@ namespace HomeAPI.Migrations
                 {
                     b.Navigation("DHTs");
 
+                    b.Navigation("LightSensors");
+
                     b.Navigation("MotionSensors");
                 });
 
             modelBuilder.Entity("HomeAPI.Models.Home", b =>
                 {
                     b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("HomeAPI.Models.Room", b =>
+                {
+                    b.Navigation("Boxes");
                 });
 #pragma warning restore 612, 618
         }

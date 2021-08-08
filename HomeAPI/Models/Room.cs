@@ -20,7 +20,6 @@ namespace HomeAPI.Models
         [JsonProperty("createdBy")]
         public DateTime CreatedBy { get; set; }
 
-
         [JsonProperty("calledBy")]
         public string CalledBy { get; set; }
 
@@ -42,12 +41,10 @@ namespace HomeAPI.Models
         [JsonProperty("luxes")]
         public float Luxes { get; set; }     
 
-        [JsonProperty("aAlarmMessage")]
+        [JsonProperty("alarmMessage")]
         public string AlarmMessage { get; set; }
 
-        public virtual Home Home { get; set; }
-        //public virtual ICollection<DHT> DHTs { get; set; }
-
-        //public ICollection<MotionSensor> MotionSensors { get; set; }
+        public virtual Home Home { get; set; }    
+        public virtual ICollection<Box> Boxes { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace HomeAPI.Repositories
         {
             List<MotionSensor> motionSensors;
 
-            motionSensors = _context.MotionSensors.Where(i => i.DeviceId == sensorId).ToList();
+            motionSensors = _context.MotionSensors.Where(i => i.DeviceID == sensorId).ToList();
 
             return motionSensors;
         }
@@ -73,12 +73,11 @@ namespace HomeAPI.Repositories
             motionSensor.BoxId = boxId;
             motionSensor.MeasureTime = dateTime;
             motionSensor.Device = deviceName;
-            motionSensor.DeviceId = 1234;
+            motionSensor.DeviceID = 1234;
 
             _context.MotionSensors.Add(motionSensor);
             _context.SaveChanges();
         }
-
        
     }
 }

@@ -26,7 +26,7 @@ namespace HomeAPI.Repositories
 
         public DHT GetLastRecord()
         {
-            return _context.DHTs.OrderByDescending(c => c.Id).First();
+            return _context.DHTs.OrderByDescending(c => c.ID).First();
         }
 
         public List<DHT> GetAllValues()
@@ -65,7 +65,7 @@ namespace HomeAPI.Repositories
                 DHT dht = new DHT();
                 dht = oldDht;
                 dht.BoxId = newDHT.BoxId;
-                dht.DeviceId = newDHT.NewId;
+                dht.DeviceID = newDHT.NewId;
                 dht.Device = newDHT.Device;
                 dht.DateModified = newDHT.DateModified;
 
@@ -80,7 +80,7 @@ namespace HomeAPI.Repositories
 
         public List<DHT> GetRowsBySensorId(int id)
         {
-            return _context.DHTs.Where(x => x.DeviceId == id).ToList();
+            return _context.DHTs.Where(x => x.DeviceID == id).ToList();
         }
     }
 }
