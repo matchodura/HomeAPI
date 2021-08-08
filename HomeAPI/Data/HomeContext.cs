@@ -39,9 +39,7 @@ namespace HomeAPI.Data
             modelBuilder.Entity<Room>(entity =>
             {
                 entity.HasKey(e => e.ID);
-                entity.Property(e => e.Name).IsRequired();
-                entity.HasOne(d => d.Home)
-                  .WithMany(p => p.Rooms);
+                entity.Property(e => e.Name).IsRequired();             
             });
 
             #region HomeSeed
@@ -60,6 +58,25 @@ namespace HomeAPI.Data
                 new Home { ID = 12, Name = "PokojMateusza_pietro" },
                 new Home { ID = 13, Name = "Strych" },
                 new Home { ID = 14, Name = "Piwnica" }
+                );
+            #endregion
+
+            #region RoomSeed
+            modelBuilder.Entity<Room>().HasData(
+                new Room { ID = 1, HomeID = 1, Name = "Klatka" },
+                new Room { ID = 2, HomeID = 2, Name = "Korytarz_parter" },
+                new Room { ID = 3, HomeID = 3, Name = "Kuchnia_parter" },
+                new Room { ID = 4, HomeID = 4, Name = "DuzyPokoj_parter" },
+                new Room { ID = 5, HomeID = 5, Name = "MalyPokoj_parter" },
+                new Room { ID = 6, HomeID = 6, Name = "Lazienka_parter" },
+                new Room { ID = 7, HomeID = 7, Name = "Sypialnia_parter" },
+                new Room { ID = 8, HomeID = 8, Name = "Lazienka_pietro" },
+                new Room { ID = 9, HomeID = 9, Name = "Korytarz_pietro" },
+                new Room { ID = 10, HomeID = 10, Name = "DuzyPokoj_pietro" },
+                new Room { ID = 11, HomeID = 11, Name = "Sypialnia_pietro" },
+                new Room { ID = 12, HomeID = 12, Name = "PokojMateusza_pietro" },
+                new Room { ID = 13, HomeID = 13, Name = "Strych" },
+                new Room { ID = 14, HomeID = 14, Name = "Piwnica" }
                 );
             #endregion
         }

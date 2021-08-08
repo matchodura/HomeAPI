@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeAPI.Migrations
 {
     [DbContext(typeof(HomeContext))]
-    [Migration("20210808174707_InitialHomeSeedWithRoomNames")]
-    partial class InitialHomeSeedWithRoomNames
+    [Migration("20210808182425_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -286,11 +286,8 @@ namespace HomeAPI.Migrations
                     b.Property<int>("BoxId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CalledBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedBy")
-                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime");
@@ -298,7 +295,7 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("HomeID")
+                    b.Property<int>("HomeID")
                         .HasColumnType("int");
 
                     b.Property<string>("Humidity")
@@ -322,6 +319,176 @@ namespace HomeAPI.Migrations
                     b.HasIndex("HomeID");
 
                     b.ToTable("Rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 201, DateTimeKind.Local).AddTicks(8019),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 1,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Klatka"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6459),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 2,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Korytarz_parter"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6515),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 3,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Kuchnia_parter"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6523),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 4,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DuzyPokoj_parter"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6529),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 5,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "MalyPokoj_parter"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6535),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 6,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Lazienka_parter"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6540),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 7,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Sypialnia_parter"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6546),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 8,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Lazienka_pietro"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6552),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 9,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Korytarz_pietro"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6557),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 10,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "DuzyPokoj_pietro"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6563),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 11,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Sypialnia_pietro"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6569),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 12,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "PokojMateusza_pietro"
+                        },
+                        new
+                        {
+                            ID = 13,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6575),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 13,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Strych"
+                        },
+                        new
+                        {
+                            ID = 14,
+                            BoxId = 0,
+                            CreatedBy = "Mateusz",
+                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6580),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HomeID = 14,
+                            Luxes = 0f,
+                            MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Piwnica"
+                        });
                 });
 
             modelBuilder.Entity("HomeAPI.Models.Box", b =>
@@ -366,7 +533,9 @@ namespace HomeAPI.Migrations
                 {
                     b.HasOne("HomeAPI.Models.Home", "Home")
                         .WithMany("Rooms")
-                        .HasForeignKey("HomeID");
+                        .HasForeignKey("HomeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Home");
                 });

@@ -16,6 +16,7 @@ namespace HomeAPI.Models
         [JsonProperty("roomName")]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Room> Rooms { get; set; }               
     }
 }

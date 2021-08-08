@@ -118,8 +118,7 @@ namespace HomeAPI.Controllers
             bool alreadyExists = _context.Rooms.Any(x => x.Name == room.Name);
 
 
-            room.MeasureTime = DateTime.Now;
-            room.CalledBy = "user";
+            room.MeasureTime = DateTime.Now;          
 
             if (alreadyExists)
             {

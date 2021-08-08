@@ -42,5 +42,7 @@ namespace HomeAPI.Interfaces.Repositories
         /// <returns></returns>
         public Task<Room> UpdateRoom(string roomName);
 
+        public List<Home> GetRoomsNames();
+
     }
 }

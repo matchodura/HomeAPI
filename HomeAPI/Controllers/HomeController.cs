@@ -46,6 +46,17 @@ namespace HomeAPI.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetRoomsNames")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<Room>> GetRoomsNames()
+        {
+            List<Home> rooms = _homeRepository.GetRoomsNames();
+
+            return Json(rooms);
+        }
+
         [HttpPost]
         [Route("CreateRoom")]
         [ProducesResponseType(StatusCodes.Status200OK)]

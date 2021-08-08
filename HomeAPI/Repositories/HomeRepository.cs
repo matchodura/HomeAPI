@@ -73,10 +73,17 @@ namespace HomeAPI.Repositories
             return _context.Rooms.SingleOrDefault(x => x.Name == roomName);
         }
 
+        public List<Home> GetRoomsNames()
+        {
+            return _context.Home.Distinct().ToList();
+        }
+
         public Task<Room> UpdateRoom(string roomName)
         {
             throw new NotImplementedException();
         }
+
+
 
         #region Helper Methods
 
