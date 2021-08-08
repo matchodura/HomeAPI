@@ -33,7 +33,7 @@ namespace HomeAPI.Models
 
         public virtual Room Rooms { get; set; }
 
-        public virtual ICollection<DHTSensorsensor> DHTSensors { get; set; }
+        public virtual ICollection<DHTSensor> DHTSensors { get; set; }
 
         public virtual ICollection<MotionSensor> MotionSensors { get; set; }
 

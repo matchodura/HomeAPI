@@ -8,6 +8,10 @@ namespace HomeAPI.Interfaces.Repositories
 {
     public interface IRoomRepository
     {
-        public Task<Room> GetAllData();
+        /// <summary>
+        /// Gets values for specific room
+        /// </summary>
+        /// <returns></returns>
+        public Room GetRoomData(int roomID);
     }
 }

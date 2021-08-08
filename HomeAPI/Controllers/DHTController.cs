@@ -49,7 +49,7 @@ namespace HomeAPI.Controllers
                 Timeout = TimeSpan.FromSeconds(timeout)            
             };
 
-            DHTSensorsensor dht = new DHTSensorsensor();
+            DHTSensor dht = new DHTSensor();
 
             try
             {
@@ -59,7 +59,7 @@ namespace HomeAPI.Controllers
 
                 if (response != null)
                 {                 
-                    dht = JsonConvert.DeserializeObject<DHTSensorsensor>(responseMessage);                                       
+                    dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);                                       
                 }
 
             }
@@ -101,9 +101,9 @@ namespace HomeAPI.Controllers
         [Route("GetDHTSensors")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHTSensorsensor>> GetDHTSensors()
+        public ActionResult<List<DHTSensor>> GetDHTSensors()
         {
-            List<DHTSensorsensor> DHTSensors = _dhtRepository.GetAllValues();
+            List<DHTSensor> DHTSensors = _dhtRepository.GetAllValues();
 
             return Json(DHTSensors);
         }
@@ -113,9 +113,9 @@ namespace HomeAPI.Controllers
         [Route("GetDHTSensors/Filtered")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHTSensorsensor>> GetDHTSensors([FromBody] TimeFilter timeFilter)
+        public ActionResult<List<DHTSensor>> GetDHTSensors([FromBody] TimeFilter timeFilter)
         {
-            List<DHTSensorsensor> DHTSensors = _dhtRepository.GetValuesByDate(timeFilter);
+            List<DHTSensor> DHTSensors = _dhtRepository.GetValuesByDate(timeFilter);
 
             return Json(DHTSensors);
         }
@@ -136,7 +136,7 @@ namespace HomeAPI.Controllers
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
 
-            DHTSensorsensor dht = new DHTSensorsensor();
+            DHTSensor dht = new DHTSensor();
 
             try
             {
@@ -147,9 +147,7 @@ namespace HomeAPI.Controllers
                 if (response != null)
                 {
 
-                    dht = JsonConvert.DeserializeObject<DHTSensorsensor>(responseMessage);
-
-
+                    dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);
                 }
 
             }
@@ -171,14 +169,12 @@ namespace HomeAPI.Controllers
         [Route("config")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<DHTSensorsensor> ChangeConfig([FromBody] DHTConfig newDHT)
+        public ActionResult<DHTSensor> ChangeConfig([FromBody] DHTConfig newDHT)
         {
             int oldId = newDHT.CurrentId; 
             //TODO wysylanie do node
             var updatedDHT = _dhtRepository.UpdateSettings(oldId, newDHT);
             return Json(updatedDHT);
         }
-
-
     }
 }

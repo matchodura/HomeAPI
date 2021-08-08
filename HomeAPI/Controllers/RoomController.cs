@@ -15,13 +15,7 @@ namespace HomeAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class RoomController : Controller
-    {
-          
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+    {      
 
         private readonly HomeContext _context;
         private readonly IRoomRepository _roomRepository;
@@ -33,7 +27,7 @@ namespace HomeAPI.Controllers
         }
 
 
-        [Route("CurrentValues")]
+        [Route("test")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CheckDHT()
@@ -74,6 +68,19 @@ namespace HomeAPI.Controllers
 
             return Json(responseMessage);
         }
+
+
+        [HttpGet]
+        [Route("status/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Room> GetRoomValues(int id)
+        {
+            Room room = _roomRepository.GetRoomData(id);
+
+            return Json(room);
+        }
+
 
         //TODO
         [Route("GetAllValues")]

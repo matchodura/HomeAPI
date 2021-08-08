@@ -35,7 +35,7 @@ namespace HomeAPI.Controllers
 
 
         [HttpGet]
-        [Route("rooms/status")]
+        [Route("status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<Room>> GetRooms()
@@ -47,7 +47,7 @@ namespace HomeAPI.Controllers
 
 
         [HttpGet]
-        [Route("rooms/names")]
+        [Route("names")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<Room>> GetRoomsNames()

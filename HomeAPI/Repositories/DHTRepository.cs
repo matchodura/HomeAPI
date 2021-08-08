@@ -37,7 +37,7 @@ namespace HomeAPI.Repositories
         public List<DHTSensor> GetValuesByDate(TimeFilter timeFilter)
         {
             string sortOrder = timeFilter.SortOrder.ToUpper();
-            List<DHTSensorsensor> results = new List<DHTSensorsensor>();
+            List<DHTSensor> results = new List<DHTSensor>();
 
             if (sortOrder == "DESC")
             {

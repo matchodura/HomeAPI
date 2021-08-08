@@ -48,8 +48,8 @@ namespace HomeAPI.Services
                 var dbContext = scope.ServiceProvider.GetRequiredService<HomeContext>();
 
                 try
-                { 
-                    DHTSensorsensor dhtRecord = await GetBoxData();
+                {
+                    DHTSensor dhtRecord = await GetBoxData();
                     dbContext.Add(dhtRecord);
 
                     //LightSensor lightSensorRecord = await GetLightSensorData();
@@ -67,7 +67,7 @@ namespace HomeAPI.Services
             }                
         }
 
-        public async Task<DHTSensorsensor> GetBoxData()
+        public async Task<DHTSensor> GetBoxData()
         {
             string responseMessage = "";
             string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
@@ -79,7 +79,7 @@ namespace HomeAPI.Services
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
 
-            DHTSensorsensor dht = new DHTSensorsensor();
+            DHTSensor dht = new DHTSensor();
 
             try
             {
@@ -89,7 +89,7 @@ namespace HomeAPI.Services
 
                 if (response != null)
                 {
-                    dht = JsonConvert.DeserializeObject<DHTSensorsensor>(responseMessage);
+                    dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);
                 }
 
             }

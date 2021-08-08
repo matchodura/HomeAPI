@@ -34,7 +34,7 @@ namespace HomeAPI.Controllers
         }
 
 
-        public static List<ChartModel> GetData(List<DHTSensorsensor> records)
+        public static List<ChartModel> GetData(List<DHTSensor> records)
         {
 
             var lastRecord = records.OrderByDescending(p => p.MeasureTime)
