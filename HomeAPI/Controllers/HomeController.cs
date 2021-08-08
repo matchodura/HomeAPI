@@ -78,5 +78,17 @@ namespace HomeAPI.Controllers
 
             return message;
         }
+
+
+        [HttpPost]
+        [Route("rooms/update")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Room> Update([FromBody] Room room)
+        {
+            var message = _homeRepository.UpdateRoom(room);
+
+            return Json(message);
+        }
     }
 }

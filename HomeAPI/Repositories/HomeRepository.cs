@@ -63,6 +63,11 @@ namespace HomeAPI.Repositories
             return message;
         }
 
+        public string DeleteRoom(Room room)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Room> GetAllRooms()
         {
             return _context.Rooms.Distinct().ToList();
@@ -78,11 +83,26 @@ namespace HomeAPI.Repositories
             return _context.Home.Distinct().ToList();
         }
 
-        public Task<Room> UpdateRoom(string roomName)
+       
+        public Room UpdateRoom(Room room)
         {
-            throw new NotImplementedException();
-        }
+           //TODO
+            var oldRoom = _context.Rooms.FirstOrDefault(item => item.HomeID == room.HomeID);
+            var oldHome = _context.Home.FirstOrDefault(item => item.ID == room.HomeID);
 
+            oldHome.Name = room.Name;
+            oldRoom.Name = room.Name;
+            oldRoom.DateModified = DateTime.Now;
+
+            _context.Rooms.Update(room);
+            _context.SaveChanges();
+
+            _context.Home.Update(oldHome);
+            _context.SaveChanges();
+
+
+            return room;
+        }
 
 
         #region Helper Methods

@@ -14,6 +14,7 @@ namespace HomeAPI.Models
         public int ID { get; set; }
 
         [ForeignKey("ID")]
+        [JsonProperty("ID")]
         public int HomeID { get; set; }
 
         [JsonProperty("roomName")]

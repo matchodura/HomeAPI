@@ -13,5 +13,6 @@ namespace HomeAPI.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         public Room GetRoomData(int roomID);
+              
     }
 }

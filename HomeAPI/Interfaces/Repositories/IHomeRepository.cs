@@ -33,14 +33,14 @@ namespace HomeAPI.Interfaces.Repositories
         /// </summary>
         /// <param name="roomName"></param>
         /// <returns></returns>
-        public string DeleteRoom(string roomName);
+        public string DeleteRoom(Room room);
 
         /// <summary>
         /// Updates specified room
         /// </summary>
         /// <param name="roomName"></param>
         /// <returns></returns>
-        public Task<Room> UpdateRoom(string roomName);
+        public Room UpdateRoom(Room room);
 
         /// <summary>
         /// Gets names of rooms in home
