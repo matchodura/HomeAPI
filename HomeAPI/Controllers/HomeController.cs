@@ -35,7 +35,7 @@ namespace HomeAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetRooms")]
+        [Route("rooms/status")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<Room>> GetRooms()
@@ -47,7 +47,7 @@ namespace HomeAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetRoomsNames")]
+        [Route("rooms/names")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<List<Room>> GetRoomsNames()
@@ -59,7 +59,7 @@ namespace HomeAPI.Controllers
 
 
         [HttpGet]
-        [Route("GetRoom/{id}")]
+        [Route("rooms/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Room> GetRoomById(int id)
@@ -69,7 +69,7 @@ namespace HomeAPI.Controllers
 
 
         [HttpPost]
-        [Route("CreateRoom")]
+        [Route("rooms/create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<string> Create([FromBody] Room room)
