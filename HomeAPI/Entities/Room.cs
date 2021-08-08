@@ -9,7 +9,8 @@ namespace HomeAPI.Models
 {
     public class Room
     {
-        [JsonProperty("roomId")]          
+        [JsonProperty("roomId")]     
+        [JsonIgnore]
         public int ID { get; set; }
 
         [ForeignKey("ID")]

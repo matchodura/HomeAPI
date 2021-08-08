@@ -68,9 +68,9 @@ namespace HomeAPI.Repositories
             return _context.Rooms.Distinct().ToList();
         }
 
-        public Room GetRoom(string roomName)
+        public Room GetRoom(int roomID)
         {
-            return _context.Rooms.SingleOrDefault(x => x.Name == roomName);
+            return _context.Rooms.SingleOrDefault(x => x.ID == roomID);
         }
 
         public List<Home> GetRoomsNames()

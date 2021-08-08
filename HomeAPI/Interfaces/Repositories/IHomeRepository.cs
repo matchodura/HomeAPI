@@ -13,13 +13,13 @@ namespace HomeAPI.Interfaces.Repositories
         /// </summary>
         /// <returns></returns>
         public List<Room> GetAllRooms();
-
+            
         /// <summary>
-        /// Returns current values for specific room
+        /// Returns current values for specific room by it's id
         /// </summary>
-        /// <param name="roomName"></param>
+        /// <param name="roomID"></param>
         /// <returns></returns>
-        public Room GetRoom(string roomName);
+        public Room GetRoom(int roomID);
 
         /// <summary>
         /// Creates new room
