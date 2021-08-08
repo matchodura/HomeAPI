@@ -19,35 +19,35 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public List<DHT> GetAllRecords()
+        public List<DHTSensorsensor> GetAllRecords()
         {
             throw new NotImplementedException();
         }
 
-        public DHT GetLastRecord()
+        public DHTSensorsensor GetLastRecord()
         {
-            return _context.DHTs.OrderByDescending(c => c.ID).First();
+            return _context.DHTSensors.OrderByDescending(c => c.ID).First();
         }
 
-        public List<DHT> GetAllValues()
+        public List<DHTSensorsensor> GetAllValues()
         {
-            return _context.DHTs.Distinct().ToList();
+            return _context.DHTSensors.Distinct().ToList();
         }
 
-        public List<DHT> GetValuesByDate(TimeFilter timeFilter)
+        public List<DHTSensorsensor> GetValuesByDate(TimeFilter timeFilter)
         {
             string sortOrder = timeFilter.SortOrder.ToUpper();
-            List<DHT> results = new List<DHT>();
+            List<DHTSensorsensor> results = new List<DHTSensorsensor>();
 
             if (sortOrder == "DESC")
             {
-                results = _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results = _context.DHTSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderByDescending(p => p.MeasureTime)
                                        .ToList();
             }
             else
             {
-                results = _context.DHTs.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results = _context.DHTSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderBy(p => p.MeasureTime)
                                        .ToList();
             }
@@ -56,31 +56,31 @@ namespace HomeAPI.Repositories
            
         }
 
-        public async Task<List<DHT>> UpdateSettings(int oldId, DHTConfig newDHT)
+        public async Task<List<DHTSensorsensor>> UpdateSettings(int oldId, DHTConfig newDHT)
         {
-            var dHTs = GetRowsBySensorId(oldId);
+            var DHTSensors = GetRowsBySensorId(oldId);
 
-            foreach (var oldDht in dHTs)
+            foreach (var oldDht in DHTSensors)
             {
-                DHT dht = new DHT();
+                DHTSensorsensor dht = new DHTSensorsensor();
                 dht = oldDht;
                 dht.BoxId = newDHT.BoxId;
                 dht.DeviceID = newDHT.NewId;
                 dht.Device = newDHT.Device;
                 dht.DateModified = newDHT.DateModified;
 
-                _context.DHTs.Update(dht);
+                _context.DHTSensors.Update(dht);
                 _context.SaveChanges();
             }
         
 
-            var results = await _context.DHTs.ToListAsync();
+            var results = await _context.DHTSensors.ToListAsync();
             return results;
         }
 
-        public List<DHT> GetRowsBySensorId(int id)
+        public List<DHTSensorsensor> GetRowsBySensorId(int id)
         {
-            return _context.DHTs.Where(x => x.DeviceID == id).ToList();
+            return _context.DHTSensors.Where(x => x.DeviceID == id).ToList();
         }
     }
 }

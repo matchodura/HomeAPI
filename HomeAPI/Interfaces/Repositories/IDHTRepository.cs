@@ -8,10 +8,10 @@ namespace HomeAPI.Interfaces.Repositories
 {
     public interface IDHTRepository
     {      
-        public List<DHT> GetAllValues();
-        public List<DHT> GetValuesByDate(TimeFilter timeFilter);
-        public DHT GetLastRecord();
-        public Task<List<DHT>> UpdateSettings(int oldId, DHTConfig newDHT);
-        public List<DHT> GetRowsBySensorId(int id);
+        public List<DHTSensorsensor> GetAllValues();
+        public List<DHTSensorsensor> GetValuesByDate(TimeFilter timeFilter);
+        public DHTSensorsensor GetLastRecord();
+        public Task<List<DHTSensorsensor>> UpdateSettings(int oldId, DHTConfig newDHT);
+        public List<DHTSensorsensor> GetRowsBySensorId(int id);
     }
 }

@@ -113,8 +113,8 @@ namespace HomeAPI
             history.MethodName = methodName;
             history.DateSent = DateTime.Now;
             history.Response = response;
-
-            _context.BulbsHistory.Add(history);
+            //TODO
+          //  _context.BulbsHistory.Add(history);
             _context.SaveChanges();
 
 

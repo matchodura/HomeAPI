@@ -58,7 +58,7 @@ namespace HomeAPI.Services
 
                 try
                 {
-                    DHT lastRecord =  dhtRepository.GetLastRecord();
+                    DHTSensorsensor lastRecord =  dhtRepository.GetLastRecord();
 
                     _hubContext.Clients.All.BroadcastData(lastRecord);
                 }

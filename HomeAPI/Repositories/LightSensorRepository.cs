@@ -57,9 +57,9 @@ namespace HomeAPI.Repositories
 
         public async Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
         {
-            var dHTs = GetRowsBySensorId(oldId);
+            var DHTSensors = GetRowsBySensorId(oldId);
 
-            foreach (var oldDht in dHTs)
+            foreach (var oldDht in DHTSensors)
             {
                 LightSensor dht = new LightSensor();
                 dht = oldDht;

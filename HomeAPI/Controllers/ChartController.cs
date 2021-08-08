@@ -28,13 +28,13 @@ namespace HomeAPI.Controllers
 
         public IActionResult Get()
         {
-            var records = _context.DHTs.ToList();
+            var records = _context.DHTSensors.ToList();
             var timerManager = new TimerManager(() => _hub.Clients.All.SendAsync("transferchartdata", GetData(records)), 30 );
             return Ok(new { Message = "Request completed" });
         }
 
 
-        public static List<ChartModel> GetData(List<DHT> records)
+        public static List<ChartModel> GetData(List<DHTSensorsensor> records)
         {
 
             var lastRecord = records.OrderByDescending(p => p.MeasureTime)

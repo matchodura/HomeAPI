@@ -74,33 +74,7 @@ namespace HomeAPI.Migrations
                     b.ToTable("Bulbs");
                 });
 
-            modelBuilder.Entity("HomeAPI.Models.BulbHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateSent")
-                        .HasColumnType("datetime");
-
-                    b.Property<int?>("LampId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MethodName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MethodValue")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Response")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BulbsHistory");
-                });
-
-            modelBuilder.Entity("HomeAPI.Models.DHT", b =>
+            modelBuilder.Entity("HomeAPI.Models.DHTSensorsensor", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -137,7 +111,7 @@ namespace HomeAPI.Migrations
 
                     b.HasIndex("BoxId");
 
-                    b.ToTable("DHTs");
+                    b.ToTable("DHTSensors");
                 });
 
             modelBuilder.Entity("HomeAPI.Models.Home", b =>
@@ -287,10 +261,10 @@ namespace HomeAPI.Migrations
                     b.Navigation("Rooms");
                 });
 
-            modelBuilder.Entity("HomeAPI.Models.DHT", b =>
+            modelBuilder.Entity("HomeAPI.Models.DHTSensorsensor", b =>
                 {
                     b.HasOne("HomeAPI.Models.Box", "Box")
-                        .WithMany("DHTs")
+                        .WithMany("DHTSensors")
                         .HasForeignKey("BoxId");
 
                     b.Navigation("Box");
@@ -325,7 +299,7 @@ namespace HomeAPI.Migrations
 
             modelBuilder.Entity("HomeAPI.Models.Box", b =>
                 {
-                    b.Navigation("DHTs");
+                    b.Navigation("DHTSensors");
 
                     b.Navigation("LightSensors");
 

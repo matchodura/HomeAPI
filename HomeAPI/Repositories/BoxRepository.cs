@@ -32,10 +32,10 @@ namespace HomeAPI.Repositories
 
             int boxId = box.ID;
 
-            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceID == box.DHTId).ToList();
+            List<DHTSensorsensor> DHTSensors = _context.DHTSensors.Where(d => d.DeviceID == box.DHTId).ToList();
             List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceID == box.MotionSensorId).ToList();
 
-            foreach (DHT dht in dhts)
+            foreach (DHTSensorsensor dht in DHTSensors)
             {
                 dht.BoxId = boxId;
                 dht.DateCreated = currentDateTime;
@@ -97,10 +97,10 @@ namespace HomeAPI.Repositories
 
             int boxId = box.ID;
 
-            List<DHT> dhts = _context.DHTs.Where(d => d.DeviceID == box.DHTId).ToList();
+            List<DHTSensorsensor> DHTSensors = _context.DHTSensors.Where(d => d.DeviceID == box.DHTId).ToList();
             List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceID == box.MotionSensorId).ToList();
 
-            foreach (DHT dht in dhts)
+            foreach (DHTSensorsensor dht in DHTSensors)
             {
                 dht.BoxId = boxId;
                 dht.DateCreated = currentDateTime;

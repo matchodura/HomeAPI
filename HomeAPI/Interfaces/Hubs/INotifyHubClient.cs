@@ -12,6 +12,6 @@ namespace HomeAPI.Interfaces
         Task MotionOn(string message);
         Task MotionOff(string message);
 
-        Task BroadcastData(DHT dht);
+        Task BroadcastData(DHTSensorsensor dht);
     }
 }

@@ -54,7 +54,7 @@ namespace HomeAPI.Controllers
         [Route("GetMotionSensors")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHT>> GetMotionSensors()
+        public ActionResult<List<DHTSensorsensor>> GetMotionSensors()
         {
             List<MotionSensor> motionSensors = _boxRepository.GetMotionSensors();
             return Json(motionSensors);

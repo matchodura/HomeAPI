@@ -20,7 +20,7 @@ namespace HomeAPI.Tests
             var context = new Mock<HomeContext>();
           //  var boxController = new BoxController(context.Object, mockRepo.Object);
 
-           // var result =  boxController.GetDHTS();
+           // var result =  boxController.GetDHTSensors();
         }
     }
 }

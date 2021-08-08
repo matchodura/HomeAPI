@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeAPI.Interfaces
 {
-    public interface IDHTSensor
+    public interface IDHTSensorsensor
     {
         public Task<ActionResult> GetCurrentValue();             
 

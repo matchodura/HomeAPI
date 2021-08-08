@@ -49,7 +49,7 @@ namespace HomeAPI.Services
 
                 try
                 { 
-                    DHT dhtRecord = await GetBoxData();
+                    DHTSensorsensor dhtRecord = await GetBoxData();
                     dbContext.Add(dhtRecord);
 
                     //LightSensor lightSensorRecord = await GetLightSensorData();
@@ -67,7 +67,7 @@ namespace HomeAPI.Services
             }                
         }
 
-        public async Task<DHT> GetBoxData()
+        public async Task<DHTSensorsensor> GetBoxData()
         {
             string responseMessage = "";
             string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
@@ -79,7 +79,7 @@ namespace HomeAPI.Services
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
 
-            DHT dht = new DHT();
+            DHTSensorsensor dht = new DHTSensorsensor();
 
             try
             {
@@ -89,7 +89,7 @@ namespace HomeAPI.Services
 
                 if (response != null)
                 {
-                    dht = JsonConvert.DeserializeObject<DHT>(responseMessage);
+                    dht = JsonConvert.DeserializeObject<DHTSensorsensor>(responseMessage);
                 }
 
             }

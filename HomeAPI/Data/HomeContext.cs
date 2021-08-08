@@ -13,9 +13,9 @@ namespace HomeAPI.Data
 
         public DbSet<Bulb> Bulbs { get; set; }
 
-        public DbSet<BulbHistory> BulbsHistory { get; set; }
+        //public DbSet<BulbHistory> BulbsHistory { get; set; }
 
-        public DbSet<DHT> DHTs { get; set; }
+        public DbSet<DHTSensorsensor> DHTSensors { get; set; }
 
         public DbSet<Box> Boxes { get; set; }
 
