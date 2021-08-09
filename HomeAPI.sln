@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAPI.Yeelight", "..\Home
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAPI.Tests", "HomeAPI.Tests\HomeAPI.Tests.csproj", "{2B704380-A491-4B74-8402-706A82DDE07F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAPI.Blazor", "HomeAPI.Blazor\HomeAPI.Blazor.csproj", "{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{2B704380-A491-4B74-8402-706A82DDE07F}.Release|iPhone.Build.0 = Release|Any CPU
 		{2B704380-A491-4B74-8402-706A82DDE07F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{2B704380-A491-4B74-8402-706A82DDE07F}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Release|iPhone.Build.0 = Release|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{4BE56EEF-FE0C-47C3-BC1D-C6CBEBBF3CDF}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
