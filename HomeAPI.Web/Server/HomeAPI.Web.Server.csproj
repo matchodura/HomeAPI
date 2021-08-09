@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\HomeAPI.Web.Client.csproj" />
     <ProjectReference Include="..\Shared\HomeAPI.Web.Shared.csproj" />
   </ItemGroup>
 
