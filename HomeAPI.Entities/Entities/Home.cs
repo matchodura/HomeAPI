@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HomeAPI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,6 @@ namespace HomeAPI.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Room> Rooms { get; set; }               
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }

@@ -35,26 +35,26 @@ namespace HomeAPI.Controllers
 
 
         [HttpGet]
-        [Route("status")]
+        [Route("data")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<Room>> GetRooms()
+        public async Task<IActionResult> GetRooms()
         {
-            List<Room> rooms = _homeRepository.GetAllRooms();
+            var rooms = await _homeRepository.GetRoomsData();
 
-            return Json(rooms);
+            return Ok(rooms);
         }
 
 
         [HttpGet]
-        [Route("names")]
+        [Route("list")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<Room>> GetRoomsNames()
+        public async Task<IActionResult> GetRoomsList()
         {
-            List<Home> rooms = _homeRepository.GetRoomsNames();
+            var rooms = await _homeRepository.GetRoomsList();
 
-            return Json(rooms);
+            return Ok(rooms);
         }
 
 

@@ -12,8 +12,14 @@ namespace HomeAPI.Interfaces.Repositories
         /// Returns List of all Rooms with current data
         /// </summary>
         /// <returns></returns>
-        public List<Room> GetAllRooms();
-            
+        public Task<IEnumerable<Room>> GetRoomsData();
+
+        /// <summary>
+        /// Gets names of rooms in home
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<Home>> GetRoomsList();
+
         /// <summary>
         /// Returns current values for specific room by it's id
         /// </summary>
@@ -42,11 +48,7 @@ namespace HomeAPI.Interfaces.Repositories
         /// <returns></returns>
         public Room UpdateRoom(Room room);
 
-        /// <summary>
-        /// Gets names of rooms in home
-        /// </summary>
-        /// <returns></returns>
-        public List<Home> GetRoomsNames();
+        
 
     }
 }

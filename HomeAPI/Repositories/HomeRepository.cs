@@ -2,6 +2,7 @@
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,9 +69,9 @@ namespace HomeAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Room> GetAllRooms()
+        public async Task<IEnumerable<Room>> GetRoomsData()
         {
-            return _context.Rooms.Distinct().ToList();
+            return await _context.Rooms.Distinct().ToListAsync();
         }
 
         public Room GetRoom(int roomID)
@@ -78,9 +79,9 @@ namespace HomeAPI.Repositories
             return _context.Rooms.SingleOrDefault(x => x.ID == roomID);
         }
 
-        public List<Home> GetRoomsNames()
+        public async Task<IEnumerable<Home>> GetRoomsList()
         {
-            return _context.Home.Distinct().ToList();
+            return await _context.Home.Distinct().ToListAsync();
         }
 
        

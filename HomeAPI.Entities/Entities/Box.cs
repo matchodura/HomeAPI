@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HomeAPI.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +20,7 @@ namespace HomeAPI.Models
         [JsonProperty("roomId")]
         public int RoomId { get; set; }
 
-        public string CreatedBy { get; set; } = Constants.Constants.CREATEDBY;
+        public string CreatedBy { get; set; } = "Mateusz";
 
         public DateTime DateModified { get; set; }
 

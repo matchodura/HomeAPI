@@ -40,13 +40,12 @@ namespace HomeAPI
         {
 
 
-            services.AddCors(options =>
+            services.AddCors(policy =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins("http://localhost:4200")
-                         .AllowAnyMethod()
-                         .AllowAnyHeader()
-                         .AllowCredentials());
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
             });
 
 
