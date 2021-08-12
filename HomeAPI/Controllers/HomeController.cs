@@ -35,25 +35,12 @@ namespace HomeAPI.Controllers
 
 
         [HttpGet]
-        [Route("data")]
+        [Route("rooms")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetRooms()
         {
-            var rooms = await _homeRepository.GetRoomsData();
-
-            return Ok(rooms);
-        }
-
-
-        [HttpGet]
-        [Route("list")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetRoomsList()
-        {
-            var rooms = await _homeRepository.GetRoomsList();
-
+            var rooms = await _homeRepository.GetRooms();
             return Ok(rooms);
         }
 
@@ -62,33 +49,58 @@ namespace HomeAPI.Controllers
         [Route("rooms/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Room> GetRoomById(int id)
-        {               
-            return Json(_homeRepository.GetRoom(id));
-        }      
-
+        public async Task<IActionResult> GetRoom(int id)
+        {
+            var room = await _homeRepository.GetRoom(id);
+            if (room == null)
+                return NotFound();
+            return Ok(room);
+        }
+                        
 
         [HttpPost]
         [Route("rooms/create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> Create([FromBody] Room room)
+        public async Task<IActionResult> Create([FromBody] Room room)
         {
-            var message = _homeRepository.CreateRoom(room);
-
-            return message;
+            var roomExists = await ValidateIfRoomExists(room);
+            if (roomExists)
+                return Conflict();
+            await _homeRepository.Create(room);
+            return Ok();
         }
 
 
-        [HttpPost]
-        [Route("rooms/update")]
+        [HttpPut]
+        [Route("rooms/update/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Room> Update([FromBody] Room room)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> Update([FromBody] Room room)
         {
-            var message = _homeRepository.UpdateRoom(room);
-
-            return Json(message);
+            var roomExists = await ValidateIfRoomExists(room);
+            if (!roomExists)
+                return NotFound();
+            await _homeRepository.Update(room);
+            return Ok();
         }
+
+        #region Helper Methods
+
+        private async Task<bool> ValidateIfRoomExists(Room room)
+        {
+            var dbProduct = await _homeRepository.GetRoom(room.ID);
+
+            if (dbProduct != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+           
+        }
+        #endregion
     }
 }

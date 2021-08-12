@@ -10,5 +10,6 @@ namespace HomeAPI.Blazor.Repositories
     {
         Task<List<Room>> GetRoomsData();
         Task<List<Home>> GetRoomsList();
+        Task<List<Home>> UpdateRoom();
     }
 }

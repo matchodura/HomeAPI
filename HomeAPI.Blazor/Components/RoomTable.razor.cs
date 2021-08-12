@@ -11,5 +11,12 @@ namespace HomeAPI.Blazor.Components
     {
         [Parameter]
         public List<Room> Rooms { get; set; }
+
+        private void HandleValidSubmit()
+        {
+            Console.WriteLine("elo");
+
+            // Process the valid form
+        }
     }
 }

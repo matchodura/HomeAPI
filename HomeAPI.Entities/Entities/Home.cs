@@ -12,9 +12,12 @@ namespace HomeAPI.Models
     {
         [Key]
         [JsonProperty("roomId")]       
+
         public int ID { get; set; }
 
         [JsonProperty("roomName")]
+        [Required]
+        [StringLength(10, ErrorMessage = "Name is too long.")]
         public string Name { get; set; }
 
         [JsonIgnore]

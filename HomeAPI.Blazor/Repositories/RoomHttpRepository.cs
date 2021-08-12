@@ -48,5 +48,21 @@ namespace HomeAPI.Blazor.Repositories
             Console.WriteLine(products);
             return products;
         }
+
+
+        public async Task<List<Home>> UpdateRoom()
+        {
+            var response = await _client.GetAsync("home/update");
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var products = JsonConvert.DeserializeObject<List<Home>>(content);
+            Console.WriteLine(products);
+            return products;
+        }
     }
 }
