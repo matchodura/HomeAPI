@@ -71,6 +71,7 @@ namespace HomeAPI
           
             services.AddRazorPages();
 
+           // services.AddScoped<HomeContext, HomeContext>();
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<IMotionSensorRepository, MotionSensorRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();

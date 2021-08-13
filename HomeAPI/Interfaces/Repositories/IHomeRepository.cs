@@ -27,21 +27,23 @@ namespace HomeAPI.Interfaces.Repositories
         /// </summary>
         /// <param name="room"></param>
         /// <returns></returns>
-        public Task Create(Room room);
-
-        /// <summary>
-        /// Deletes specified room
-        /// </summary>
-        /// <param name="roomName"></param>
-        /// <returns></returns>
-        public Task Delete(Room room);
+        public Task<Room> Create(Room room);
 
         /// <summary>
         /// Updates specified room
         /// </summary>
         /// <param name="roomName"></param>
         /// <returns></returns>
-        public Task Update(Room room);               
+        public Task<Room> Update(Room room);
+
+        /// <summary>
+        /// Deletes specified room
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <returns></returns>
+        public Task<string> Delete(Room room);
+
+          
 
     }
 }

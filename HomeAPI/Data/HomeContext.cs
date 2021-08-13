@@ -9,6 +9,7 @@ namespace HomeAPI.Data
 {
     public class HomeContext : DbContext
     {
+   
         public HomeContext(DbContextOptions<HomeContext> options) : base(options) { }
 
         public DbSet<Bulb> Bulbs { get; set; }

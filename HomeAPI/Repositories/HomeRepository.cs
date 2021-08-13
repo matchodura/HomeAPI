@@ -19,34 +19,47 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Room>> GetRooms()
-        {
-            return await _context.Rooms.Distinct().ToListAsync();
-        }
-
         public async Task<Room> GetRoom(int roomID)
         {
             return await _context.Rooms.SingleOrDefaultAsync(x => x.ID == roomID);
         }
 
-        public async Task Create(Room room)
+        public async Task<IEnumerable<Room>> GetRooms()
         {
+            return await _context.Rooms.Distinct().ToListAsync();
+        }            
+
+        public async Task<Room> Create(Room room)
+        {
+            room.DateCreated = DateTime.Now;
             _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
+
+            return await _context.Rooms.SingleOrDefaultAsync(x => x.ID == room.ID);
         }             
 
-        public async Task Update(Room room)
+        public async Task<Room> Update(Room room)
         {
-            _context.Rooms.Update(room);
+            var currentRoom = _context.Rooms.Find(room.ID);
+
+            currentRoom.DateModified = DateTime.Now;
+            currentRoom.Name = room.Name;
+            currentRoom.BoxId = room.BoxId;     
+            
+            _context.Rooms.Update(currentRoom);
             await _context.SaveChangesAsync();
+
+            return await _context.Rooms.SingleOrDefaultAsync(x => x.ID == room.ID);
         }
 
-        public async Task Delete(Room room)
+        public async Task<string> Delete(Room room)
         {
-            _context.Rooms.Remove(room);
+            var currentRoom = _context.Rooms.Find(room.ID);
+
+            _context.Rooms.Remove(currentRoom);
             await _context.SaveChangesAsync();
-        }
-                            
+            return "object deleted!";
+        }                            
 
     }
 }

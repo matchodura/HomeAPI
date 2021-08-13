@@ -25,7 +25,7 @@ namespace HomeAPI.Models
         public DateTime DateModified { get; set; }
 
         [JsonProperty("dateCreated")]
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime DateCreated { get; set; } 
 
         [JsonProperty("measureTime")]
         public DateTime MeasureTime { get; set; }

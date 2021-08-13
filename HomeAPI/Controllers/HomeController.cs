@@ -40,10 +40,10 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetRooms()
         {
-            var room = await _homeRepository.GetRooms();
-            if (room == null)
+            var rooms = await _homeRepository.GetRooms();
+            if (rooms == null)
                 return NotFound();
-            return Ok();
+            return Ok(rooms);
         }
 
 
@@ -61,21 +61,23 @@ namespace HomeAPI.Controllers
                         
         //TODO: add ability to update specific room?
         [HttpPost]
-        [Route("rooms/create")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("rooms")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Create([FromBody] Room room)
         {
             var roomExists = await ValidateIfRoomExists(room);
             if (roomExists)
                 return Conflict();
-            await _homeRepository.Create(room);
-            return Ok();
+
+            var response = await _homeRepository.Create(room);
+
+            return CreatedAtAction(nameof(GetRoom), new { id = room.ID }, response);
         }
 
 
         [HttpPut]
-        [Route("rooms/update/{id}")]
+        [Route("rooms")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Update([FromBody] Room room)
@@ -83,13 +85,14 @@ namespace HomeAPI.Controllers
             var roomExists = await ValidateIfRoomExists(room);
             if (!roomExists)
                 return NotFound();
-            await _homeRepository.Update(room);
-            return Ok();
+
+            var response = await _homeRepository.Update(room);
+            return Ok(response);
         }
 
 
         [HttpDelete]
-        [Route("rooms/delete/{id}")]
+        [Route("rooms")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Delete([FromBody] Room room)
@@ -97,8 +100,9 @@ namespace HomeAPI.Controllers
             var roomExists = await ValidateIfRoomExists(room);
             if (!roomExists)
                 return NotFound();
-            await _homeRepository.Delete(room);
-            return Ok();
+
+            var response = await _homeRepository.Delete(room);
+            return Ok(response);
         }
 
 
