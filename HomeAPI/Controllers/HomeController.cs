@@ -40,8 +40,10 @@ namespace HomeAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetRooms()
         {
-            var rooms = await _homeRepository.GetRooms();
-            return Ok(rooms);
+            var room = await _homeRepository.GetRooms();
+            if (room == null)
+                return NotFound();
+            return Ok();
         }
 
 
@@ -57,11 +59,11 @@ namespace HomeAPI.Controllers
             return Ok(room);
         }
                         
-
+        //TODO: add ability to update specific room?
         [HttpPost]
         [Route("rooms/create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Create([FromBody] Room room)
         {
             var roomExists = await ValidateIfRoomExists(room);
@@ -84,6 +86,21 @@ namespace HomeAPI.Controllers
             await _homeRepository.Update(room);
             return Ok();
         }
+
+
+        [HttpDelete]
+        [Route("rooms/delete/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> Delete([FromBody] Room room)
+        {
+            var roomExists = await ValidateIfRoomExists(room);
+            if (!roomExists)
+                return NotFound();
+            await _homeRepository.Delete(room);
+            return Ok();
+        }
+
 
         #region Helper Methods
 

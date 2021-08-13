@@ -10,14 +10,14 @@ namespace HomeAPI.Blazor.Pages
 {
     public partial class HomePage
     {
-        public List<Home> HomeList { get; set; } = new List<Home>();
+        public List<Room> RoomsList { get; set; } = new List<Room>();
         [Inject]
         public IRoomHttpRepository RoomRepo { get; set; }
         protected async override Task OnInitializedAsync()
         {
-            HomeList = await RoomRepo.GetRoomsList();
+            RoomsList = await RoomRepo.GetRoomsData();
             //just for testing
-            foreach (var room in HomeList)
+            foreach (var room in RoomsList)
             {
                 Console.WriteLine(room.Name);
             }

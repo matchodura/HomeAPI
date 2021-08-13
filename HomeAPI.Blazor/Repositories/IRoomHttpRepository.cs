@@ -9,7 +9,7 @@ namespace HomeAPI.Blazor.Repositories
     public interface IRoomHttpRepository
     {
         Task<List<Room>> GetRoomsData();
-        Task<List<Home>> GetRoomsList();
-        Task<List<Home>> UpdateRoom();
+  
+        Task<List<Room>> UpdateRoom();
     }
 }

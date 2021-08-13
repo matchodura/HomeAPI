@@ -9,13 +9,8 @@ namespace HomeAPI.Models
 {
     public class Room
     {
-        [JsonProperty("roomId")]     
-        [JsonIgnore]
-        public int ID { get; set; }
-
-        [ForeignKey("ID")]
-        [JsonProperty("ID")]
-        public int HomeID { get; set; }
+        [JsonProperty("roomId")]            
+        public int ID { get; set; }                  
 
         [JsonProperty("roomName")]
         public string Name { get; set; }
@@ -47,7 +42,6 @@ namespace HomeAPI.Models
         [JsonProperty("alarmMessage")]
         public string AlarmMessage { get; set; }
                
-        public virtual Home Home { get; set; }    
         public virtual ICollection<Box> Boxes { get; set; }
     }
 }

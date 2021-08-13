@@ -34,23 +34,8 @@ namespace HomeAPI.Blazor.Repositories
             return products;
         }
 
-        public async Task<List<Home>> GetRoomsList()
-        {
-            var response = await _client.GetAsync("home/list");
-            var content = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(content);
-            }
-
-            var products = JsonConvert.DeserializeObject<List<Home>>(content);
-            Console.WriteLine(products);
-            return products;
-        }
-
-
-        public async Task<List<Home>> UpdateRoom()
+        public async Task<List<Room>> UpdateRoom()
         {
             var response = await _client.GetAsync("home/update");
             var content = await response.Content.ReadAsStringAsync();
@@ -60,7 +45,7 @@ namespace HomeAPI.Blazor.Repositories
                 throw new ApplicationException(content);
             }
 
-            var products = JsonConvert.DeserializeObject<List<Home>>(content);
+            var products = JsonConvert.DeserializeObject<List<Room>>(content);
             Console.WriteLine(products);
             return products;
         }

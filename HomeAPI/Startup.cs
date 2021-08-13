@@ -81,6 +81,9 @@ namespace HomeAPI
             services.AddHostedService<BoxService>();
             services.AddHostedService<DataUpdateService>();
 
+            // Register the Swagger services
+            services.AddSwaggerDocument();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,6 +107,10 @@ namespace HomeAPI
                 endpoints.MapHub<ChartHub>("/chart");
                 endpoints.MapHub<MotionHub>("/notify");          
             });
+
+            // Register the Swagger generator and the Swagger UI middlewares
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }

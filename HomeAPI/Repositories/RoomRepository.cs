@@ -19,7 +19,7 @@ namespace HomeAPI.Repositories
 
         public Room GetRoomData(int roomID)
         {
-            return _context.Rooms.FirstOrDefault(x => x.HomeID == roomID);
+            return _context.Rooms.FirstOrDefault(x => x.ID == roomID);
         }
     }
 }

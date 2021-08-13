@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeAPI.Migrations
 {
     [DbContext(typeof(HomeContext))]
-    [Migration("20210808182425_Initial")]
-    partial class Initial
+    [Migration("20210813170617_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,7 +76,7 @@ namespace HomeAPI.Migrations
                     b.ToTable("Bulbs");
                 });
 
-            modelBuilder.Entity("HomeAPI.Models.DHTSensorsensor", b =>
+            modelBuilder.Entity("HomeAPI.Models.DHTSensor", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -114,93 +114,6 @@ namespace HomeAPI.Migrations
                     b.HasIndex("BoxId");
 
                     b.ToTable("DHTSensors");
-                });
-
-            modelBuilder.Entity("HomeAPI.Models.Home", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Home");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Name = "Klatka"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Name = "Korytarz_parter"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Name = "Kuchnia_parter"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Name = "DuzyPokoj_parter"
-                        },
-                        new
-                        {
-                            ID = 5,
-                            Name = "MalyPokoj_parter"
-                        },
-                        new
-                        {
-                            ID = 6,
-                            Name = "Lazienka_parter"
-                        },
-                        new
-                        {
-                            ID = 7,
-                            Name = "Sypialnia_parter"
-                        },
-                        new
-                        {
-                            ID = 8,
-                            Name = "Lazienka_pietro"
-                        },
-                        new
-                        {
-                            ID = 9,
-                            Name = "Korytarz_pietro"
-                        },
-                        new
-                        {
-                            ID = 10,
-                            Name = "DuzyPokoj_pietro"
-                        },
-                        new
-                        {
-                            ID = 11,
-                            Name = "Sypialnia_pietro"
-                        },
-                        new
-                        {
-                            ID = 12,
-                            Name = "PokojMateusza_pietro"
-                        },
-                        new
-                        {
-                            ID = 13,
-                            Name = "Strych"
-                        },
-                        new
-                        {
-                            ID = 14,
-                            Name = "Piwnica"
-                        });
                 });
 
             modelBuilder.Entity("HomeAPI.Models.LightSensor", b =>
@@ -295,9 +208,6 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("HomeID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Humidity")
                         .HasColumnType("text");
 
@@ -316,8 +226,6 @@ namespace HomeAPI.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("HomeID");
-
                     b.ToTable("Rooms");
 
                     b.HasData(
@@ -326,9 +234,8 @@ namespace HomeAPI.Migrations
                             ID = 1,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 201, DateTimeKind.Local).AddTicks(8019),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 548, DateTimeKind.Local).AddTicks(6274),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 1,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Klatka"
@@ -338,9 +245,8 @@ namespace HomeAPI.Migrations
                             ID = 2,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6459),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3796),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 2,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Korytarz_parter"
@@ -350,9 +256,8 @@ namespace HomeAPI.Migrations
                             ID = 3,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6515),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3835),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 3,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Kuchnia_parter"
@@ -362,9 +267,8 @@ namespace HomeAPI.Migrations
                             ID = 4,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6523),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3840),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 4,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "DuzyPokoj_parter"
@@ -374,9 +278,8 @@ namespace HomeAPI.Migrations
                             ID = 5,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6529),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3844),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 5,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "MalyPokoj_parter"
@@ -386,9 +289,8 @@ namespace HomeAPI.Migrations
                             ID = 6,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6535),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3847),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 6,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Lazienka_parter"
@@ -398,9 +300,8 @@ namespace HomeAPI.Migrations
                             ID = 7,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6540),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3851),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 7,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sypialnia_parter"
@@ -410,9 +311,8 @@ namespace HomeAPI.Migrations
                             ID = 8,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6546),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3854),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 8,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Lazienka_pietro"
@@ -422,9 +322,8 @@ namespace HomeAPI.Migrations
                             ID = 9,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6552),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3858),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 9,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Korytarz_pietro"
@@ -434,9 +333,8 @@ namespace HomeAPI.Migrations
                             ID = 10,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6557),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3861),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 10,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "DuzyPokoj_pietro"
@@ -446,9 +344,8 @@ namespace HomeAPI.Migrations
                             ID = 11,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6563),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3865),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 11,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sypialnia_pietro"
@@ -458,9 +355,8 @@ namespace HomeAPI.Migrations
                             ID = 12,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6569),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3868),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 12,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "PokojMateusza_pietro"
@@ -470,9 +366,8 @@ namespace HomeAPI.Migrations
                             ID = 13,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6575),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3871),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 13,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Strych"
@@ -482,9 +377,8 @@ namespace HomeAPI.Migrations
                             ID = 14,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 8, 20, 24, 25, 205, DateTimeKind.Local).AddTicks(6580),
+                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3874),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            HomeID = 14,
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Piwnica"
@@ -502,7 +396,7 @@ namespace HomeAPI.Migrations
                     b.Navigation("Rooms");
                 });
 
-            modelBuilder.Entity("HomeAPI.Models.DHTSensorsensor", b =>
+            modelBuilder.Entity("HomeAPI.Models.DHTSensor", b =>
                 {
                     b.HasOne("HomeAPI.Models.Box", "Box")
                         .WithMany("DHTSensors")
@@ -529,17 +423,6 @@ namespace HomeAPI.Migrations
                     b.Navigation("Box");
                 });
 
-            modelBuilder.Entity("HomeAPI.Models.Room", b =>
-                {
-                    b.HasOne("HomeAPI.Models.Home", "Home")
-                        .WithMany("Rooms")
-                        .HasForeignKey("HomeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Home");
-                });
-
             modelBuilder.Entity("HomeAPI.Models.Box", b =>
                 {
                     b.Navigation("DHTSensors");
@@ -547,11 +430,6 @@ namespace HomeAPI.Migrations
                     b.Navigation("LightSensors");
 
                     b.Navigation("MotionSensors");
-                });
-
-            modelBuilder.Entity("HomeAPI.Models.Home", b =>
-                {
-                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("HomeAPI.Models.Room", b =>
