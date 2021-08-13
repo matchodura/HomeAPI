@@ -74,8 +74,7 @@ namespace HomeAPI
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<IMotionSensorRepository, MotionSensorRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
-            services.AddScoped<IDHTRepository, DHTRepository>();
-            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IDHTRepository, DHTRepository>();         
             services.AddScoped<ILightSensorRepository, LightSensorRepository>();
 
             services.AddHostedService<BoxService>();
