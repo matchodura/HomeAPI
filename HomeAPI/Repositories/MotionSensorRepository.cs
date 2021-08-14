@@ -18,16 +18,6 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public List<MotionSensor> GetAllRecordsByDeviceName(string sensorName)
-        {
-            List<MotionSensor> motionSensors;
-
-            motionSensors = _context.MotionSensors.Where(i => i.Device == sensorName).ToList();
-
-            return motionSensors;
-        }
-
-
         public List<MotionSensor> GetAllRecordsById(int sensorId)
         {
             List<MotionSensor> motionSensors;
@@ -47,6 +37,12 @@ namespace HomeAPI.Repositories
             return motionSensors;
         }
 
+        public List<MotionSensor> GetRecordsByTime()
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         public MotionSensor GetLastRecordById(int sensorId, int boxId)
         {
@@ -54,25 +50,12 @@ namespace HomeAPI.Repositories
         }
 
 
-        public MotionSensor GetLastRecordByName(string sensorName, string boxName)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public List<MotionSensor> GetRecordsByTime()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void InsertRecord(int boxId, string deviceName, DateTime dateTime)
+        public void InsertRecord(int boxId, DateTime dateTime)
         {
             MotionSensor motionSensor = new MotionSensor();
 
             motionSensor.BoxId = boxId;
-            motionSensor.MeasureTime = dateTime;
-            motionSensor.Device = deviceName;
+            motionSensor.AlarmTime = dateTime;
             motionSensor.DeviceID = 1234;
 
             _context.MotionSensors.Add(motionSensor);

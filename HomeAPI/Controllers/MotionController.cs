@@ -65,24 +65,6 @@ namespace HomeAPI.Controllers
         }
 
 
-        [HttpGet]
-        [Route("records/sensors/name/{sensorName}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<MotionSensor>> GetAllRecordsByName(string sensorName)
-        {
-            var allRecords = _motionSensorRepository.GetAllRecordsByDeviceName(sensorName);
-
-            if (!allRecords.Any())
-            {                
-                return NotFound();
-            }
-            
-            return Json(allRecords);
-            
-        }
-
-
         [Route("on")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -95,7 +77,7 @@ namespace HomeAPI.Controllers
             responseMessage = $"{deviceName} {dateTime}";
 
            
-            _motionSensorRepository.InsertRecord(boxId, deviceName, dateTime);
+            _motionSensorRepository.InsertRecord(boxId, dateTime);
 
 
             await _hubContext.Clients.All.MotionOn(responseMessage);

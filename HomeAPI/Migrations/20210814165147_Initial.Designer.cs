@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeAPI.Migrations
 {
     [DbContext(typeof(HomeContext))]
-    [Migration("20210813170617_initial")]
-    partial class initial
+    [Migration("20210814165147_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,9 @@ namespace HomeAPI.Migrations
 
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime");
+
+                    b.Property<int>("LightSensorID")
+                        .HasColumnType("int");
 
                     b.Property<int>("MotionSensorId")
                         .HasColumnType("int");
@@ -94,10 +97,7 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Device")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("DeviceID")
+                    b.Property<int>("DeviceID")
                         .HasColumnType("int");
 
                     b.Property<float>("Humidity")
@@ -134,10 +134,7 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Device")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("DeviceID")
+                    b.Property<int>("DeviceID")
                         .HasColumnType("int");
 
                     b.Property<float>("Luxes")
@@ -162,6 +159,9 @@ namespace HomeAPI.Migrations
                     b.Property<string>("AlarmMessage")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("AlarmTime")
+                        .HasColumnType("datetime");
+
                     b.Property<int?>("BoxId")
                         .HasColumnType("int");
 
@@ -171,14 +171,8 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Device")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("DeviceID")
+                    b.Property<int>("DeviceID")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("MeasureTime")
-                        .HasColumnType("datetime");
 
                     b.HasKey("ID");
 
@@ -234,7 +228,7 @@ namespace HomeAPI.Migrations
                             ID = 1,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 548, DateTimeKind.Local).AddTicks(6274),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -245,7 +239,7 @@ namespace HomeAPI.Migrations
                             ID = 2,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3796),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -256,7 +250,7 @@ namespace HomeAPI.Migrations
                             ID = 3,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3835),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -267,7 +261,7 @@ namespace HomeAPI.Migrations
                             ID = 4,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3840),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -278,7 +272,7 @@ namespace HomeAPI.Migrations
                             ID = 5,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3844),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -289,7 +283,7 @@ namespace HomeAPI.Migrations
                             ID = 6,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3847),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -300,7 +294,7 @@ namespace HomeAPI.Migrations
                             ID = 7,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3851),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -311,7 +305,7 @@ namespace HomeAPI.Migrations
                             ID = 8,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3854),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -322,7 +316,7 @@ namespace HomeAPI.Migrations
                             ID = 9,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3858),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -333,7 +327,7 @@ namespace HomeAPI.Migrations
                             ID = 10,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3861),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -344,7 +338,7 @@ namespace HomeAPI.Migrations
                             ID = 11,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3865),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -355,7 +349,7 @@ namespace HomeAPI.Migrations
                             ID = 12,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3868),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -366,7 +360,7 @@ namespace HomeAPI.Migrations
                             ID = 13,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3871),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -377,7 +371,7 @@ namespace HomeAPI.Migrations
                             ID = 14,
                             BoxId = 0,
                             CreatedBy = "Mateusz",
-                            DateCreated = new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3874),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Luxes = 0f,
                             MeasureTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

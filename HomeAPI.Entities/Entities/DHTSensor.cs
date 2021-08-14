@@ -9,15 +9,14 @@ namespace HomeAPI.Models
 {
     public class DHTSensor
     {
+        [JsonProperty("recordID")]
         public int ID { get; set; }
 
         [ForeignKey("boxId")]
-        public int? BoxId { get; set; }              
+        public int? BoxId { get; set; }
 
-        [JsonProperty("device")]
-        public string Device { get; set; }
-
-        public int? DeviceID { get; set; }
+        [JsonProperty("deviceID")]
+        public int DeviceID { get; set; }           
 
         [JsonProperty("temperature")]
         public float Temperature { get; set; }

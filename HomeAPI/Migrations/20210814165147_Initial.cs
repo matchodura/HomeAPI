@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace HomeAPI.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,7 +58,8 @@ namespace HomeAPI.Migrations
                     DateModified = table.Column<DateTime>(type: "datetime", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime", nullable: false),
                     DHTId = table.Column<int>(type: "int", nullable: false),
-                    MotionSensorId = table.Column<int>(type: "int", nullable: false)
+                    MotionSensorId = table.Column<int>(type: "int", nullable: false),
+                    LightSensorID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,8 +79,7 @@ namespace HomeAPI.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     BoxId = table.Column<int>(type: "int", nullable: true),
-                    Device = table.Column<string>(type: "text", nullable: true),
-                    DeviceID = table.Column<int>(type: "int", nullable: true),
+                    DeviceID = table.Column<int>(type: "int", nullable: false),
                     Temperature = table.Column<float>(type: "float", nullable: false),
                     Humidity = table.Column<float>(type: "float", nullable: false),
                     CalledBy = table.Column<string>(type: "text", nullable: true),
@@ -105,8 +105,7 @@ namespace HomeAPI.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     BoxId = table.Column<int>(type: "int", nullable: true),
-                    Device = table.Column<string>(type: "text", nullable: true),
-                    DeviceID = table.Column<int>(type: "int", nullable: true),
+                    DeviceID = table.Column<int>(type: "int", nullable: false),
                     Luxes = table.Column<float>(type: "float", nullable: false),
                     CalledBy = table.Column<string>(type: "text", nullable: true),
                     MeasureTime = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -131,10 +130,9 @@ namespace HomeAPI.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     BoxId = table.Column<int>(type: "int", nullable: true),
-                    Device = table.Column<string>(type: "text", nullable: true),
-                    DeviceID = table.Column<int>(type: "int", nullable: true),
+                    DeviceID = table.Column<int>(type: "int", nullable: false),
                     AlarmMessage = table.Column<string>(type: "text", nullable: true),
-                    MeasureTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    AlarmTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     DateModified = table.Column<DateTime>(type: "datetime", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
@@ -154,20 +152,20 @@ namespace HomeAPI.Migrations
                 columns: new[] { "ID", "AlarmMessage", "BoxId", "CreatedBy", "DateCreated", "DateModified", "Humidity", "Luxes", "MeasureTime", "Name", "Temperature" },
                 values: new object[,]
                 {
-                    { 1, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 548, DateTimeKind.Local).AddTicks(6274), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Klatka", null },
-                    { 2, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3796), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Korytarz_parter", null },
-                    { 3, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3835), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kuchnia_parter", null },
-                    { 4, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3840), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "DuzyPokoj_parter", null },
-                    { 5, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3844), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MalyPokoj_parter", null },
-                    { 6, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3847), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lazienka_parter", null },
-                    { 7, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3851), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sypialnia_parter", null },
-                    { 8, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3854), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lazienka_pietro", null },
-                    { 9, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3858), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Korytarz_pietro", null },
-                    { 10, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3861), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "DuzyPokoj_pietro", null },
-                    { 11, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3865), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sypialnia_pietro", null },
-                    { 12, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3868), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "PokojMateusza_pietro", null },
-                    { 13, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3871), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Strych", null },
-                    { 14, null, 0, "Mateusz", new DateTime(2021, 8, 13, 19, 6, 16, 551, DateTimeKind.Local).AddTicks(3874), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Piwnica", null }
+                    { 1, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Klatka", null },
+                    { 2, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Korytarz_parter", null },
+                    { 3, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kuchnia_parter", null },
+                    { 4, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "DuzyPokoj_parter", null },
+                    { 5, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MalyPokoj_parter", null },
+                    { 6, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lazienka_parter", null },
+                    { 7, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sypialnia_parter", null },
+                    { 8, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lazienka_pietro", null },
+                    { 9, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Korytarz_pietro", null },
+                    { 10, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "DuzyPokoj_pietro", null },
+                    { 11, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sypialnia_pietro", null },
+                    { 12, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "PokojMateusza_pietro", null },
+                    { 13, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Strych", null },
+                    { 14, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Piwnica", null }
                 });
 
             migrationBuilder.CreateIndex(

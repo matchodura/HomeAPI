@@ -66,7 +66,6 @@ namespace HomeAPI.Repositories
                 dht = oldDht;
                 dht.BoxId = newDHT.BoxId;
                 dht.DeviceID = newDHT.NewId;
-                dht.Device = newDHT.Device;
                 dht.DateModified = newDHT.DateModified;
 
                 _context.DHTSensors.Update(dht);

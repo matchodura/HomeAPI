@@ -32,6 +32,9 @@ namespace HomeAPI.Models
         [JsonProperty("motionSensorID")]
         public int MotionSensorId { get; set; }
 
+        [JsonProperty("lightSensorID")]
+        public int LightSensorID { get; set; }
+
         public virtual Room Rooms { get; set; }
 
         public virtual ICollection<DHTSensor> DHTSensors { get; set; }
