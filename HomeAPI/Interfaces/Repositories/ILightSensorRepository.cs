@@ -8,10 +8,40 @@ namespace HomeAPI.Interfaces.Repositories
 {
     public interface ILightSensorRepository
     {
-        public List<LightSensor> GetAllValues();
-        public List<LightSensor> GetValuesByDate(TimeFilter timeFilter);
-        public LightSensor GetLastRecord();
-        public Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT);
-        public List<LightSensor> GetRowsBySensorId(int id);
+        /// <summary>
+        /// Get all readings in database
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<LightSensor>> GetAllValues();
+
+        /// <summary>
+        /// Get all readings in database for specific time
+        /// </summary>
+        /// <param name="timeFilter"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<LightSensor>> GetValuesByDate(TimeFilter timeFilter);
+
+        /// <summary>
+        /// Get all reading for specified sensor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<LightSensor>> GetValuesForSpecificSensor(int id);
+
+        /// <summary>
+        /// Get last reading of specified sensor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<LightSensor> GetLastRecord(int id);
+
+        /// <summary>
+        /// Get last readings of all sensors
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<LightSensor>> GetLastRecords();
+
+       // public Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT);
+
     }
 }

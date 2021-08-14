@@ -8,10 +8,41 @@ namespace HomeAPI.Interfaces.Repositories
 {
     public interface IDHTRepository
     {      
-        public List<DHTSensor> GetAllValues();
-        public List<DHTSensor> GetValuesByDate(TimeFilter timeFilter);
-        public DHTSensor GetLastRecord();
-        public Task<List<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT);
-        public List<DHTSensor> GetRowsBySensorId(int id);
+        /// <summary>
+        /// Get all readings in database
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<DHTSensor>> GetAllValues();
+
+        /// <summary>
+        /// Get all readings in database for specific time
+        /// </summary>
+        /// <param name="timeFilter"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<DHTSensor>> GetValuesByDate(TimeFilter timeFilter);
+
+        /// <summary>
+        /// Get all reading for specified sensor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<DHTSensor>> GetValuesForSpecificSensor(int id);
+
+        /// <summary>
+        /// Get last reading of specified sensor
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Task<DHTSensor> GetLastRecord(int id);
+
+        /// <summary>
+        /// Get last readings of all sensors
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<DHTSensor>> GetLastRecords();
+
+        //TODO
+        public Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT);
+
     }
 }

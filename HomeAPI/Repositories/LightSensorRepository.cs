@@ -18,67 +18,78 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public List<LightSensor> GetAllRecords()
+        public async Task<IEnumerable<LightSensor>> GetAllValues()
         {
-            throw new NotImplementedException();
+            return await _context.LightSensors.Distinct().ToListAsync();
         }
 
-        public LightSensor GetLastRecord()
+        public async Task<IEnumerable<LightSensor>> GetValuesByDate(TimeFilter timeFilter)
         {
-            return _context.LightSensors.OrderByDescending(c => c.ID).First();
-        }
-
-        public List<LightSensor> GetAllValues()
-        {
-            return _context.LightSensors.Distinct().ToList();
-        }
-
-        public List<LightSensor> GetValuesByDate(TimeFilter timeFilter)
-        {
-            string sortOrder = timeFilter.SortOrder.ToUpper();
+            string v = timeFilter.SortOrder.ToUpper();
+            string sortOrder = v;
             List<LightSensor> results = new List<LightSensor>();
 
             if (sortOrder == "DESC")
             {
-                results = _context.LightSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results = await _context.LightSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderByDescending(p => p.MeasureTime)
-                                       .ToList();
+                                       .ToListAsync();
             }
             else
             {
-                results = _context.LightSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results = await _context.LightSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderBy(p => p.MeasureTime)
-                                       .ToList();
+                                       .ToListAsync();
             }
 
             return results;
 
         }
 
-        public async Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
+        public async Task<IEnumerable<LightSensor>> GetValuesForSpecificSensor(int id)
         {
-            var DHTSensors = GetRowsBySensorId(oldId);
-
-            foreach (var oldDht in DHTSensors)
-            {
-                LightSensor dht = new LightSensor();
-                dht = oldDht;
-                dht.BoxId = newDHT.BoxId;
-                dht.DeviceID = newDHT.NewId;
-                dht.DateModified = newDHT.DateModified;
-
-                _context.LightSensors.Update(dht);
-                _context.SaveChanges();
-            }
-
-
-            var results = await _context.LightSensors.ToListAsync();
-            return results;
+            return await _context.LightSensors.Where(x => x.DeviceID == id).ToListAsync();
         }
 
-        public List<LightSensor> GetRowsBySensorId(int id)
+        public async Task<LightSensor> GetLastRecord(int id)
         {
-            return _context.LightSensors.Where(x => x.DeviceID == id).ToList();
+            return await _context.LightSensors.Where(x => x.DeviceID == id).OrderByDescending(c => c.ID).FirstAsync();
         }
+
+        public async Task<IEnumerable<LightSensor>> GetLastRecords()
+        {
+            return await _context.LightSensors
+                          .GroupBy(x => x.DeviceID)
+                          .Select(g => g.Last())
+                          .ToListAsync();
+        }
+
+
+        //public Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public async Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
+        //{
+        //    var DHTSensors = GetRowsBySensorId(oldId);
+
+        //    foreach (var oldDht in DHTSensors)
+        //    {
+        //        LightSensor dht = new LightSensor();
+        //        dht = oldDht;
+        //        dht.BoxId = newDHT.BoxId;
+        //        dht.DeviceID = newDHT.NewId;
+        //        dht.DateModified = newDHT.DateModified;
+
+        //        _context.LightSensors.Update(dht);
+        //        _context.SaveChanges();
+        //    }
+
+
+        //    var results = await _context.LightSensors.ToListAsync();
+        //    return results;
+        //}
+
     }
 }

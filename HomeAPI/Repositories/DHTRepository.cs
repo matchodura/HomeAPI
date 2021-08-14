@@ -19,67 +19,78 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public List<DHTSensor> GetAllRecords()
+        public async Task<IEnumerable<DHTSensor>> GetAllValues()
         {
-            throw new NotImplementedException();
+            return await _context.DHTSensors.Distinct().ToListAsync();
         }
 
-        public DHTSensor GetLastRecord()
-        {
-            return _context.DHTSensors.OrderByDescending(c => c.ID).First();
-        }
-
-        public List<DHTSensor> GetAllValues()
-        {
-            return _context.DHTSensors.Distinct().ToList();
-        }
-
-        public List<DHTSensor> GetValuesByDate(TimeFilter timeFilter)
+        public async Task<IEnumerable<DHTSensor>> GetValuesByDate(TimeFilter timeFilter)
         {
             string sortOrder = timeFilter.SortOrder.ToUpper();
             List<DHTSensor> results = new List<DHTSensor>();
 
             if (sortOrder == "DESC")
             {
-                results = _context.DHTSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results = await _context.DHTSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderByDescending(p => p.MeasureTime)
-                                       .ToList();
+                                       .ToListAsync();
             }
             else
             {
-                results = _context.DHTSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
+                results =await  _context.DHTSensors.Where(i => i.MeasureTime.Date >= timeFilter.DateBefore.Date && i.MeasureTime.Date <= timeFilter.DateAfter)
                                        .OrderBy(p => p.MeasureTime)
-                                       .ToList();
+                                       .ToListAsync();
             }
-          
+
             return results;
-           
+
         }
 
-        public async Task<List<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
+        public async Task<IEnumerable<DHTSensor>> GetValuesForSpecificSensor(int id)
         {
-            var DHTSensors = GetRowsBySensorId(oldId);
-
-            foreach (var oldDht in DHTSensors)
-            {
-                DHTSensor dht = new DHTSensor();
-                dht = oldDht;
-                dht.BoxId = newDHT.BoxId;
-                dht.DeviceID = newDHT.NewId;
-                dht.DateModified = newDHT.DateModified;
-
-                _context.DHTSensors.Update(dht);
-                _context.SaveChanges();
-            }
-        
-
-            var results = await _context.DHTSensors.ToListAsync();
-            return results;
+            return await _context.DHTSensors.Where(x => x.DeviceID == id).ToListAsync();
         }
 
-        public List<DHTSensor> GetRowsBySensorId(int id)
+        public async Task<DHTSensor> GetLastRecord(int id)
         {
-            return _context.DHTSensors.Where(x => x.DeviceID == id).ToList();
+            return await _context.DHTSensors.Where(x=> x.DeviceID == id).OrderByDescending(c => c.ID).FirstAsync();
         }
+
+        public async Task<IEnumerable<DHTSensor>> GetLastRecords()
+        {       
+
+            return await _context.DHTSensors
+                          .GroupBy(x => x.DeviceID)
+                          .Select(g => g.Last())
+                          .ToListAsync();
+        }
+
+        public Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        //public async Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
+        //{
+        //    var DHTSensors = GetValuesForSpecificSensor(oldId);
+
+        //    foreach (var oldDht in DHTSensors)
+        //    {
+        //        DHTSensor dht = new DHTSensor();
+        //        dht = oldDht;
+        //        dht.BoxId = newDHT.BoxId;
+        //        dht.DeviceID = newDHT.NewId;
+        //        dht.DateModified = newDHT.DateModified;
+
+        //        _context.DHTSensors.Update(dht);
+        //        _context.SaveChanges();
+        //    }
+
+
+        //    var results = await _context.DHTSensors.ToListAsync();
+        //    return results;
+        //}
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HomeAPI.Data;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,37 +19,33 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public List<MotionSensor> GetAllRecordsById(int sensorId)
+        public async Task<IEnumerable<MotionSensor>> GetAllValues()
         {
-            List<MotionSensor> motionSensors;
-
-            motionSensors = _context.MotionSensors.Where(i => i.DeviceID == sensorId).ToList();
-
-            return motionSensors;
+            return await _context.MotionSensors.Distinct().ToListAsync();
         }
 
-
-        public List<MotionSensor> GetAllRecordsByBoxId(int boxId)
-        {
-            List<MotionSensor> motionSensors;
-
-            motionSensors = _context.MotionSensors.Where(i => i.BoxId == boxId).ToList();
-
-            return motionSensors;
-        }
-
-        public List<MotionSensor> GetRecordsByTime()
+        public Task<IEnumerable<MotionSensor>> GetValuesByDate(TimeFilter timeFilter)
         {
             throw new NotImplementedException();
         }
 
-
-
-        public MotionSensor GetLastRecordById(int sensorId, int boxId)
+        public async Task<IEnumerable<MotionSensor>> GetValuesForSpecificSensor(int id)
         {
-            throw new NotImplementedException();
+            return await _context.MotionSensors.Where(x => x.DeviceID == id).ToListAsync();
         }
 
+        public async Task<MotionSensor> GetLastRecord(int id)
+        {
+            return await _context.MotionSensors.Where(x => x.DeviceID == id).OrderByDescending(c => c.ID).FirstAsync();
+        }
+
+        public async Task<IEnumerable<MotionSensor>> GetLastRecords()
+        {
+            return await _context.MotionSensors
+                          .GroupBy(x => x.DeviceID)
+                          .Select(g => g.Last())
+                          .ToListAsync();
+        }
 
         public void InsertRecord(int boxId, DateTime dateTime)
         {
