@@ -16,12 +16,11 @@ using System.Threading.Tasks;
 namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class MotionController : Controller
+    public class MotionController : Controller, ISensor, IMotionSensor
     {
         private readonly IHubContext<MotionHub, INotifyHubClient> _hubContext;
         private readonly HomeContext _context;
         private readonly IMotionSensorRepository _motionSensorRepository;
-
 
         public MotionController(IHubContext<MotionHub, INotifyHubClient> hubContext, HomeContext context, IMotionSensorRepository motionSensorRepository)
         {
@@ -30,88 +29,108 @@ namespace HomeAPI.Controllers
             _motionSensorRepository = motionSensorRepository;
         }
 
-
         [HttpGet]
-        [Route("records/box/{boxId}")]
+        [Route("motion")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<MotionSensor>> GetAllRecordsByBoxId(int boxId)
-        {          
-            var allRecords = _motionSensorRepository.GetAllRecordsByBoxId(boxId);
-
-            if (!allRecords.Any())
-            {
-                return NotFound();
-            }
-
-            return Json(allRecords);
-        }
-
-
-        [HttpGet]
-        [Route("records/sensors/id/{sensorId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<MotionSensor>> GetAllRecordsById(int sensorId)
+        public async Task<IActionResult> GetValues()
         {
-            var allRecords = _motionSensorRepository.GetAllRecordsById(sensorId);
-
-            if (!allRecords.Any())
-            {
+            var readings = await _motionSensorRepository.GetAllValues();
+            if (readings == null)
                 return NotFound();
-            }
-
-            return Json(allRecords);
+            return Ok(readings);
         }
 
+        [HttpGet]
+        [Route("motion/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetValuesForSpecificSensor(int id)
+        {
+            var readings = await _motionSensorRepository.GetValuesForSpecificSensor(id);
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
 
+        [HttpGet]
+        [Route("motion/last")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLastRecords()
+        {
+            var readings = await _motionSensorRepository.GetLastRecords();
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        [HttpGet]
+        [Route("motion/last/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLastRecord(int id)
+        {
+            var readings = await _motionSensorRepository.GetLastRecord(id);
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        //TODO:
+        [HttpGet]
+        [Route("motion/filtered")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IEnumerable<IActionResult>> GetFilteredResults(TimeFilter timeFilter)
+        {
+            var readings = await _motionSensorRepository.GetValuesByDate(timeFilter);
+
+            return (IEnumerable<IActionResult>)Ok(readings);
+        }
+
+        [HttpPost]
         [Route("on")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<string>> MotionOn(string deviceName, int boxId)
+        public async Task<IActionResult> MotionOn(string deviceName, int boxId)
         {
             string responseMessage = "";
 
             DateTime dateTime = DateTime.Now;
             
             responseMessage = $"{deviceName} {dateTime}";
-
            
             _motionSensorRepository.InsertRecord(boxId, dateTime);
 
+            await _hubContext.Clients.All.MotionOn(responseMessage);                       
 
-            await _hubContext.Clients.All.MotionOn(responseMessage);
-
-           
-
-            return responseMessage;
+            return Ok(responseMessage);
         }
 
 
+        [HttpPost]
         [Route("off")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<string>> MotionOff(string deviceName, int boxId)
+        public async Task<IActionResult> MotionOff(string deviceName, int boxId)
         {
             string responseMessage = "";
 
             DateTime dateTime = DateTime.Now;
 
-            responseMessage = $"{deviceName} {dateTime}";
-                      
+            responseMessage = $"{deviceName} {dateTime}";                      
 
             await _hubContext.Clients.All.MotionOff($"{deviceName} motion has stopped!");
 
-            return responseMessage;
+            return Ok(responseMessage);
         }
-
-
-
 
         /// <summary>
         /// changes url to esp8266 motion sensor GET request back, when something is found in its range
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
         [Route("ChangeUrl")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -151,6 +170,6 @@ namespace HomeAPI.Controllers
 
             return Json(responseMessage);
         }
-              
+
     }
 }

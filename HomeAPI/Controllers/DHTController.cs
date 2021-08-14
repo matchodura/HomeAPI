@@ -15,7 +15,7 @@ namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DHTController : Controller, IDHTSensorsensor
+    public class DHTController : Controller, ISensor
     {
 
         private readonly HomeContext _context;
@@ -27,104 +27,121 @@ namespace HomeAPI.Controllers
             _dhtRepository = dhtRepository;
         }
 
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        [Route("GetValues")]
+        [HttpGet]
+        [Route("dht")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> CheckDHT()
+        public async Task<IActionResult> GetValues()
         {
-            string responseMessage = "";      
-            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
-            int timeout = 10;
-
-            var client = new HttpClient() {
-
-                BaseAddress = new Uri(clientAdress),
-                Timeout = TimeSpan.FromSeconds(timeout)            
-            };
-
-            DHTSensor dht = new DHTSensor();
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values");
-                response.EnsureSuccessStatusCode();
-                responseMessage = await response.Content.ReadAsStringAsync();
-
-                if (response != null)
-                {                 
-                    dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);                                       
-                }
-
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-
-                responseMessage = e.Message;                                
-            }
-
-
-           //box id will be changed in the future
-            dht.BoxId = 1;
-            dht.MeasureTime = DateTime.Now;
-            dht.CalledBy = "user";
-
-            _context.DHTSensors.Add(dht);
-            _context.SaveChanges();
-
-           
-            return Json(responseMessage);
+            var readings = await _dhtRepository.GetAllValues();
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
         }
-
-
-        [Route("GetLastRecord")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> GetLastRecord()
-        {
-            var lastRecord = _context.DHTSensors.OrderByDescending(p => p.MeasureTime)
-                       .FirstOrDefault();
-
-            return Json(lastRecord);
-        }
-
 
         [HttpGet]
-        [Route("GetDHTSensors")]
+        [Route("dht/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHTSensor>> GetDHTSensors()
+        public async Task<IActionResult> GetValuesForSpecificSensor(int id)
         {
-            List<DHTSensor> DHTSensors = _dhtRepository.GetAllValues();
-
-            return Json(DHTSensors);
+            var readings = await _dhtRepository.GetValuesForSpecificSensor(id);
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
         }
 
+        [HttpGet]
+        [Route("dht/last")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLastRecords()
+        {
+            var readings = await _dhtRepository.GetLastRecords();
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        [HttpGet]
+        [Route("dht/last/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLastRecord(int id)
+        {
+            var readings = await _dhtRepository.GetLastRecord(id);
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        //TODO
+        [HttpPost]
+        [Route("dht/filtered")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IEnumerable<IActionResult>> GetFilteredResults([FromBody] TimeFilter timeFilter)
+        {
+            var readings = await _dhtRepository.GetValuesByDate(timeFilter);
+
+            return (IEnumerable<IActionResult>)Ok(readings);
+        }
+
+        //[Route("dht/current")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //public Task<IEnumerable<IActionResult>> GetCurrentValues()
+        //{
+        //    string responseMessage = "";      
+        //    string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
+        //    int timeout = 10;
+
+        //    var client = new HttpClient() {
+
+        //        BaseAddress = new Uri(clientAdress),
+        //        Timeout = TimeSpan.FromSeconds(timeout)            
+        //    };
+
+        //    DHTSensor dht = new DHTSensor();
+
+        //    try
+        //    {
+        //        HttpResponseMessage response = await client.GetAsync(clientAdress + "/values");
+        //        response.EnsureSuccessStatusCode();
+        //        responseMessage = await response.Content.ReadAsStringAsync();
+
+        //        if (response != null)
+        //        {                 
+        //            dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);                                       
+        //        }
+
+        //    }
+        //    catch (HttpRequestException e)
+        //    {
+        //        Console.WriteLine("\nException Caught!");
+        //        Console.WriteLine("Message :{0} ", e.Message);
+
+        //        responseMessage = e.Message;                                
+        //    }
+
+
+        //   //box id will be changed in the future
+        //    dht.BoxId = 1;
+        //    dht.MeasureTime = DateTime.Now;
+        //    dht.CalledBy = "user";
+
+        //    _context.DHTSensors.Add(dht);
+        //    _context.SaveChanges();
+
+
+        //    return Json(responseMessage);
+        //}
 
         [HttpPost]
-        [Route("GetDHTSensors/Filtered")]
+        [Route("dht/current/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHTSensor>> GetDHTSensors([FromBody] TimeFilter timeFilter)
-        {
-            List<DHTSensor> DHTSensors = _dhtRepository.GetValuesByDate(timeFilter);
-
-            return Json(DHTSensors);
-        }
-
-        [HttpGet]
-        [Route("CurrentValues")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> GetCurrentValue()
+        public async Task<IActionResult> GetCurrentValuesForSpecificSensor(int id)
         {
             string responseMessage = "";
             string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
@@ -132,6 +149,7 @@ namespace HomeAPI.Controllers
 
             var client = new HttpClient()
             {
+
                 BaseAddress = new Uri(clientAdress),
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
@@ -146,27 +164,33 @@ namespace HomeAPI.Controllers
 
                 if (response != null)
                 {
-
                     dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);
                 }
 
             }
-
             catch (HttpRequestException e)
             {
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
 
                 responseMessage = e.Message;
-
             }
 
+
+            //box id will be changed in the future
+            dht.BoxId = 1;
             dht.MeasureTime = DateTime.Now;
-            return Json(dht);
+            dht.CalledBy = "user";
+
+            _context.DHTSensors.Add(dht);
+            _context.SaveChanges();
+
+
+            return Ok(responseMessage);
         }
 
         [HttpPost]
-        [Route("config")]
+        [Route("dht/config")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<DHTSensor> ChangeConfig([FromBody] DHTConfig newDHT)
@@ -175,6 +199,12 @@ namespace HomeAPI.Controllers
             //TODO wysylanie do node
             var updatedDHT = _dhtRepository.UpdateSettings(oldId, newDHT);
             return Json(updatedDHT);
+        }
+
+        //TODO:
+        public Task<IEnumerable<IActionResult>> GetCurrentValues()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Interfaces;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,7 @@ namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LightSensorController : Controller
+    public class LightSensorController : Controller, ISensor
     {
         private readonly HomeContext _context;
         private readonly ILightSensorRepository _lightSensorRepository;
@@ -25,17 +26,70 @@ namespace HomeAPI.Controllers
             _lightSensorRepository = dhtRepository;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        [Route("light")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetValues()
         {
-            return View();
+            var readings = await _lightSensorRepository.GetAllValues();
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        [HttpGet]
+        [Route("light/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetValuesForSpecificSensor(int id)
+        {
+            var readings = await _lightSensorRepository.GetValuesForSpecificSensor(id);
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        [HttpGet]
+        [Route("light/last/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLastRecord(int id)
+        {
+            var readings = await _lightSensorRepository.GetLastRecord(id);
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        [HttpGet]
+        [Route("light/last")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLastRecords()
+        {
+            var readings = await _lightSensorRepository.GetLastRecords();
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
+        //TODO
+        [HttpPost]
+        [Route("light/filtered")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public Task<IEnumerable<IActionResult>> GetFilteredResults(TimeFilter timeFilter)
+        {
+            throw new NotImplementedException();
         }
 
         //gets current values
         [HttpGet]
-        [Route("CurrentValues")]
+        [Route("light/current/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> GetCurrentValue()
+        public async Task<IActionResult> GetCurrentValuesForSpecificSensor(int id)
         {
             string responseMessage = "";
             string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
@@ -126,5 +180,7 @@ namespace HomeAPI.Controllers
 
             return Json(responseMessage);
         }
+
+
     }
 }

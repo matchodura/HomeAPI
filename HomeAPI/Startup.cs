@@ -70,8 +70,7 @@ namespace HomeAPI
             services.AddControllersWithViews().AddNewtonsoftJson();
           
             services.AddRazorPages();
-
-           // services.AddScoped<HomeContext, HomeContext>();
+                  
             services.AddScoped<IHomeRepository, HomeRepository>();
             services.AddScoped<IMotionSensorRepository, MotionSensorRepository>();
             services.AddScoped<IBoxRepository, BoxRepository>();
@@ -79,7 +78,7 @@ namespace HomeAPI
             services.AddScoped<ILightSensorRepository, LightSensorRepository>();
 
             services.AddHostedService<BoxService>();
-            services.AddHostedService<DataUpdateService>();
+            //services.AddHostedService<DataUpdateService>();
 
             // Register the Swagger services
             services.AddSwaggerDocument();
