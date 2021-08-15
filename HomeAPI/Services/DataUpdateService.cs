@@ -44,8 +44,8 @@ namespace HomeAPI.Services
             _logger.LogInformation("Timed Hosted Service running.");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                //TimeSpan.FromMinutes(15));
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromMinutes(15));
+            //TimeSpan.FromSeconds(5));
 
             return Task.CompletedTask;
         }

@@ -37,7 +37,10 @@ namespace HomeAPI.Models
         public string Humidity { get; set; }
 
         [JsonProperty("luxes")]
-        public float Luxes { get; set; }     
+        public float Luxes { get; set; }
+
+        [JsonProperty("rain")]
+        public float Rain { get; set; }
 
         [JsonProperty("alarmMessage")]
         public string AlarmMessage { get; set; }

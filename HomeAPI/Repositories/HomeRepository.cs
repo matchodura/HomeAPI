@@ -52,6 +52,21 @@ namespace HomeAPI.Repositories
             return await _context.Rooms.SingleOrDefaultAsync(x => x.ID == room.ID);
         }
 
+        public async Task<Room> UpdateRecords(Room room)
+        {
+            var currentRoom = _context.Rooms.Find(room.ID);
+
+            currentRoom.MeasureTime = DateTime.Now;
+          
+       
+
+            _context.Rooms.Update(currentRoom);
+            await _context.SaveChangesAsync();
+
+            return await _context.Rooms.SingleOrDefaultAsync(x => x.ID == room.ID);
+        }
+
+
         public async Task<string> Delete(Room room)
         {
             var currentRoom = _context.Rooms.Find(room.ID);

@@ -37,6 +37,13 @@ namespace HomeAPI.Interfaces.Repositories
         public Task<Room> Update(Room room);
 
         /// <summary>
+        /// Updates specified room with data records
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <returns></returns>
+        public Task<Room> UpdateRecords(Room room);
+
+        /// <summary>
         /// Deletes specified room
         /// </summary>
         /// <param name="roomName"></param>
