@@ -27,8 +27,4 @@
     <ProjectReference Include="..\HomeAPI.Entities\HomeAPI.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

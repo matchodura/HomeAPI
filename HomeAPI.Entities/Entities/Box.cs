@@ -40,7 +40,7 @@ namespace HomeAPI.Models
         public virtual ICollection<DHTSensor> DHTSensors { get; set; }
 
         public virtual ICollection<MotionSensor> MotionSensors { get; set; }
-
         public virtual ICollection<LightSensor> LightSensors { get; set; }
+        public virtual ICollection<RainSensor> RainSensors { get; set; }
     }
 }

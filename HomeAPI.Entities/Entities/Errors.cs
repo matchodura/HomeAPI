@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeAPI.Entities.Entities
-{
-    public class Errors
+namespace HomeAPI.Models
+{ 
+    public class Error
     {
         public int ID { get; set; }
 

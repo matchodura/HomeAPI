@@ -3,14 +3,16 @@ using System;
 using HomeAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HomeAPI.Migrations
 {
     [DbContext(typeof(HomeContext))]
-    partial class HomeContextModelSnapshot : ModelSnapshot
+    [Migration("20210815120048_update-rain2")]
+    partial class updaterain2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace HomeAPI.Migrations
                             BoxName = "box_1",
                             CreatedBy = "Mateusz",
                             DHTId = 0,
-                            DateCreated = new DateTime(2021, 8, 15, 14, 5, 34, 88, DateTimeKind.Local).AddTicks(4782),
+                            DateCreated = new DateTime(2021, 8, 15, 14, 0, 47, 500, DateTimeKind.Local).AddTicks(2100),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LightSensorID = 0,
                             MotionSensorId = 0,
@@ -72,7 +74,7 @@ namespace HomeAPI.Migrations
                             BoxName = "box_2",
                             CreatedBy = "Mateusz",
                             DHTId = 0,
-                            DateCreated = new DateTime(2021, 8, 15, 14, 5, 34, 90, DateTimeKind.Local).AddTicks(9941),
+                            DateCreated = new DateTime(2021, 8, 15, 14, 0, 47, 502, DateTimeKind.Local).AddTicks(8735),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LightSensorID = 0,
                             MotionSensorId = 0,
@@ -141,23 +143,6 @@ namespace HomeAPI.Migrations
                     b.HasIndex("BoxID");
 
                     b.ToTable("DHTSensors");
-                });
-
-            modelBuilder.Entity("HomeAPI.Models.Error", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("ErrorMessage")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ErrorTime")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Errors");
                 });
 
             modelBuilder.Entity("HomeAPI.Models.LightSensor", b =>
@@ -257,9 +242,6 @@ namespace HomeAPI.Migrations
 
                     b.Property<int>("Rain")
                         .HasColumnType("int");
-
-                    b.Property<string>("RainStatus")
-                        .HasColumnType("text");
 
                     b.Property<string>("SensorType")
                         .HasColumnType("text");

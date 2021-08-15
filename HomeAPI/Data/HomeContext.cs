@@ -11,18 +11,14 @@ namespace HomeAPI.Data
     {
    
         public HomeContext(DbContextOptions<HomeContext> options) : base(options) { }
-
         public DbSet<Bulb> Bulbs { get; set; }
-
         public DbSet<DHTSensor> DHTSensors { get; set; }
-
         public DbSet<Box> Boxes { get; set; }
-
         public DbSet<MotionSensor> MotionSensors { get; set; }
-
         public DbSet<Room> Rooms { get; set; }
-
         public DbSet<LightSensor> LightSensors { get; set; }
+        public DbSet<RainSensor> RainSensors { get; set; }
+        public DbSet<Error> Errors { get; set; }
                     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -33,10 +33,11 @@ namespace HomeAPI.Services
         {
             _logger.LogInformation("Timed Hosted Service running.");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,            
-          
-                //TimeSpan.FromMinutes(15));
-                TimeSpan.FromMinutes(1));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero,
+
+                TimeSpan.FromMinutes(15));
+            //TimeSpan.FromMinutes(1));
+
 
             return Task.CompletedTask;
         }
@@ -56,9 +57,20 @@ namespace HomeAPI.Services
                     //dbContext.Add(lightSensorRecord);
                     dbContext.SaveChanges();
 
+                    Thread.Sleep(10000);
+                    LightSensor lightSensorRecord = await GetLightSensorData();
+                    dbContext.Add(lightSensorRecord);
+                    dbContext.SaveChanges();
+
+                    Thread.Sleep(10000);
+                    RainSensor rainSensorRecord = await GetRainData();
+                    dbContext.Add(rainSensorRecord);
+                    dbContext.SaveChanges();
+
+
                 }
 
-                catch(Exception e)
+                catch (Exception e)
                 {
                    
                     _logger.LogInformation($"{DateTime.Now} - Error occured in DHT data logging: {e}", e.GetType().Name);
@@ -83,7 +95,7 @@ namespace HomeAPI.Services
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values");
+                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values/dht");
                 response.EnsureSuccessStatusCode();
                 responseMessage = await response.Content.ReadAsStringAsync();
 
@@ -124,7 +136,7 @@ namespace HomeAPI.Services
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/light");
+                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values/light");
                 response.EnsureSuccessStatusCode();
                 responseMessage = await response.Content.ReadAsStringAsync();
 
@@ -148,6 +160,45 @@ namespace HomeAPI.Services
             return lightSensor;
         }
 
+
+        public async Task<RainSensor> GetRainData()
+        {
+            string responseMessage = "";
+            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
+            int timeout = 10;
+
+            var client = new HttpClient()
+            {
+                BaseAddress = new Uri(clientAdress),
+                Timeout = TimeSpan.FromSeconds(timeout)
+            };
+
+            RainSensor rainSensor = new RainSensor();
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values/rain");
+                response.EnsureSuccessStatusCode();
+                responseMessage = await response.Content.ReadAsStringAsync();
+
+                if (response != null)
+                {
+                    rainSensor = JsonConvert.DeserializeObject<RainSensor>(responseMessage);
+                }
+
+            }
+
+            catch (HttpRequestException e)
+            {
+                responseMessage = e.Message;
+            }
+
+          
+
+            rainSensor.MeasureTime = DateTime.Now;
+            rainSensor.CalledBy = "service";
+            return rainSensor;
+        }
 
         public Task StopAsync(CancellationToken stoppingToken)
         {
