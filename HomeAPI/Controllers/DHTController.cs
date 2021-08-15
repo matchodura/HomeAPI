@@ -177,8 +177,7 @@ namespace HomeAPI.Controllers
             }
 
 
-            //box id will be changed in the future
-            dht.BoxId = 1;
+            //box id will be changed in the future         
             dht.MeasureTime = DateTime.Now;
             dht.CalledBy = "user";
 

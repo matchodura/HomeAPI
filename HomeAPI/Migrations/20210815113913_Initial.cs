@@ -78,9 +78,10 @@ namespace HomeAPI.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    BoxId = table.Column<int>(type: "int", nullable: true),
+                    BoxID = table.Column<int>(type: "int", nullable: true),
                     DeviceID = table.Column<int>(type: "int", nullable: false),
                     Temperature = table.Column<float>(type: "float", nullable: false),
+                    SensorType = table.Column<string>(type: "text", nullable: true),
                     Humidity = table.Column<float>(type: "float", nullable: false),
                     CalledBy = table.Column<string>(type: "text", nullable: true),
                     MeasureTime = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -91,8 +92,8 @@ namespace HomeAPI.Migrations
                 {
                     table.PrimaryKey("PK_DHTSensors", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_DHTSensors_Boxes_BoxId",
-                        column: x => x.BoxId,
+                        name: "FK_DHTSensors_Boxes_BoxID",
+                        column: x => x.BoxID,
                         principalTable: "Boxes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -104,7 +105,7 @@ namespace HomeAPI.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    BoxId = table.Column<int>(type: "int", nullable: true),
+                    BoxID = table.Column<int>(type: "int", nullable: true),
                     DeviceID = table.Column<int>(type: "int", nullable: false),
                     Luxes = table.Column<float>(type: "float", nullable: false),
                     CalledBy = table.Column<string>(type: "text", nullable: true),
@@ -116,8 +117,8 @@ namespace HomeAPI.Migrations
                 {
                     table.PrimaryKey("PK_LightSensors", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_LightSensors_Boxes_BoxId",
-                        column: x => x.BoxId,
+                        name: "FK_LightSensors_Boxes_BoxID",
+                        column: x => x.BoxID,
                         principalTable: "Boxes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -129,7 +130,7 @@ namespace HomeAPI.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    BoxId = table.Column<int>(type: "int", nullable: true),
+                    BoxID = table.Column<int>(type: "int", nullable: true),
                     DeviceID = table.Column<int>(type: "int", nullable: false),
                     AlarmMessage = table.Column<string>(type: "text", nullable: true),
                     AlarmTime = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -140,8 +141,8 @@ namespace HomeAPI.Migrations
                 {
                     table.PrimaryKey("PK_MotionSensors", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_MotionSensors_Boxes_BoxId",
-                        column: x => x.BoxId,
+                        name: "FK_MotionSensors_Boxes_BoxID",
+                        column: x => x.BoxID,
                         principalTable: "Boxes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
@@ -168,25 +169,35 @@ namespace HomeAPI.Migrations
                     { 14, null, 0, "Mateusz", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 0f, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Piwnica", null }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Boxes",
+                columns: new[] { "ID", "BoxName", "CreatedBy", "DHTId", "DateCreated", "DateModified", "LightSensorID", "MotionSensorId", "RoomId" },
+                values: new object[] { 1, "box_1", "Mateusz", 0, new DateTime(2021, 8, 15, 13, 39, 13, 491, DateTimeKind.Local).AddTicks(4557), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 0, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Boxes",
+                columns: new[] { "ID", "BoxName", "CreatedBy", "DHTId", "DateCreated", "DateModified", "LightSensorID", "MotionSensorId", "RoomId" },
+                values: new object[] { 2, "box_2", "Mateusz", 0, new DateTime(2021, 8, 15, 13, 39, 13, 494, DateTimeKind.Local).AddTicks(71), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 0, 2 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Boxes_RoomId",
                 table: "Boxes",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DHTSensors_BoxId",
+                name: "IX_DHTSensors_BoxID",
                 table: "DHTSensors",
-                column: "BoxId");
+                column: "BoxID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LightSensors_BoxId",
+                name: "IX_LightSensors_BoxID",
                 table: "LightSensors",
-                column: "BoxId");
+                column: "BoxID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MotionSensors_BoxId",
+                name: "IX_MotionSensors_BoxID",
                 table: "MotionSensors",
-                column: "BoxId");
+                column: "BoxID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

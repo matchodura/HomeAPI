@@ -3,14 +3,16 @@ using System;
 using HomeAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HomeAPI.Migrations
 {
     [DbContext(typeof(HomeContext))]
-    partial class HomeContextModelSnapshot : ModelSnapshot
+    [Migration("20210815113913_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace HomeAPI.Migrations
                             BoxName = "box_1",
                             CreatedBy = "Mateusz",
                             DHTId = 0,
-                            DateCreated = new DateTime(2021, 8, 15, 13, 40, 42, 435, DateTimeKind.Local).AddTicks(8363),
+                            DateCreated = new DateTime(2021, 8, 15, 13, 39, 13, 491, DateTimeKind.Local).AddTicks(4557),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LightSensorID = 0,
                             MotionSensorId = 0,
@@ -72,7 +74,7 @@ namespace HomeAPI.Migrations
                             BoxName = "box_2",
                             CreatedBy = "Mateusz",
                             DHTId = 0,
-                            DateCreated = new DateTime(2021, 8, 15, 13, 40, 42, 438, DateTimeKind.Local).AddTicks(2826),
+                            DateCreated = new DateTime(2021, 8, 15, 13, 39, 13, 494, DateTimeKind.Local).AddTicks(71),
                             DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LightSensorID = 0,
                             MotionSensorId = 0,
@@ -170,9 +172,6 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime>("MeasureTime")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("SensorType")
-                        .HasColumnType("text");
-
                     b.HasKey("ID");
 
                     b.HasIndex("BoxID");
@@ -203,9 +202,6 @@ namespace HomeAPI.Migrations
 
                     b.Property<int>("DeviceID")
                         .HasColumnType("int");
-
-                    b.Property<string>("SensorType")
-                        .HasColumnType("text");
 
                     b.HasKey("ID");
 

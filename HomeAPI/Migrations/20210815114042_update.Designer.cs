@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeAPI.Migrations
 {
     [DbContext(typeof(HomeContext))]
-    [Migration("20210814165147_Initial")]
-    partial class Initial
+    [Migration("20210815114042_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,32 @@ namespace HomeAPI.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Boxes");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            BoxName = "box_1",
+                            CreatedBy = "Mateusz",
+                            DHTId = 0,
+                            DateCreated = new DateTime(2021, 8, 15, 13, 40, 42, 435, DateTimeKind.Local).AddTicks(8363),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LightSensorID = 0,
+                            MotionSensorId = 0,
+                            RoomId = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            BoxName = "box_2",
+                            CreatedBy = "Mateusz",
+                            DHTId = 0,
+                            DateCreated = new DateTime(2021, 8, 15, 13, 40, 42, 438, DateTimeKind.Local).AddTicks(2826),
+                            DateModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LightSensorID = 0,
+                            MotionSensorId = 0,
+                            RoomId = 2
+                        });
                 });
 
             modelBuilder.Entity("HomeAPI.Models.Bulb", b =>
@@ -85,7 +111,7 @@ namespace HomeAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("BoxId")
+                    b.Property<int?>("BoxID")
                         .HasColumnType("int");
 
                     b.Property<string>("CalledBy")
@@ -106,12 +132,15 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime>("MeasureTime")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("SensorType")
+                        .HasColumnType("text");
+
                     b.Property<float>("Temperature")
                         .HasColumnType("float");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BoxId");
+                    b.HasIndex("BoxID");
 
                     b.ToTable("DHTSensors");
                 });
@@ -122,7 +151,7 @@ namespace HomeAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("BoxId")
+                    b.Property<int?>("BoxID")
                         .HasColumnType("int");
 
                     b.Property<string>("CalledBy")
@@ -143,9 +172,12 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime>("MeasureTime")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("SensorType")
+                        .HasColumnType("text");
+
                     b.HasKey("ID");
 
-                    b.HasIndex("BoxId");
+                    b.HasIndex("BoxID");
 
                     b.ToTable("LightSensors");
                 });
@@ -162,7 +194,7 @@ namespace HomeAPI.Migrations
                     b.Property<DateTime>("AlarmTime")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("BoxId")
+                    b.Property<int?>("BoxID")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("DateCreated")
@@ -174,9 +206,12 @@ namespace HomeAPI.Migrations
                     b.Property<int>("DeviceID")
                         .HasColumnType("int");
 
+                    b.Property<string>("SensorType")
+                        .HasColumnType("text");
+
                     b.HasKey("ID");
 
-                    b.HasIndex("BoxId");
+                    b.HasIndex("BoxID");
 
                     b.ToTable("MotionSensors");
                 });
@@ -394,7 +429,7 @@ namespace HomeAPI.Migrations
                 {
                     b.HasOne("HomeAPI.Models.Box", "Box")
                         .WithMany("DHTSensors")
-                        .HasForeignKey("BoxId");
+                        .HasForeignKey("BoxID");
 
                     b.Navigation("Box");
                 });
@@ -403,7 +438,7 @@ namespace HomeAPI.Migrations
                 {
                     b.HasOne("HomeAPI.Models.Box", "Box")
                         .WithMany("LightSensors")
-                        .HasForeignKey("BoxId");
+                        .HasForeignKey("BoxID");
 
                     b.Navigation("Box");
                 });
@@ -412,7 +447,7 @@ namespace HomeAPI.Migrations
                 {
                     b.HasOne("HomeAPI.Models.Box", "Box")
                         .WithMany("MotionSensors")
-                        .HasForeignKey("BoxId");
+                        .HasForeignKey("BoxID");
 
                     b.Navigation("Box");
                 });

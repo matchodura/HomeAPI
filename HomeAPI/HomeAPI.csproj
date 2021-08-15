@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\HomeAPI.Yeelight\HomeAPI.Yeelight.csproj" />
     <ProjectReference Include="..\HomeAPI.Entities\HomeAPI.Entities.csproj" />
   </ItemGroup>
 

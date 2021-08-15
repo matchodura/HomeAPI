@@ -12,11 +12,15 @@ namespace HomeAPI.Models
         [JsonProperty("recordID")]
         public int ID { get; set; }
 
-        [ForeignKey("boxId")]
-        public int? BoxId { get; set; }
+        [ForeignKey("boxID")]
+        [JsonProperty("boxID")]
+        public int? BoxID { get; set; }
 
         [JsonProperty("deviceID")]
-        public int DeviceID { get; set; }           
+        public int DeviceID { get; set; }        
+
+        [JsonProperty("sensorType")]
+        public string SensorType { get; set; }
 
         [JsonProperty("temperature")]
         public float Temperature { get; set; }

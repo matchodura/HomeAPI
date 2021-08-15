@@ -17,74 +17,74 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 
-//namespace HomeAPI.Services
-//{
-//    //public class DataUpdateService : IHostedService, IDisposable
-//    //{
+namespace HomeAPI.Services
+{
+    public class DataUpdateService : IHostedService, IDisposable
+    {
 
-//    //    private readonly ILogger<DataUpdateService> _logger;
-//    //    private Timer _timer;
-//    //    private readonly IHubContext<MotionHub, INotifyHubClient> _hubContext;
-//    //    private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ILogger<DataUpdateService> _logger;
+        private Timer _timer;
+        private readonly IHubContext<MotionHub, INotifyHubClient> _hubContext;
+        private readonly IServiceScopeFactory _scopeFactory;
 
-//    //    public DataUpdateService(
-//    //                      ILogger<DataUpdateService> logger, 
-//    //                      IServiceScopeFactory scopeFactory,
-//    //                      IHubContext<MotionHub, INotifyHubClient> hubContext
-//    //                      )
-//    //    {
-//    //        _hubContext = hubContext;          
-//    //        _logger = logger;
-//    //        _scopeFactory = scopeFactory;
-//    //    }
-
-
-//    //    public Task StartAsync(CancellationToken stoppingToken)
-//    //    {
-//    //        _logger.LogInformation("Timed Hosted Service running.");
-
-//    //        _timer = new Timer(DoWork, null, TimeSpan.Zero,
-//    //            //TimeSpan.FromMinutes(15));
-//    //            TimeSpan.FromSeconds(5));
-
-//    //        return Task.CompletedTask;
-//    //    }
-
-//    //    private async void DoWork(object state)
-//    //    {
-//    //        using (var scope = _scopeFactory.CreateScope())
-//    //        {
-//    //            var dhtRepository = scope.ServiceProvider.GetRequiredService<IDHTRepository>();
-
-//    //            try
-//    //            {
-//    //                DHTSensor lastRecord = await dhtRepository.GetLastRecords();
-
-//    //                _hubContext.Clients.All.BroadcastData(lastRecord);
-//    //            }
-
-//    //            catch (Exception e)
-//    //            {
-
-//    //                _logger.LogInformation("Error occured in DHT data logging: {e}", e.GetType().Name);
-//    //            }
-
-//    //        }
-//    //    }
+        public DataUpdateService(
+                          ILogger<DataUpdateService> logger,
+                          IServiceScopeFactory scopeFactory,
+                          IHubContext<MotionHub, INotifyHubClient> hubContext
+                          )
+        {
+            _hubContext = hubContext;
+            _logger = logger;
+            _scopeFactory = scopeFactory;
+        }
 
 
-//    //    public Task StopAsync(CancellationToken stoppingToken)
-//    //    {
-//    //        _logger.LogInformation("Timed Hosted Service is stopping.");
+        public Task StartAsync(CancellationToken stoppingToken)
+        {
+            _logger.LogInformation("Timed Hosted Service running.");
 
-//    //        _timer?.Change(Timeout.Infinite, 0);
+            _timer = new Timer(DoWork, null, TimeSpan.Zero,
+                //TimeSpan.FromMinutes(15));
+                TimeSpan.FromSeconds(5));
 
-//    //        return Task.CompletedTask;
-//    //    }
+            return Task.CompletedTask;
+        }
 
-//    //    public void Dispose()
-//    //    {
-//    //        _timer?.Dispose();
-//    //    }
-////    }
-////}
+        private async void DoWork(object state)
+        {
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var dhtRepository = scope.ServiceProvider.GetRequiredService<IDHTRepository>();
+
+                try
+                {
+                    var lastRecord = await dhtRepository.GetLastRecords();
+                 
+                    await _hubContext.Clients.All.BroadcastData(lastRecord);
+                }
+
+                catch (Exception e)
+                {
+
+                    _logger.LogInformation("Error occured in DHT data logging: {e}", e.GetType().Name);
+                }
+
+            }
+        }
+
+
+        public Task StopAsync(CancellationToken stoppingToken)
+        {
+            _logger.LogInformation("Timed Hosted Service is stopping.");
+
+            _timer?.Change(Timeout.Infinite, 0);
+
+            return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            _timer?.Dispose();
+        }
+    }
+}

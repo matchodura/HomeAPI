@@ -51,7 +51,7 @@ namespace HomeAPI.Repositories
         {
             MotionSensor motionSensor = new MotionSensor();
 
-            motionSensor.BoxId = boxId;
+            motionSensor.BoxID = boxId;
             motionSensor.AlarmTime = dateTime;
             motionSensor.DeviceID = 1234;
 

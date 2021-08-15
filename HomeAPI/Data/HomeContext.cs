@@ -53,6 +53,14 @@ namespace HomeAPI.Data
                 new Room { ID = 14, Name = "Piwnica" }
                 );
             #endregion
+
+            #region BoxSeed
+            modelBuilder.Entity<Box>().HasData(
+                new Box { ID = 1, BoxName = "box_1" , RoomId = 1, CreatedBy = Constants.Constants.CREATED_BY, DateCreated = DateTime.Now},
+                new Box { ID = 2, BoxName = "box_2" , RoomId = 2, CreatedBy = Constants.Constants.CREATED_BY, DateCreated = DateTime.Now }
+
+                );
+            #endregion
         }
 
     }

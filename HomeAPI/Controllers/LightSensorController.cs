@@ -170,7 +170,7 @@ namespace HomeAPI.Controllers
 
 
             //box id will be changed in the future
-            lightSensor.BoxId = 1;
+            
             lightSensor.MeasureTime = DateTime.Now;
             lightSensor.CalledBy = "user";
 

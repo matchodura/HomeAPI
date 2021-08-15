@@ -37,7 +37,7 @@ namespace HomeAPI.Repositories
 
             foreach (DHTSensor dht in DHTSensors)
             {
-                dht.BoxId = boxId;
+                dht.BoxID = boxId;
                 dht.DateCreated = currentDateTime;
                 dht.DateModified = currentDateTime;
                 _context.Update(dht);
@@ -46,7 +46,7 @@ namespace HomeAPI.Repositories
 
             foreach (MotionSensor motionSensor in motionSensors)
             {
-                motionSensor.BoxId = boxId;
+                motionSensor.BoxID = boxId;
                 motionSensor.DateCreated = currentDateTime;
                 motionSensor.DateModified = currentDateTime;
                 _context.Update(motionSensor);
@@ -102,7 +102,7 @@ namespace HomeAPI.Repositories
 
             foreach (DHTSensor dht in DHTSensors)
             {
-                dht.BoxId = boxId;
+                dht.BoxID = boxId;
                 dht.DateCreated = currentDateTime;
                 dht.DateModified = currentDateTime;
                 _context.Update(dht);
@@ -111,7 +111,7 @@ namespace HomeAPI.Repositories
 
             foreach (MotionSensor motionSensor in motionSensors)
             {
-                motionSensor.BoxId = boxId;
+                motionSensor.BoxID = boxId;
                 motionSensor.DateCreated = currentDateTime;
                 motionSensor.DateModified = currentDateTime;
                 _context.Update(motionSensor);

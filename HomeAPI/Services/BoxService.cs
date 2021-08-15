@@ -36,7 +36,7 @@ namespace HomeAPI.Services
             _timer = new Timer(DoWork, null, TimeSpan.Zero,            
           
                 //TimeSpan.FromMinutes(15));
-                TimeSpan.FromMinutes(15));
+                TimeSpan.FromMinutes(1));
 
             return Task.CompletedTask;
         }
@@ -49,7 +49,7 @@ namespace HomeAPI.Services
 
                 try
                 {
-                    DHTSensor dhtRecord = await GetBoxData();
+                    DHTSensor dhtRecord = await GetDHTData();
                     dbContext.Add(dhtRecord);
 
                     //LightSensor lightSensorRecord = await GetLightSensorData();
@@ -61,13 +61,13 @@ namespace HomeAPI.Services
                 catch(Exception e)
                 {
                    
-                    _logger.LogInformation("Error occured in DHT data logging: {e}", e.GetType().Name);
+                    _logger.LogInformation($"{DateTime.Now} - Error occured in DHT data logging: {e}", e.GetType().Name);
                 }
               
             }                
         }
 
-        public async Task<DHTSensor> GetBoxData()
+        public async Task<DHTSensor> GetDHTData()
         {
             string responseMessage = "";
             string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
@@ -100,8 +100,8 @@ namespace HomeAPI.Services
             }
 
 
-            //box id will be changed in the future
-            dht.BoxId = 1;
+            //box id will be changed in the future        
+          
             dht.MeasureTime = DateTime.Now;
             dht.CalledBy = "service";
             return dht;          
@@ -142,7 +142,7 @@ namespace HomeAPI.Services
 
 
             //box id will be changed in the future
-            lightSensor.BoxId = 1;
+           
             lightSensor.MeasureTime = DateTime.Now;
             lightSensor.CalledBy = "service";
             return lightSensor;

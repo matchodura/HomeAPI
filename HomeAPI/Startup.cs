@@ -59,7 +59,8 @@ namespace HomeAPI
             //    );
 
             services.AddDbContext<HomeContext>(options => options
-                 .UseMySQL("Server=192.168.1.181; Port=3306; Database=homeapi; User=test2;Password=test;SSL Mode=None;")
+                 .UseMySQL("Server=192.168.1.181; Port=3306; Database=homeapi; User=api;Password=api;SSL Mode=None;")
+                 //.UseMySQL("Server=192.168.1.181; Port=3306; Database=homeapi; User=test2;Password=test;SSL Mode=None;")
                  .EnableSensitiveDataLogging()
                 );
           
