@@ -52,7 +52,6 @@ namespace HomeAPI.Helpers
             return dht;
         }
 
-
         public async Task<LightSensor> GetLightSensorData(string calledBy)
         {
             string responseMessage = "";
@@ -89,7 +88,6 @@ namespace HomeAPI.Helpers
 
             return lightSensor;
         }
-
 
         public async Task<RainSensor> GetRainData(string calledBy)
         {

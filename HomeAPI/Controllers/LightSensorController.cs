@@ -16,7 +16,7 @@ namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LightSensorController : Controller, ISensor
+    public class LightSensorController : Controller, IDataSensor
     {
         private readonly HomeContext _context;
         private readonly ILightSensorRepository _lightSensorRepository;
@@ -91,7 +91,7 @@ namespace HomeAPI.Controllers
         [Route("light/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCurrentValuesForSpecificSensor()
+        public async Task<IActionResult> GetCurrentValues()
         {
 
             string calledBy = "user";
@@ -102,59 +102,6 @@ namespace HomeAPI.Controllers
             return Ok(responseMessage);
 
         }
-
-
-        //gets current values and saves them to database
-        [Route("GetValues")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetSaveLuxesToDatabase()
-        {
-            string responseMessage = "";
-            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
-            int timeout = 10;
-
-            var client = new HttpClient()
-            {
-                BaseAddress = new Uri(clientAdress),
-                Timeout = TimeSpan.FromSeconds(timeout)
-            };
-
-            LightSensor lightSensor = new LightSensor();
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/light");
-                response.EnsureSuccessStatusCode();
-                responseMessage = await response.Content.ReadAsStringAsync();
-
-                if (response != null)
-                {
-                    lightSensor = JsonConvert.DeserializeObject<LightSensor>(responseMessage);
-                }
-
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-
-                responseMessage = e.Message;
-            }
-
-
-            //box id will be changed in the future
-            
-            lightSensor.MeasureTime = DateTime.Now;
-            lightSensor.CalledBy = "user";
-
-            _context.LightSensors.Add(lightSensor);
-            _context.SaveChanges();
-
-
-            return Json(responseMessage);
-        }
-
 
     }
 }

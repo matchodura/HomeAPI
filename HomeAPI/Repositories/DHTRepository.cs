@@ -64,33 +64,5 @@ namespace HomeAPI.Repositories
                           .Select(g => g.Last())
                           .ToListAsync();
         }
-
-        public Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        //public async Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
-        //{
-        //    var DHTSensors = GetValuesForSpecificSensor(oldId);
-
-        //    foreach (var oldDht in DHTSensors)
-        //    {
-        //        DHTSensor dht = new DHTSensor();
-        //        dht = oldDht;
-        //        dht.BoxId = newDHT.BoxId;
-        //        dht.DeviceID = newDHT.NewId;
-        //        dht.DateModified = newDHT.DateModified;
-
-        //        _context.DHTSensors.Update(dht);
-        //        _context.SaveChanges();
-        //    }
-
-
-        //    var results = await _context.DHTSensors.ToListAsync();
-        //    return results;
-        //}
-
     }
 }

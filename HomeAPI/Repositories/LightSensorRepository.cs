@@ -64,32 +64,5 @@ namespace HomeAPI.Repositories
                           .ToListAsync();
         }
 
-
-        //public Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public async Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT)
-        //{
-        //    var DHTSensors = GetRowsBySensorId(oldId);
-
-        //    foreach (var oldDht in DHTSensors)
-        //    {
-        //        LightSensor dht = new LightSensor();
-        //        dht = oldDht;
-        //        dht.BoxId = newDHT.BoxId;
-        //        dht.DeviceID = newDHT.NewId;
-        //        dht.DateModified = newDHT.DateModified;
-
-        //        _context.LightSensors.Update(dht);
-        //        _context.SaveChanges();
-        //    }
-
-
-        //    var results = await _context.LightSensors.ToListAsync();
-        //    return results;
-        //}
-
     }
 }

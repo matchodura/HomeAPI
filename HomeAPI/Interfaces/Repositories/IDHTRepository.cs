@@ -41,8 +41,5 @@ namespace HomeAPI.Interfaces.Repositories
         /// <returns></returns>
         public Task<IEnumerable<DHTSensor>> GetLastRecords();
 
-        //TODO
-        public Task<IEnumerable<DHTSensor>> UpdateSettings(int oldId, DHTConfig newDHT);
-
     }
 }

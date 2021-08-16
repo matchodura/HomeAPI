@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace HomeAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class MotionController : Controller, ISensor, IMotionSensor
+    public class MotionController : Controller, IMotionSensor
     {
         private readonly IHubContext<MotionHub, INotifyHubClient> _hubContext;
         private readonly HomeContext _context;

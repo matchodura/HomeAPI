@@ -41,7 +41,5 @@ namespace HomeAPI.Interfaces.Repositories
         /// <returns></returns>
         public Task<IEnumerable<LightSensor>> GetLastRecords();
 
-       // public Task<List<LightSensor>> UpdateSettings(int oldId, DHTConfig newDHT);
-
     }
 }
