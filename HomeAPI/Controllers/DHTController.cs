@@ -1,9 +1,12 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Helpers;
 using HomeAPI.Interfaces;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
+using HomeAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,11 +23,14 @@ namespace HomeAPI.Controllers
 
         private readonly HomeContext _context;
         private readonly IDHTRepository _dhtRepository;
+        private readonly SensorDataLogging _sensorDataLogging;
 
-        public DHTController(HomeContext context, IDHTRepository dhtRepository)
+
+        public DHTController(HomeContext context, IDHTRepository dhtRepository, SensorDataLogging sensorDataLogging)
         {
             _context = context;
             _dhtRepository = dhtRepository;
+            _sensorDataLogging = sensorDataLogging;
         }
 
         [HttpGet]
@@ -138,54 +144,19 @@ namespace HomeAPI.Controllers
         //}
 
         [HttpPost]
-        [Route("dht/current/{id}")]
+        [Route("dht/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCurrentValuesForSpecificSensor(int id)
-        {
-            string responseMessage = "";
-            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
-            int timeout = 10;
+        public async Task<IActionResult> GetCurrentValuesForSpecificSensor()
+        {         
 
-            var client = new HttpClient()
-            {
+            string calledBy = "user";
+            var responseMessage = await _sensorDataLogging.GetDHTData(calledBy);
 
-                BaseAddress = new Uri(clientAdress),
-                Timeout = TimeSpan.FromSeconds(timeout)
-            };
-
-            DHTSensor dht = new DHTSensor();
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values");
-                response.EnsureSuccessStatusCode();
-                responseMessage = await response.Content.ReadAsStringAsync();
-
-                if (response != null)
-                {
-                    dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);
-                }
-
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-
-                responseMessage = e.Message;
-            }
-
-
-            //box id will be changed in the future         
-            dht.MeasureTime = DateTime.Now;
-            dht.CalledBy = "user";
-
-            _context.DHTSensors.Add(dht);
-            _context.SaveChanges();
-
-
-            return Ok(responseMessage);
+            if (responseMessage == null)
+                return NotFound();
+            return Ok(responseMessage);                        
+         
         }
 
         [HttpPost]

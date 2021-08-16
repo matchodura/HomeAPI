@@ -1,4 +1,5 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Helpers;
 using HomeAPI.Interfaces;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
@@ -19,11 +20,13 @@ namespace HomeAPI.Controllers
     {
         private readonly HomeContext _context;
         private readonly ILightSensorRepository _lightSensorRepository;
+        private readonly SensorDataLogging _sensorDataLogging;
 
-        public LightSensorController(HomeContext context, ILightSensorRepository dhtRepository)
+        public LightSensorController(HomeContext context, ILightSensorRepository lightSensorRepository, SensorDataLogging sensorDataLogging)
         {
             _context = context;
-            _lightSensorRepository = dhtRepository;
+            _lightSensorRepository = lightSensorRepository;
+            _sensorDataLogging = sensorDataLogging;
         }
 
         [HttpGet]
@@ -84,49 +87,20 @@ namespace HomeAPI.Controllers
             throw new NotImplementedException();
         }
 
-        //gets current values
-        [HttpGet]
-        [Route("light/current/{id}")]
+        [HttpPost]
+        [Route("light/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetCurrentValuesForSpecificSensor(int id)
+        public async Task<IActionResult> GetCurrentValuesForSpecificSensor()
         {
-            string responseMessage = "";
-            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
-            int timeout = 10;
 
-            var client = new HttpClient()
-            {
-                BaseAddress = new Uri(clientAdress),
-                Timeout = TimeSpan.FromSeconds(timeout)
-            };
+            string calledBy = "user";
+            var responseMessage = await _sensorDataLogging.GetLightSensorData(calledBy);
 
-            LightSensor lightSensor = new LightSensor();
+            if (responseMessage == null)
+                return NotFound();
+            return Ok(responseMessage);
 
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/light");
-                response.EnsureSuccessStatusCode();
-                responseMessage = await response.Content.ReadAsStringAsync();
-
-                if (response != null)
-                {
-                    lightSensor = JsonConvert.DeserializeObject<LightSensor>(responseMessage);
-                }
-
-            }
-
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-
-                responseMessage = e.Message;
-
-            }
-
-            lightSensor.MeasureTime = DateTime.Now;
-            return Json(lightSensor);
         }
 
 

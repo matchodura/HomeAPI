@@ -1,4 +1,5 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Helpers;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,16 +21,15 @@ namespace HomeAPI.Services
        
         private readonly ILogger<BoxService> _logger;
         private Timer _timer;
-     
-
-
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly SensorDataLogging _sensorDataLogging;
 
-        public BoxService(ILogger<BoxService> logger, IServiceScopeFactory scopeFactory)
+        public BoxService(ILogger<BoxService> logger, IServiceScopeFactory scopeFactory, SensorDataLogging sensorDataLogging)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
-         
+            _sensorDataLogging = sensorDataLogging;
+
             //_context = context;
         }
 
@@ -39,7 +39,7 @@ namespace HomeAPI.Services
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
 
-                TimeSpan.FromMinutes(1));
+                TimeSpan.FromMinutes(15));
             //TimeSpan.FromMinutes(1));
 
 
@@ -55,10 +55,12 @@ namespace HomeAPI.Services
                 DHTSensor dhtrecord1 = new DHTSensor();
                 LightSensor lightSensorRecord1 = new LightSensor();
                 RainSensor rainSensorRecord1 = new RainSensor();
+                string calledBy = "service";
+                             
 
                 try
                 {
-                    DHTSensor dhtRecord = await GetDHTData();
+                    DHTSensor dhtRecord = await _sensorDataLogging.GetDHTData(calledBy);
                     dbContext.Add(dhtRecord);
 
                     //LightSensor lightSensorRecord = await GetLightSensorData();
@@ -66,12 +68,12 @@ namespace HomeAPI.Services
                     dbContext.SaveChanges();
 
                     Thread.Sleep(5000);
-                    LightSensor lightSensorRecord = await GetLightSensorData();
+                    LightSensor lightSensorRecord = await _sensorDataLogging.GetLightSensorData(calledBy);
                     dbContext.Add(lightSensorRecord);
                     dbContext.SaveChanges();
 
                     Thread.Sleep(5000);
-                    RainSensor rainSensorRecord = await GetRainData();
+                    RainSensor rainSensorRecord = await _sensorDataLogging.GetRainData(calledBy);
                     dbContext.Add(rainSensorRecord);
                     dbContext.SaveChanges();
 
@@ -103,126 +105,7 @@ namespace HomeAPI.Services
             }                
         }
 
-        public async Task<DHTSensor> GetDHTData()
-        {
-            string responseMessage = "";
-            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
-            int timeout = 10;
-
-            var client = new HttpClient()
-            {
-                BaseAddress = new Uri(clientAdress),
-                Timeout = TimeSpan.FromSeconds(timeout)
-            };
-
-            DHTSensor dht = new DHTSensor();
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values/dht");
-                response.EnsureSuccessStatusCode();
-                responseMessage = await response.Content.ReadAsStringAsync();
-
-                if (response != null)
-                {
-                    dht = JsonConvert.DeserializeObject<DHTSensor>(responseMessage);
-                }
-
-            }
-
-            catch (HttpRequestException e)
-            {               
-                responseMessage = e.Message;
-            }
-
-
-            //box id will be changed in the future        
-          
-            dht.MeasureTime = DateTime.Now;
-            dht.CalledBy = "service";
-            return dht;          
-        }
-
-
-        public async Task<LightSensor> GetLightSensorData()
-        {
-            string responseMessage = "";
-            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
-            int timeout = 10;
-
-            var client = new HttpClient()
-            {
-                BaseAddress = new Uri(clientAdress),
-                Timeout = TimeSpan.FromSeconds(timeout)
-            };
-
-            LightSensor lightSensor = new LightSensor();
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values/light");
-                response.EnsureSuccessStatusCode();
-                responseMessage = await response.Content.ReadAsStringAsync();
-
-                if (response != null)
-                {
-                    lightSensor = JsonConvert.DeserializeObject<LightSensor>(responseMessage);
-                }
-
-            }
-
-            catch (HttpRequestException e)
-            {
-                responseMessage = e.Message;
-            }
-
-
-            //box id will be changed in the future
-           
-            lightSensor.MeasureTime = DateTime.Now;
-            lightSensor.CalledBy = "service";
-            return lightSensor;
-        }
-
-
-        public async Task<RainSensor> GetRainData()
-        {
-            string responseMessage = "";
-            string clientAdress = Constants.Constants.NODEMCU_IP_ADDRESS;
-            int timeout = 10;
-
-            var client = new HttpClient()
-            {
-                BaseAddress = new Uri(clientAdress),
-                Timeout = TimeSpan.FromSeconds(timeout)
-            };
-
-            RainSensor rainSensor = new RainSensor();
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(clientAdress + "/values/rain");
-                response.EnsureSuccessStatusCode();
-                responseMessage = await response.Content.ReadAsStringAsync();
-
-                if (response != null)
-                {
-                    rainSensor = JsonConvert.DeserializeObject<RainSensor>(responseMessage);
-                }
-
-            }
-
-            catch (HttpRequestException e)
-            {
-                responseMessage = e.Message;
-            }
-
-          
-
-            rainSensor.MeasureTime = DateTime.Now;
-            rainSensor.CalledBy = "service";
-            return rainSensor;
-        }
+       
 
         public Task StopAsync(CancellationToken stoppingToken)
         {

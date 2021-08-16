@@ -1,4 +1,5 @@
 using HomeAPI.Data;
+using HomeAPI.Helpers;
 using HomeAPI.HubConfig;
 using HomeAPI.Interfaces;
 using HomeAPI.Interfaces.Repositories;
@@ -77,6 +78,7 @@ namespace HomeAPI
             services.AddScoped<IBoxRepository, BoxRepository>();
             services.AddScoped<IDHTRepository, DHTRepository>();         
             services.AddScoped<ILightSensorRepository, LightSensorRepository>();
+            services.AddSingleton<SensorDataLogging>();
 
             services.AddHostedService<BoxService>();
             //services.AddHostedService<DataUpdateService>();
