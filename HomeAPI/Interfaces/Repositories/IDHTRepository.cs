@@ -41,5 +41,11 @@ namespace HomeAPI.Interfaces.Repositories
         /// <returns></returns>
         public Task<IEnumerable<DHTSensor>> GetLastRecords();
 
+        /// <summary>
+        /// Sorts values
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<DHTSensor>> SortValues(string sortBy, string sortOrder);
+
     }
 }

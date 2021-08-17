@@ -1,10 +1,13 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Helpers;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace HomeAPI.Repositories
@@ -63,6 +66,11 @@ namespace HomeAPI.Repositories
                           .GroupBy(x => x.DeviceID)
                           .Select(g => g.Last())
                           .ToListAsync();
+        }
+
+        public async Task<IEnumerable<DHTSensor>> SortValues(string sortBy, string sortOrder)
+        {                 
+            return  await _context.DHTSensors.AsQueryable().OrderByPropertyName(sortBy, sortOrder).ToListAsync();
         }
     }
 }

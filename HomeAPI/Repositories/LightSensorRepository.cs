@@ -1,4 +1,5 @@
 ﻿using HomeAPI.Data;
+using HomeAPI.Helpers;
 using HomeAPI.Interfaces.Repositories;
 using HomeAPI.Models;
 using Microsoft.EntityFrameworkCore;
@@ -64,5 +65,9 @@ namespace HomeAPI.Repositories
                           .ToListAsync();
         }
 
+        public async Task<IEnumerable<LightSensor>> SortValues(string sortBy, string sortOrder)
+        {
+            return await _context.LightSensors.AsQueryable().OrderByPropertyName(sortBy, sortOrder).ToListAsync();
+        }
     }
 }

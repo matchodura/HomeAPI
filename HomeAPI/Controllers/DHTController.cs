@@ -83,7 +83,7 @@ namespace HomeAPI.Controllers
 
         //TODO
         [HttpPost]
-        [Route("dht/filtered")]
+        [Route("dht/asasa/vavcz/czcas/asa")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IEnumerable<IActionResult>> GetFilteredResults([FromBody] TimeFilter timeFilter)
@@ -93,7 +93,19 @@ namespace HomeAPI.Controllers
             return (IEnumerable<IActionResult>)Ok(readings);
         }
 
-        [HttpPost]
+      
+        [HttpGet]
+        [Route("dht/sorted")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetSortedResults(string sortBy, string sortType)
+        {
+            var readings = await _dhtRepository.SortValues(sortBy.ToString(), sortType);
+
+            return Ok(readings);
+        }
+
+        [HttpGet]
         [Route("dht/current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -108,5 +120,5 @@ namespace HomeAPI.Controllers
             return Ok(responseMessage);                        
          
         }
-            }
+    }
 }

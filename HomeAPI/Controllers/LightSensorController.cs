@@ -77,14 +77,15 @@ namespace HomeAPI.Controllers
             return Ok(readings);
         }
 
-        //TODO
         [HttpPost]
-        [Route("light/filtered")]
+        [Route("light/sorted")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public Task<IEnumerable<IActionResult>> GetFilteredResults(TimeFilter timeFilter)
+        public async Task<IActionResult> GetSortedResults(string sortBy, string sortType)
         {
-            throw new NotImplementedException();
+            var readings = await _lightSensorRepository.SortValues(sortBy.ToString(), sortType);
+
+            return Ok(readings);
         }
 
         [HttpPost]

@@ -24,7 +24,7 @@ namespace HomeAPI.Interfaces
         public Task<IActionResult> GetCurrentValues();
         public Task<IActionResult> GetLastRecord(int id);
         public Task<IActionResult> GetLastRecords(); 
-        public Task<IEnumerable<IActionResult>> GetFilteredResults(TimeFilter timeFilter);
+        public Task<IActionResult> GetSortedResults(string sortBy, string sortOrder);
 
     }
 }
