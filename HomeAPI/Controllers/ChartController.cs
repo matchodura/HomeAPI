@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 namespace HomeAPI.Controllers
 {
 
-    [Route("api/[controller]")]
-    [ApiController]
+   // [Route("api/[controller]")]
+   // [ApiController]
     public class ChartController : Controller
     {
         private readonly IHubContext<ChartHub> _hub;
