@@ -79,9 +79,7 @@ namespace HomeAPI
             services.AddScoped<IDHTRepository, DHTRepository>();         
             services.AddScoped<ILightSensorRepository, LightSensorRepository>();
             services.AddSingleton<SensorDataLogging>();
-
             services.AddHostedService<BoxService>();
-            //services.AddHostedService<DataUpdateService>();
 
             // Register the Swagger services
             services.AddSwaggerDocument();
