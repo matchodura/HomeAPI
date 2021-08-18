@@ -24,41 +24,95 @@ namespace HomeAPI.Controllers
         }
 
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [Route("Create")]
+        [HttpGet]
+        [Route("box")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> CreateBox([FromBody] Box box)
+        public async Task<IActionResult> GetBoxes()
         {
-            box = _boxRepository.CreateBox(box);
-            return Json(box);
+            var boxes = await _boxRepository.GetBoxes();
+            if (boxes == null)
+                return NotFound();
+            return Ok(boxes);
+        }
+
+
+        [HttpGet]
+        [Route("box/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetBox(int id)
+        {
+            var box = await _boxRepository.GetBox(id);
+            if (box == null)
+                return NotFound();
+            return Ok(box);
+        }
+
+   
+        [HttpPost]
+        [Route("box")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> Create([FromBody] Box box)
+        {
+            var boxExists = await ValidateIfBoxExists(box);
+            if (boxExists)
+                return Conflict();
+
+            var response = await _boxRepository.Create(box);
+
+            return CreatedAtAction(nameof(GetBox), new { id = box.ID }, response);
         }
 
 
         [HttpPut]
-        [Route("Update")]
+        [Route("box")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<string> UpdateBox([FromBody] Box box)
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> Update([FromBody] Box box)
         {
-            box = _boxRepository.UpdateBox(box);
-            return Json(box);
-        }    
+            var boxExists = await ValidateIfBoxExists(box);
+            if (!boxExists)
+                return NotFound();
 
-        [HttpGet]
-        [Route("GetMotionSensors")]
+            var response = await _boxRepository.Update(box);
+            return Ok(response);
+        }
+
+
+        [HttpDelete]
+        [Route("box")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<List<DHTSensor>> GetMotionSensors()
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> Delete([FromBody] Box box)
         {
-            List<MotionSensor> motionSensors = _boxRepository.GetMotionSensors();
-            return Json(motionSensors);
-        }             
+            var boxExists = await ValidateIfBoxExists(box);
+            if (!boxExists)
+                return NotFound();
+
+            var response = await _boxRepository.Delete(box);
+            return Ok(response);
+        }
+
+
+        #region Helper Methods
+
+        private async Task<bool> ValidateIfBoxExists(Box box)
+        {
+            var dbProduct = await _boxRepository.GetBox(box.ID);
+
+            if (dbProduct != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        #endregion
 
     }
 }

@@ -30,7 +30,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("motion")]
+        [Route("get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetValues()
@@ -42,7 +42,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("motion/{id}")]
+        [Route("get/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetValuesForSpecificSensor(int id)
@@ -54,7 +54,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("motion/last")]
+        [Route("last")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetLastRecords()
@@ -66,7 +66,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("motion/last/{id}")]
+        [Route("last/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetLastRecord(int id)
@@ -79,7 +79,7 @@ namespace HomeAPI.Controllers
 
         //TODO:
         [HttpGet]
-        [Route("motion/filtered")]
+        [Route("filtered")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IEnumerable<IActionResult>> GetFilteredResults(TimeFilter timeFilter)

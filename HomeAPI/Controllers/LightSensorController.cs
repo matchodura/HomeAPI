@@ -30,7 +30,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("light")]
+        [Route("get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetValues()
@@ -42,7 +42,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("light/{id}")]
+        [Route("get/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetValuesForSpecificSensor(int id)
@@ -53,8 +53,19 @@ namespace HomeAPI.Controllers
             return Ok(readings);
         }
 
+        [Route("last")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLastRecords()
+        {
+            var readings = await _lightSensorRepository.GetLastRecords();
+            if (readings == null)
+                return NotFound();
+            return Ok(readings);
+        }
+
         [HttpGet]
-        [Route("light/last/{id}")]
+        [Route("last/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetLastRecord(int id)
@@ -66,19 +77,10 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("light/last")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetLastRecords()
-        {
-            var readings = await _lightSensorRepository.GetLastRecords();
-            if (readings == null)
-                return NotFound();
-            return Ok(readings);
-        }
+
 
         [HttpPost]
-        [Route("light/sorted")]
+        [Route("sorted")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetSortedResults(string sortBy, string sortType)
@@ -89,7 +91,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpPost]
-        [Route("light/current")]
+        [Route("current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetCurrentValues()

@@ -56,8 +56,7 @@ namespace HomeAPI.Repositories
         {
             var currentRoom = _context.Rooms.Find(room.ID);
 
-            currentRoom.MeasureTime = DateTime.Now;
-          
+            currentRoom.MeasureTime = DateTime.Now;        
        
 
             _context.Rooms.Update(currentRoom);

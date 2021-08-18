@@ -34,8 +34,9 @@ namespace HomeAPI.Models
 
         public DateTime? DateModified { get; set; }
 
-        public DateTime? DateCreated { get; set; }              
+        public DateTime? DateCreated { get; set; }
 
+        [JsonIgnore]
         public virtual Box Box { get; set; }
     }
 }

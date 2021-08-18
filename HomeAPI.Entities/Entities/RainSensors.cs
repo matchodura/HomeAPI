@@ -37,6 +37,7 @@ namespace HomeAPI.Models
 
         public DateTime? DateCreated { get; set; }
 
+        [JsonIgnore]
         public virtual Box Box { get; set; }
     }
 }

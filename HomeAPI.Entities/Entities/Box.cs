@@ -12,10 +12,14 @@ namespace HomeAPI.Models
     public class Box
     {
         [Key]
+        [JsonProperty("boxID")]
         public int ID { get; set; }
 
         [JsonProperty("boxName")]
         public string BoxName { get; set; }
+
+        [JsonProperty("boxIP")]
+        public string BoxIP { get; set; }
 
         [JsonProperty("roomId")]
         public int RoomId { get; set; }
@@ -35,12 +39,19 @@ namespace HomeAPI.Models
         [JsonProperty("lightSensorID")]
         public int LightSensorID { get; set; }
 
+        [JsonIgnore]
         public virtual Room Rooms { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<DHTSensor> DHTSensors { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<MotionSensor> MotionSensors { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<LightSensor> LightSensors { get; set; }
+
+        [JsonIgnore]
         public virtual ICollection<RainSensor> RainSensors { get; set; }
     }
 }

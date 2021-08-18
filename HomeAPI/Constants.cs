@@ -8,7 +8,9 @@ namespace HomeAPI.Constants
     public static class Constants
     {
         public const string NODEMCU_IP_ADDRESS = "http://192.168.1.21";
+        //PC
         //public const string BACKEND_IP_ADDRESS = "http://192.168.1.179";
+        //RPI
         public const string BACKEND_IP_ADDRESS = "http://192.168.1.181";
         public const string CREATED_BY = "Mateusz";
     }

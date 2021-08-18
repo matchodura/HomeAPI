@@ -19,110 +19,48 @@ namespace HomeAPI.Repositories
             _context = context;
         }
 
-        public Box CreateBox(Box box)
+        public async Task<Box> Create(Box box)
         {
+            box.DateCreated = DateTime.Now;
+            box.DateModified = DateTime.Now;
+            _context.Boxes.Add(box);
+            await _context.SaveChangesAsync();
 
-            DateTime currentDateTime = DateTime.Now;
-
-            box.DateCreated = currentDateTime;
-            box.DateModified = currentDateTime;
-                       
-            _context.Add(box);
-            _context.SaveChanges();
-
-            int boxId = box.ID;
-
-            List<DHTSensor> DHTSensors = _context.DHTSensors.Where(d => d.DeviceID == box.DHTId).ToList();
-            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceID == box.MotionSensorId).ToList();
-
-            foreach (DHTSensor dht in DHTSensors)
-            {
-                dht.BoxID = boxId;
-                dht.DateCreated = currentDateTime;
-                dht.DateModified = currentDateTime;
-                _context.Update(dht);
-                _context.SaveChanges();
-            }
-
-            foreach (MotionSensor motionSensor in motionSensors)
-            {
-                motionSensor.BoxID = boxId;
-                motionSensor.DateCreated = currentDateTime;
-                motionSensor.DateModified = currentDateTime;
-                _context.Update(motionSensor);
-                _context.SaveChanges();
-            }
-
-            _context.SaveChanges();
-
-            return box;
+            return await _context.Boxes.SingleOrDefaultAsync(x => x.ID == box.ID);
         }
 
-        public bool DeleteBox()
+        public async Task<string> Delete(Box box)
         {
-            throw new NotImplementedException();
+            var currentBox = _context.Boxes.Find(box.ID);
+
+            _context.Boxes.Remove(currentBox);
+            await _context.SaveChangesAsync();
+            return "object deleted!";
         }
 
-        public List<Box> GetAllBoxes()
+        public async Task<Box> GetBox(int boxId)
         {
-            throw new NotImplementedException();
+            return await _context.Boxes.SingleOrDefaultAsync(x => x.ID == boxId);
         }
 
-        public Box GetBoxById(int boxId)
+        public async Task<IEnumerable<Box>> GetBoxes()
         {
-            throw new NotImplementedException();
+            return await _context.Boxes.Distinct().ToListAsync();
         }
 
-        public Box GetBoxByName(string boxName)
+        public async Task<Box> Update(Box box)
         {
-            throw new NotImplementedException();
-        }            
+            var currentBox = _context.Boxes.Find(box.ID);
 
-        public List<MotionSensor> GetMotionSensors()
-        {
-            return _context.MotionSensors.Distinct().ToList();
+            currentBox.DateModified = DateTime.Now;
+            currentBox.BoxName = box.BoxName;
+            currentBox.RoomId = box.RoomId;
+            currentBox.BoxIP = box.BoxIP;
+
+            _context.Boxes.Update(currentBox);
+            await _context.SaveChangesAsync();
+
+            return await _context.Boxes.SingleOrDefaultAsync(x => x.ID == box.ID);
         }
-
-        // to be completed
-        public Box UpdateBox(Box box)
-        {
-
-
-            DateTime currentDateTime = DateTime.Now;
-                      
-            box.DateModified = currentDateTime;
-
-            _context.Add(box);
-            _context.SaveChanges();
-
-            int boxId = box.ID;
-
-            List<DHTSensor> DHTSensors = _context.DHTSensors.Where(d => d.DeviceID == box.DHTId).ToList();
-            List<MotionSensor> motionSensors = _context.MotionSensors.Where(d => d.DeviceID == box.MotionSensorId).ToList();
-
-            foreach (DHTSensor dht in DHTSensors)
-            {
-                dht.BoxID = boxId;
-                dht.DateCreated = currentDateTime;
-                dht.DateModified = currentDateTime;
-                _context.Update(dht);
-                _context.SaveChanges();
-            }
-
-            foreach (MotionSensor motionSensor in motionSensors)
-            {
-                motionSensor.BoxID = boxId;
-                motionSensor.DateCreated = currentDateTime;
-                motionSensor.DateModified = currentDateTime;
-                _context.Update(motionSensor);
-                _context.SaveChanges();
-            }
-
-            _context.SaveChanges();
-
-            return box;
-        }
-
-      
     }
 }

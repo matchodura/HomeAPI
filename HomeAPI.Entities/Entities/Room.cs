@@ -44,7 +44,8 @@ namespace HomeAPI.Models
 
         [JsonProperty("alarmMessage")]
         public string AlarmMessage { get; set; }
-               
+
+        [JsonIgnore]
         public virtual ICollection<Box> Boxes { get; set; }
     }
 }

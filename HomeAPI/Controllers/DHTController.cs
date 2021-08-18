@@ -34,7 +34,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("dht")]
+        [Route("get")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetValues()
@@ -46,7 +46,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("dht/{id}")]
+        [Route("get/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetValuesForSpecificSensor(int id)
@@ -58,7 +58,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("dht/last")]
+        [Route("last")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetLastRecords()
@@ -70,7 +70,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("dht/last/{id}")]
+        [Route("last/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetLastRecord(int id)
@@ -95,7 +95,7 @@ namespace HomeAPI.Controllers
 
       
         [HttpGet]
-        [Route("dht/sorted")]
+        [Route("sorted")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetSortedResults(string sortBy, string sortType)
@@ -106,7 +106,7 @@ namespace HomeAPI.Controllers
         }
 
         [HttpGet]
-        [Route("dht/current")]
+        [Route("current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetCurrentValues()
