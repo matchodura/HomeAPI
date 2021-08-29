@@ -41,15 +41,32 @@ namespace HomeAPI
         {
 
 
-            services.AddCors(policy =>
-            {
-                policy.AddPolicy("CorsPolicy", opt => opt
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod());
+            //services.AddCors(policy =>
+            //{
+            //    policy.AddPolicy("CorsPolicy", opt => opt
+            //        .AllowAnyOrigin()
+            //        .AllowAnyHeader()
+            //        .AllowAnyMethod());
+            //});
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //                      builder =>
+            //                      {
+            //                          builder.AllowAnyHeader();
+            //                          builder.AllowAnyMethod();
+            //                          builder.AllowAnyOrigin();
+            //                      });
+            //});
+
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy", builder => builder
+                 .WithOrigins("http://localhost:4200/")
+                 .SetIsOriginAllowed((host) => true)
+                 .AllowAnyMethod()
+                 .AllowAnyHeader());
             });
-
-
 
             //services.AddDbContext<HomeContext>(options => options
             //    .UseMySql("Server=192.168.1.181; Port=3306; Database=homeapi; User=test2;Password=test;",
@@ -79,7 +96,8 @@ namespace HomeAPI
             services.AddScoped<IDHTRepository, DHTRepository>();         
             services.AddScoped<ILightSensorRepository, LightSensorRepository>();
             services.AddSingleton<SensorDataLogging>();
-            services.AddHostedService<BoxService>();
+
+           // services.AddHostedService<BoxService>();
 
             // Register the Swagger services
             services.AddSwaggerDocument();

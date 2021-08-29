@@ -36,8 +36,9 @@ namespace HomeAPI.Controllers
 
         [HttpGet]
         [Route("rooms")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<Room>),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        //public async Task<IActionResult> GetListAsync()
         public async Task<IActionResult> GetRooms()
         {
             var rooms = await _homeRepository.GetRooms();
@@ -91,20 +92,33 @@ namespace HomeAPI.Controllers
         }
 
 
+        //[HttpDelete]
+        //[Route("rooms")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status409Conflict)]
+        //public async Task<IActionResult> Delete([FromBody] Room room)
+        //{
+        //    var roomExists = await ValidateIfRoomExists(room);
+        //    if (!roomExists)
+        //        return NotFound();
+
+        //    var response = await _homeRepository.Delete(room);
+        //    return Ok(response);
+        //}
+
         [HttpDelete]
-        [Route("rooms")]
+        [Route("rooms/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Delete([FromBody] Room room)
+        public async Task<IActionResult> Delete(int id)
         {
-            var roomExists = await ValidateIfRoomExists(room);
+            var roomExists = await ValidateIfRoomExists(id);
             if (!roomExists)
                 return NotFound();
 
-            var response = await _homeRepository.Delete(room);
+            var response = await _homeRepository.Delete(id);
             return Ok(response);
         }
-
 
         #region Helper Methods
 
@@ -121,6 +135,21 @@ namespace HomeAPI.Controllers
                 return false;
             }
            
+        }
+
+        private async Task<bool> ValidateIfRoomExists(int roomId)
+        {
+            var dbProduct = await _homeRepository.GetRoom(roomId);
+
+            if (dbProduct != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
         #endregion
     }

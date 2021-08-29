@@ -65,9 +65,9 @@ namespace HomeAPI.Repositories
         }
 
 
-        public async Task<string> Delete(Room room)
+        public async Task<string> Delete(int roomId)
         {
-            var currentRoom = _context.Rooms.Find(room.ID);
+            var currentRoom = _context.Rooms.Find(roomId);
 
             _context.Rooms.Remove(currentRoom);
             await _context.SaveChangesAsync();

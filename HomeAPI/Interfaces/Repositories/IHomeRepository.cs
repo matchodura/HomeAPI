@@ -48,7 +48,7 @@ namespace HomeAPI.Interfaces.Repositories
         /// </summary>
         /// <param name="roomName"></param>
         /// <returns></returns>
-        public Task<string> Delete(Room room);         
+        public Task<string> Delete(int roomId);         
 
     }
 }
